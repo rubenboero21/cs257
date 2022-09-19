@@ -22,9 +22,14 @@ Description
 
 	-t, --title-search
 		Given a search string S, prints a list of books whose titles contain S 
-		(case-insensitive). Books are sorted by title or publication year as 			specified. If no sort method is specified, books will default to be sorted 		by title. 
+		(case-insensitive). Books are sorted by title or publication year as 
+		specified. If no sort method is specified, books will default to be sorted 
+		by title. 
 	
-	-a, --author-search string S, prints a list of authors whose names contain S 			(case-insensitive). For each such author, prints a list of the author's 		books. Authors are sorted alphabetically by surname.
+	-a, --author-search 
+		Given a search string S, prints a list of authors whose names contain S 
+		(case-insensitive). For each such author, prints a list of the author's 
+		books. Authors are sorted alphabetically by surname.
 
 	-y, --year-search
 		Given a range of years A to B, prints a list of books published between 
