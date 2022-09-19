@@ -1,12 +1,16 @@
 Name 
 
-	book-search - Ruben and Xiaoying's book searching program
+	book - Ruben and Xiaoying's book searching program
 
 Synopsis
+	python3 books.py [-h|--help]
 
-	book-search [-h|--help] [-t <string>|--title-search <string>] [-a <string>|--
-	author-search <string>] [-y <year-A> <year-B>|--year-search <year-A> <year-B>]
+	python3 books.py [-t|--title-search] [search term] [title]
+	python3 books.py [-t|--title-search] [search term] [publication-year]
+	
+	python3 books.py [-a|--author-search] [search term]
 
+	python3 books.py [-y|--year-search] [yearA] [yearB]
 
 Description
 
@@ -14,16 +18,16 @@ Description
 	information. It can search for titles, authors, and dates of publication.
 
 	-h, --help
-		Prints the synopsis and a list of the most commonly used commands.
+		Prints the synopsis and the list of commands.
 
-	-t, --title-search <string>
+	-t, --title-search
 		Given a search string S, prints a list of books whose titles contain S 
-		(case-insensitive). Books are sorted by title.
+		(case-insensitive). Books are sorted by title or publication year as 			specified. If no sort method is specified, books will default to be sorted 		by title. 
 	
-	-a, --author-search <string>
-		Given a search string S, print a list of authors whose names contain S 
-		(case-insensitive). For each such author, prints a list of the author's 		books. Authors are sorted alphabetically by surname.
+	-a, --author-search string S, prints a list of authors whose names contain S 			(case-insensitive). For each such author, prints a list of the author's 		books. Authors are sorted alphabetically by surname.
 
-	-y, --year-search <year-A> <year-B>
-		Given a range of years A to B, print a list of books published between 
-		years A and B, inclusive. Books are printed in order of publication 			year. If no second year is provided, defaults to current year.
+	-y, --year-search
+		Given a range of years A to B, prints a list of books published between 
+		years A and B, inclusive. Books are printed in order of publication year. 
+		If no second year is provided, Year B defaults to the current year.
+
