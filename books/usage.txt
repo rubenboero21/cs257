@@ -1,5 +1,5 @@
 Name 
-	book - Ruben and Xiaoying's book searching program
+	books - Ruben and Xiaoying's book searching program
 
 Synopsis
 	python3 books.py [-h|--help]
