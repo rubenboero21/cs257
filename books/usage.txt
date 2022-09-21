@@ -2,36 +2,28 @@ Name
 	books - Ruben and Xiaoying's book searching program
 
 Synopsis
-	python3 books.py [-h|--help]
-
-	python3 books.py [-t|--title-search] [search term] [title]
-	python3 books.py [-t|--title-search] [search term] [publication-year]
-	
-	python3 books.py [-a|--author-search] [search term]
-
-	python3 books.py [-y|--year-search] [yearA] [yearB]
+	python3 books.py title [-h|-t|-y] string
+	python3 books.py author [-h] string
+	python3 books.py year [-h|yearA|yearB]
 
 Description
 
 	This is a program that will search through a CSV file to find and sort 
 	information. It can search for titles, authors, and dates of publication.
 
-	-h, --help
-		Prints the synopsis and the list of commands.
-
-	-t, --title-search
+	title
 		Given a search string S, prints a list of books whose titles contain S 
 		(case-insensitive). Books are sorted by title or publication year as 
 		specified. If no sort method is specified, books will default to be sorted 
 		by title. 
 	
-	-a, --author-search 
+	author
 		Given a search string S, prints a list of authors whose names contain S 
 		(case-insensitive). For each such author, prints a list of the author's 
 		books. Authors are sorted alphabetically by surname. If there is a tie, 
 		it will be broken by first/given name.
 
-	-y, --year-search
+	year
 		Given a range of years A to B, prints a list of books published between 
 		years A and B, inclusive. Books are printed in order of publication year. 
 		If year A is not provided, then any book published before or during year 
@@ -39,3 +31,18 @@ Description
 		during year A are printed. If neither year A or B are provided, all books
 		are printed.
 
+General Flags
+
+	-h, --help
+		Prints the information about the specified command.
+	
+Title command search specific flags
+
+	-t, --title
+		The list of books matching search string will be printed in order of book 
+		title.
+	
+	-y, --year
+		The list of books matching search string will be printed in order of 
+		publication year.	
+	
