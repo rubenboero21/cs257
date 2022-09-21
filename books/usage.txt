@@ -28,10 +28,14 @@ Description
 	-a, --author-search 
 		Given a search string S, prints a list of authors whose names contain S 
 		(case-insensitive). For each such author, prints a list of the author's 
-		books. Authors are sorted alphabetically by surname.
+		books. Authors are sorted alphabetically by surname. If there is a tie, 
+		it will be broken by first/given name.
 
 	-y, --year-search
 		Given a range of years A to B, prints a list of books published between 
 		years A and B, inclusive. Books are printed in order of publication year. 
-		If no second year is provided, Year B defaults to the current year.
+		If year A is not provided, then any book published before or during year 
+		B is printed. If year B is not provided, then any book published after or
+		during year A are printed. If neither year A or B are provided, all books
+		are printed.
 
