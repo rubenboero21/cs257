@@ -36,7 +36,7 @@ General Flags
 	-h, --help
 		Prints the information about the specified command.
 	
-Title command search specific flags
+Title search specific flags
 
 	-t, --title
 		The list of books matching search string will be printed in order of book 
