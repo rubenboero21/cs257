@@ -1,6 +1,5 @@
 # this test suite was modified by Ruben Boero and Xiaoying Qu
 
-# REMEMBER TO TAG THIS FILE: git tag books-tests
 '''
    booksdatasourcetest.py
    Jeff Ondich, 24 September 2021
@@ -31,7 +30,7 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(books[2].title == 'Neverwhere')
         self.assertTrue(books[3].title == 'Omoo')
 
-    # test that year search works with no search term
+    # test that year search works with no search term and break a tie
     def test_all_books_year(self):
         tiny_data_source = BooksDataSource('tinybooks.csv')
         books = tiny_data_source.books('', 'year') # equivalent to books = tiny_data_source.books(sort_by='year')
@@ -41,11 +40,10 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(books[2].title == 'Never')
         self.assertTrue(books[3].title == 'Neverwhere')
 
-    # test that default search works with a search term (case-insensitive)
-    # if this fails and we cant figure out why, try it with the search term capitalized correctly
+    # test that default search works with a search term
     def test_search_keyword(self):
         tiny_data_source = BooksDataSource('tinybooks.csv')
-        books = tiny_data_source.books('never')
+        books = tiny_data_source.books('Never', 'title')
         self.assertTrue(len(books) == 2)
         self.assertTrue(books[0].title == 'Never')
         self.assertTrue(books[1].title == 'Neverwhere')
@@ -58,44 +56,27 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(books[0].title == 'Emma')
         self.assertTrue(books[1].title == 'Never')
         self.assertTrue(books[2].title == 'Neverwhere')
-    
-    # come up with a standard for what to do with mulitple authors, write a test to check our standard works
-    #   sort books with 2 authors by the author with the surname that comes first alphabetically
-    # the good omens book, for example
-
-    # come up with a standard to sort authors with multiple last names (like Márquez)
-    #   i think we should take both last names and store it as 1 string
 
     # test that author search works with no search term
     def test_all_authors(self):
         tiny_data_source = BooksDataSource('tinybooks.csv')
         authors = tiny_data_source.books()
         self.assertTrue(len(authors) == 4)
-        self.assertTrue(authors[0] == Author('Jane', 'Austen'))
-        self.assertTrue(authors[1] == Author('Neil', 'Gaiman'))
-        self.assertTrue(authors[2] == Author('Herman', 'Melville'))
-        self.assertTrue(authors[3] == Author('Ruben', 'Xiaoying'))
+        self.assertTrue(authors[0] == Author('Austen', 'Jane'))
+        self.assertTrue(authors[1] == Author('Gaiman', 'Neil'))
+        self.assertTrue(authors[2] == Author('Melville', 'Herman'))
+        self.assertTrue(authors[3] == Author('Xiaoying', 'Ruben'))
     
     # test that author search works when 2 authors have the same last name
     def test_same_surname(self):
-        specific_data_source = BooksDataSource('specifictinybooks.csv')
-        authors = specific_data_source.authors('Gaiman')
+        gaiman_data_source = BooksDataSource('justgaiman.csv')
+        authors = gaiman_data_source.authors('Gaiman')
         self.assertTrue(len(authors) == 2)
-        self.assertTrue(authors[0] == Author('Anne', 'Gaiman'))
-        self.assertTrue(authors[1] == Author('Neil', 'Gaiman'))
+        self.assertTrue(authors[0] == Author('Gaiman', 'Anne'))
+        self.assertTrue(authors[1] == Author('Gaiman', 'Neil'))
 
-    # test that author search works when a book has multiple authors (also case-insensitivity)
-    # if this fails and we cant figure out why, try it with the search term capitalized correctly
-    def test_two_authors(self):
-        specific_data_source = BooksDataSource('specifictinybooks.csv')
-        authors = specific_data_source.authors('gaiman')
-        self.assertTrue(len(authors) == 2)
-        self.assertTrue(authors[0] == Author('Anne', 'Gaiman'))
-        self.assertTrue(authors[1] == Author('Neil', 'Gaiman'))
-
-    #THIS TEST ASSUMES THAT WE ONLY TAKE IN BOTH OF Márquez' NAMES AS HIS LAST NAME
     # test that authors with more than two names can be searched for
-    def test_special_character_name(self):
+    def test_multiple_surnames(self):
         specific_data_source = BooksDataSource('specifictinybooks.csv')
         authors = specific_data_source.authors('Márquez')
         self.assertTrue(len(authors) == 1)
@@ -118,8 +99,24 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(books[1].title == 'One Hundred Years of Solitude')
         self.assertTrue(books[2].title == 'Good Omens')
 
-    # test that year search works when only the start year is input (also breaks a tie)
+    # test that year search works when only the start year is input
     def test_only_end_year(self):
+        specific_data_source = BooksDataSource('specifictinybooks.csv')
+        books = specific_data_source.books_between_years(start_year=1996)
+        self.assertTrue(len(books) == 2)
+        self.assertTrue(books[0].title == 'Neverwhere')
+        self.assertTrue(books[1].title == 'Thief of Time')
+
+    # test that year search works when 0 years are input
+    def test_no_year_input(self):
+        gaiman_data_source = BooksDataSource('justgaiman.csv')
+        books = gaiman_data_source.books_between_years()
+        self.assertTrue(len(books) == 2)
+        self.assertTrue(books[0].title == 'Fake Book')
+        self.assertTrue(books[1].title == 'Neverwhere')
+    
+    # test tie breaking when searching by year
+    def test_year_tie_break(self):
         specific_data_source = BooksDataSource('specifictinybooks.csv')
         books = specific_data_source.books_between_years(start_year=1990)
         self.assertTrue(len(books) == 3)
@@ -127,18 +124,20 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(books[1].title == 'Neverwhere')
         self.assertTrue(books[2].title == 'Thief of Time')
 
-    # test that year search works when 0 years are input
-    def test_no_year_input(self):
-        specific_data_source = BooksDataSource('specifictinybooks.csv')
-        books = specific_data_source.books_between_years()
-        self.assertTrue(len(books) == 5)
-        self.assertTrue(books[0].title == 'Fake Book')
-        self.assertTrue(books[1].title == 'One Hundred Years of Solitude')
-        self.assertTrue(books[2].title == 'Good Omens')
-        self.assertTrue(books[3].title == 'Neverwhere')
-        self.assertTrue(books[4].title == 'Thief of Time')
+    # test that case doesn't matter when searching titles
+    def test_title_case(self):
+        tiny_data_source = BooksDataSource('tinydatasource.csv')
+        books = tiny_data_source.books('EVER', 'title')
+        self.assertTrue(len(books) == 2)
+        self.assertTrue(books[0].title == 'Neverwhere')
+        self.assertTrue(books[1].title == 'Never')
 
-    # check that case insensitivity works
+    # test that case doesn't matter when searching authors
+    def test_author_case(self):
+        tiny_data_source = BooksDataSource('tinydatasource.csv')
+        authors = tiny_data_source.authors('mELVILLE')
+        self.assertTrue(len(authors) == 1)
+        self.assertTrue(authors[0] == Author('Melville', 'Herman'))
 
 if __name__ == '__main__':
     unittest.main()
