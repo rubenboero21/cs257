@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-# REMEMBER TO TAG THIS FILE: git tag books-implementation
+# ******* git tag books-implementation ********
 '''
     booksdatasource.py
     Jeff Ondich, 21 September 2022
@@ -60,6 +60,17 @@ class BooksDataSource:
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
         '''
+        # how will we handle authors that have multiple books on the list? we dont want to create multiple author
+        # objects for those cases. should we search through the whole list to look for other books that they have authored?
+        # the look through the whole list thing seems unnecesarily inneficient 
+        # also, we need to pass in a list of books for the author class, so basically, how will we create that list of books? 
+        # 1. find an author 2. add the book to their list of books 3. look through the rest of the csv to see if the author appears again?
+
+        # when parsing the author category, we could use a contains search to look for the 'and' in the author index
+        # then would need to parse things on either side of the and (and is the delimiter)
+
+        # for the multiple last names thing, does counting spaces work? ie 2 spaces is 1 last name, 3 spaces is 2 last names?
+        # 2 spaces bc there is a space between the name and birth/death year
         pass
 
     def authors(self, search_text=None):
