@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# Interface Implemented by Ruben and Xiaoying
 
 # ******* git tag books-implementation ********
 '''
@@ -10,6 +11,13 @@
 '''
 
 import csv
+
+
+
+def get_title(self, csv_line):
+    title =""
+
+
 
 class Author:
     def __init__(self, surname='', given_name='', birth_year=None, death_year=None, books=[]):
@@ -44,6 +52,8 @@ class Book:
     # For sorting books, you could add a "def __lt__(self, other)" method
     # to go along with __eq__ to enable you to use the built-in "sorted" function
     # to sort a list of Book objects.
+    # sorting based on key: 
+    # https://www.techiedelight.com/sort-list-of-objects-python/#:~:text=A%20simple%20solution%20is%20to,only%20arguments%3A%20key%20and%20reverse.
 
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
@@ -59,7 +69,27 @@ class BooksDataSource:
             This __init__ method parses the specified CSV file and creates
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
+
+
+
+                #following is the code we wrote:
+        for line in books_csv_file_name:
+            
+            # import csv
+
+            # f = open('file.csv')
+
+            # the_data = list(csv.reader(f, delimiter r'\t'))[1:]
+            # https://stackoverflow.com/questions/45120726/how-to-read-csv-file-lines-and-split-elements-in-line-into-list-of-lists
+            
+            data = line.strip().split(",")
+            title = get_title(data[0])
+            pub_year = get_pub_year(data[1])
+            author = get_author(data[2])
+            birth_year = get_brith_year
+
         '''
+        
         # how will we handle authors that have multiple books on the list? we dont want to create multiple author
         # objects for those cases. should we search through the whole list to look for other books that they have authored?
         # the look through the whole list thing seems unnecesarily inneficient 
@@ -72,6 +102,10 @@ class BooksDataSource:
         # for the multiple last names thing, does counting spaces work? ie 2 spaces is 1 last name, 3 spaces is 2 last names?
         # 2 spaces bc there is a space between the name and birth/death year
         pass
+        
+
+
+
 
     def authors(self, search_text=None):
         ''' Returns a list of all the Author objects in this data source whose names contain
@@ -107,4 +141,17 @@ class BooksDataSource:
             should be included.
         '''
         return []
+
+
+if __name__ == '__main__':
+    f = open('books1.csv')
+
+    reader = csv.reader(f,delimiter= ',')
+    #the_data = list(csv.reader(f[1:])
+    for row in reader:
+        print(row)
+   
+
+
+    
 
