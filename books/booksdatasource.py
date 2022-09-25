@@ -38,6 +38,7 @@ def get_pub_year(csv_substring):
     pub_year = csv_substring
     return pub_year
 
+# this function could be useless
 def get_authors(csv_substring):
     '''Returns the list of author(s) for a book given the subtring of a csv file in which it appears.'''
     authors = []
@@ -135,14 +136,8 @@ class BooksDataSource:
             # not have them as functions? Also, does it make sense to need to pass in the
             # substring in which they appear?
             title = get_title(line[0])
-            print(title)
             pub_year = get_pub_year(line[1])
-            authors = get_authors(line[2])
-
-            # ****this is INCORRECT, the last instance variable is a list containing all Author
-            # objects. this means a book object contains a list of all author objects who wrote them,
-            # so book objects need to be created after author objects - see notes for ideas on how to do this efficiently
-            self.books_list.append(Book(title, pub_year, authors))
+            #authors = get_authors(line[2])
 
             # we dont want to create a new author object every time that there is a new line bc
             # some authors are in the csv in multiple places
@@ -159,8 +154,13 @@ class BooksDataSource:
                 # title parameter here needs to be a type list 
                 self.authors_list.append(Author(surname, given_name, birth_year, death_year, books_written))
             else: # else if the author is already in the list, update its book list
-                #add the other book to their books list
+                #add the other book to their books list (will require searching through the list of objects)
                 pass
+
+            # ****this is INCORRECT, the last instance variable is a list containing all Author
+            # objects. this means a book object contains a list of all author objects who wrote them,
+            # so book objects need to be created after author objects - see notes for ideas on how to do this efficiently
+            self.books_list.append(Book(title, pub_year, authors))
             
         file.close() # couldnt figure out how to open the file using 'with' so just close the file here
 
