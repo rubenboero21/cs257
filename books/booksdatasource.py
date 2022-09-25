@@ -27,6 +27,8 @@ class Author:
         self.death_year = death_year
         self.books = books
 
+
+
     def __eq__(self, other):
         ''' For simplicity, we're going to assume that no two authors have the same name. '''
         return self.surname == other.surname and self.given_name == other.given_name
