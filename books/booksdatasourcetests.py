@@ -14,7 +14,9 @@ class BooksDataSourceTester(unittest.TestCase):
 
     def tearDown(self):
         pass
-
+    
+    # if we search for Terry Pratchett and the result is that 2 books are printed, 
+    # then we know that search works with multiple authors
     def test_unique_author(self):
         authors = self.data_source.authors('Pratchett')
         self.assertTrue(len(authors) == 1)
@@ -101,11 +103,10 @@ class BooksDataSourceTester(unittest.TestCase):
 
     # test that year search works when only the start year is input
     def test_only_end_year(self):
-        specific_data_source = BooksDataSource('specifictinybooks.csv')
-        books = specific_data_source.books_between_years(start_year=1996)
-        self.assertTrue(len(books) == 2)
+        gaiman_data_source = BooksDataSource('justgaiman.csv')
+        books = gaiman_data_source.books_between_years(start_year=1901)
+        self.assertTrue(len(books) == 1)
         self.assertTrue(books[0].title == 'Neverwhere')
-        self.assertTrue(books[1].title == 'Thief of Time')
 
     # test that year search works when 0 years are input
     def test_no_year_input(self):
