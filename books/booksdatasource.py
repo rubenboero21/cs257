@@ -115,12 +115,14 @@ class BooksDataSource:
         file = open(books_csv_file_name)
         reader = csv.reader(file, delimiter= ',')
 
+        # does it make sense to create these lists locally? they wont exist outside of this class constructor
         authors_list = [] # list of author objects
         books_list = [] # list of book objects
 
         for line in reader:
-            # make the text lowercase to adhere to case-insensitivity
-            make_lowercase(line) # is it bad to have a function that transforms the csv line?
+            # CANNOT make the input to the objects lowercase, it will make all of the outputs
+            # later on incorrect. will need to figure out case-insensitivity later
+            # make_lowercase(line) # is it bad to have a function that transforms the csv line?
 
             # the get title and pub_year functions do basically nothing, does it make sense to 
             # leave them as functions to make it easier to read + be consistent, or should we
@@ -131,6 +133,9 @@ class BooksDataSource:
             pub_year = get_pub_year(line[1])
             authors = get_authors(line[2])
 
+            # ****this is INCORRECT, the last instance variable is a list containing all Author
+            # objects. this means a book object contains a list of all author objects who wrote them,
+            # so book objects need to be created after author objects - see notes for ideas on how to do this efficiently
             books_list.append(Book(title, pub_year, authors))
 
             # we dont want to create a new author object every time that there is a new line bc
