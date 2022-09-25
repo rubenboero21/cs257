@@ -18,8 +18,16 @@
 import csv
 
 # should we define what the input/output type are for these functions like jeff does?
+def make_lowercase(csv_line):
+    '''Takes in a line from a csv file and makes all of its substrings lower case to adhere
+       to case-insensitivity'''
+    i = 0
+    while i < len(csv_line):
+        csv_line[i] = csv_line[i].lower()
+        i += 2 # jump the middle substring bc its a date, so cant be lowercase
+
 def get_title(csv_substring):
-    '''Returns the title of a book given the subtring of a csv file in which appears.'''
+    '''Returns the title of a book given the subtring of a csv file in which it appears.'''
     title = csv_substring
     return title
 
@@ -29,7 +37,7 @@ def get_pub_year(csv_substring):
     return pub_year
 
 def get_authors(csv_substring):
-    '''Returns the list of authors for a book given the subtring of a csv file in which it appears.'''
+    '''Returns the list of author(s) for a book given the subtring of a csv file in which it appears.'''
     authors = []
     return authors
 
@@ -101,22 +109,25 @@ class BooksDataSource:
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
             '''
-        #following is the code we wrote:
-
+        
         # https://stackoverflow.com/questions/45120726/how-to-read-csv-file-lines-and-split-elements-in-line-into-list-of-lists
         # https://docs.python.org/3/library/csv.html
         file = open(books_csv_file_name)
         reader = csv.reader(file, delimiter= ',')
 
-        authors_list = []
-        books_list = []
+        authors_list = [] # list of author objects
+        books_list = [] # list of book objects
 
         for line in reader:
+            # make the text lowercase to adhere to case-insensitivity
+            make_lowercase(line) # is it bad to have a function that transforms the csv line?
+
             # the get title and pub_year functions do basically nothing, does it make sense to 
             # leave them as functions to make it easier to read + be consistent, or should we
             # not have them as functions? Also, does it make sense to need to pass in the
             # substring in which they appear?
             title = get_title(line[0])
+            print(title)
             pub_year = get_pub_year(line[1])
             authors = get_authors(line[2])
 
@@ -124,17 +135,22 @@ class BooksDataSource:
 
             # we dont want to create a new author object every time that there is a new line bc
             # some authors are in the csv in multiple places
-            if authors not in authors_list:
+
+            # if statement **UNTESTED**
+            if authors not in authors_list: # not sure this will work bc comparing a string to a list of objects, test once we have name parsing working
                 birth_year = get_birth_year(line[2])
                 death_year = get_death_year(line[2])
                 surname = get_surname(line[2])
                 given_name = get_given_name(line[2])
 
-                authors_list.append(Author(surname, given_name, birth_year, death_year, books))
-            else:
+                books_written = [] # if the author has not been encountered before, create a list of their 1 book so far (inside for loop so it resets for all new authors)
+                books_written.append(title)
+                # title parameter here needs to be a type list 
+                authors_list.append(Author(surname, given_name, birth_year, death_year, books_written))
+            else: # else if the author is already in the list, update its book list
                 #add the other book to their books list
                 pass
-
+            
         file.close() # couldnt figure out how to open the file using 'with' so just close the file here
 
         # how will we handle authors that have multiple books on the list? we dont want to create multiple author
