@@ -2,6 +2,11 @@
 # Interface Implemented by Ruben and Xiaoying
 
 # ******* git tag books-implementation ********
+
+# SORTING:
+# sorting based on key: 
+# https://www.techiedelight.com/sort-list-of-objects-python/#:~:text=A%20simple%20solution%20is%20to,only%20arguments%3A%20key%20and%20reverse.
+
 '''
     booksdatasource.py
     Jeff Ondich, 21 September 2022
@@ -12,12 +17,40 @@
 
 import csv
 
+# should we define what the input/output type are for these functions like jeff does?
+def get_title(csv_substring):
+    '''Returns the title of a book given the subtring of a csv file in which appears.'''
+    title = csv_substring
+    return title
 
+def get_pub_year(csv_substring):
+    '''Returns the publication year of a book given the subtring of a csv file in which it appears.'''
+    pub_year = csv_substring
+    return pub_year
 
-def get_title(self, csv_line):
-    title =""
+def get_authors(csv_substring):
+    '''Returns the list of authors for a book given the subtring of a csv file in which it appears.'''
+    authors = []
+    return authors
 
+def get_birth_year(csv_substring):
+    '''Returns the birth year of an author given the subtring of a csv file in which it appears.'''
+    birth_year = None
+    return birth_year
 
+def get_death_year(csv_substring):
+    '''Returns the death year of an author given the subtring of a csv file in which it appears.
+       Returns None if there is no death year.'''
+    death_year = None
+    return death_year
+
+def get_surname(csv_substring):
+    '''Returns the surname of an author given the subtring of a csv file in which it appears.'''
+    pass
+
+def get_given_name(csv_substring):
+    '''Returns the given name of an author given the subtring of a csv file in which it appears.'''
+    pass
 
 class Author:
     def __init__(self, surname='', given_name='', birth_year=None, death_year=None, books=[]):
@@ -52,8 +85,6 @@ class Book:
     # For sorting books, you could add a "def __lt__(self, other)" method
     # to go along with __eq__ to enable you to use the built-in "sorted" function
     # to sort a list of Book objects.
-    # sorting based on key: 
-    # https://www.techiedelight.com/sort-list-of-objects-python/#:~:text=A%20simple%20solution%20is%20to,only%20arguments%3A%20key%20and%20reverse.
 
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
@@ -69,27 +100,43 @@ class BooksDataSource:
             This __init__ method parses the specified CSV file and creates
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
+            '''
+        #following is the code we wrote:
 
+        # https://stackoverflow.com/questions/45120726/how-to-read-csv-file-lines-and-split-elements-in-line-into-list-of-lists
+        # https://docs.python.org/3/library/csv.html
+        file = open(books_csv_file_name)
+        reader = csv.reader(file, delimiter= ',')
 
+        authors_list = []
+        books_list = []
 
-                #following is the code we wrote:
-        for line in books_csv_file_name:
-            
-            # import csv
+        for line in reader:
+            # the get title and pub_year functions do basically nothing, does it make sense to 
+            # leave them as functions to make it easier to read + be consistent, or should we
+            # not have them as functions? Also, does it make sense to need to pass in the
+            # substring in which they appear?
+            title = get_title(line[0])
+            pub_year = get_pub_year(line[1])
+            authors = get_authors(line[2])
 
-            # f = open('file.csv')
+            books_list.append(Book(title, pub_year, authors))
 
-            # the_data = list(csv.reader(f, delimiter r'\t'))[1:]
-            # https://stackoverflow.com/questions/45120726/how-to-read-csv-file-lines-and-split-elements-in-line-into-list-of-lists
-            
-            data = line.strip().split(",")
-            title = get_title(data[0])
-            pub_year = get_pub_year(data[1])
-            author = get_author(data[2])
-            birth_year = get_brith_year
+            # we dont want to create a new author object every time that there is a new line bc
+            # some authors are in the csv in multiple places
+            if authors not in authors_list:
+                birth_year = get_birth_year(line[2])
+                death_year = get_death_year(line[2])
+                surname = get_surname(line[2])
+                given_name = get_given_name(line[2])
 
-        '''
-        
+                authors_list.append(Author(surname, given_name, birth_year, death_year, books))
+            else:
+                #add the other book to their books list
+                pass
+
+        file.close() # couldnt figure out how to open the file using 'with' so just close the file here
+
         # how will we handle authors that have multiple books on the list? we dont want to create multiple author
         # objects for those cases. should we search through the whole list to look for other books that they have authored?
         # the look through the whole list thing seems unnecesarily inneficient 
@@ -102,10 +149,6 @@ class BooksDataSource:
         # for the multiple last names thing, does counting spaces work? ie 2 spaces is 1 last name, 3 spaces is 2 last names?
         # 2 spaces bc there is a space between the name and birth/death year
         pass
-        
-
-
-
 
     def authors(self, search_text=None):
         ''' Returns a list of all the Author objects in this data source whose names contain
@@ -144,14 +187,15 @@ class BooksDataSource:
 
 
 if __name__ == '__main__':
-    f = open('books1.csv')
+    # name = 'books1.csv'
+    # file = open("books1.csv")
+    # file = open(name)
 
-    reader = csv.reader(f,delimiter= ',')
-    #the_data = list(csv.reader(f[1:])
-    for row in reader:
-        print(row)
-   
+    # reader = csv.reader(file, delimiter= ',')
 
+    # for line in reader:
+    #     print(line[2])
+    #     print(get_title(line[0]))
+    #     print(get_pub_year(line[1]))
 
-    
-
+    test = BooksDataSource('books1.csv')
