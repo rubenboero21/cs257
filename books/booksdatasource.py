@@ -18,6 +18,8 @@
 import csv
 
 # should we define what the input/output type are for these functions like jeff does?
+
+# this function could be useless
 def make_lowercase(csv_line):
     '''Takes in a line from a csv file and makes all of its substrings lower case to adhere
        to case-insensitivity'''
@@ -43,21 +45,25 @@ def get_authors(csv_substring):
 
 def get_birth_year(csv_substring):
     '''Returns the birth year of an author given the subtring of a csv file in which it appears.'''
+    # will need to work with books with more than 1 author
     birth_year = None
     return birth_year
 
 def get_death_year(csv_substring):
     '''Returns the death year of an author given the subtring of a csv file in which it appears.
        Returns None if there is no death year.'''
+    # will need to work with books with more than 1 author
     death_year = None
     return death_year
 
 def get_surname(csv_substring):
     '''Returns the surname of an author given the subtring of a csv file in which it appears.'''
+    # will need to work with books with more than 1 author
     pass
 
 def get_given_name(csv_substring):
     '''Returns the given name of an author given the subtring of a csv file in which it appears.'''
+    # will need to work with books with more than 1 author
     pass
 
 class Author:
@@ -114,10 +120,10 @@ class BooksDataSource:
         # https://docs.python.org/3/library/csv.html
         file = open(books_csv_file_name)
         reader = csv.reader(file, delimiter= ',')
-
-        # does it make sense to create these lists locally? they wont exist outside of this class constructor
-        authors_list = [] # list of author objects
-        books_list = [] # list of book objects
+        
+        # self. makes these an instance variable, and therefore accessible outside of the contructor method
+        self.authors_list = [] # list of author objects
+        self.books_list = [] # list of book objects
 
         for line in reader:
             # CANNOT make the input to the objects lowercase, it will make all of the outputs
@@ -136,13 +142,13 @@ class BooksDataSource:
             # ****this is INCORRECT, the last instance variable is a list containing all Author
             # objects. this means a book object contains a list of all author objects who wrote them,
             # so book objects need to be created after author objects - see notes for ideas on how to do this efficiently
-            books_list.append(Book(title, pub_year, authors))
+            self.books_list.append(Book(title, pub_year, authors))
 
             # we dont want to create a new author object every time that there is a new line bc
             # some authors are in the csv in multiple places
 
             # if statement **UNTESTED**
-            if authors not in authors_list: # not sure this will work bc comparing a string to a list of objects, test once we have name parsing working
+            if authors not in self.authors_list: # not sure this will work bc comparing a string to a list of objects, test once we have name parsing working
                 birth_year = get_birth_year(line[2])
                 death_year = get_death_year(line[2])
                 surname = get_surname(line[2])
@@ -151,7 +157,7 @@ class BooksDataSource:
                 books_written = [] # if the author has not been encountered before, create a list of their 1 book so far (inside for loop so it resets for all new authors)
                 books_written.append(title)
                 # title parameter here needs to be a type list 
-                authors_list.append(Author(surname, given_name, birth_year, death_year, books_written))
+                self.authors_list.append(Author(surname, given_name, birth_year, death_year, books_written))
             else: # else if the author is already in the list, update its book list
                 #add the other book to their books list
                 pass
@@ -167,8 +173,8 @@ class BooksDataSource:
         # when parsing the author category, we could use a contains search to look for the 'and' in the author index
         # then would need to parse things on either side of the and (and is the delimiter)
 
-        # for the multiple last names thing, does counting spaces work? ie 2 spaces is 1 last name, 3 spaces is 2 last names?
-        # 2 spaces bc there is a space between the name and birth/death year
+        # for the multiple last names thing, get a parser, delemit at each space, and stop parsing when 
+        # you hit the '('. then entry 1 is first name, and everything else is last  name
         pass
 
     def authors(self, search_text=None):
