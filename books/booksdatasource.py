@@ -46,28 +46,32 @@ def get_authors(csv_substring):
 
 def get_birth_year(csv_substring):
     '''Returns the birth year of an author given the substring of a csv file in which it appears.'''
-    # will need to work with books with more than 1 author
     s = csv_substring.split(' ') 
-    #account for one author
+    # if there is an author with 1 last name
     if len(s) == 3:
         temp_yrstr = s[-1][1:-1]
         return temp_yrstr.split('-')[0]
-    else: # its possible an author has no birth year
+    # if there is an author with 2 last names
+    elif len(s) > 3: 
+        temp_yrstr = s[-1][1:-1]
+        return temp_yrstr.split('-')[0]
+    # if there is no birth year given
+    elif (len(temp_yrstr.split('-')) < 2):
         return None
     
 def get_death_year(csv_substring):
     '''Returns the death year of an author given the substring of a csv file in which it appears.
        Returns None if there is no death year.'''
-    # will need to work with books with more than 1 author
     s = csv_substring.split(' ') 
-    #account for a deceased author
-    if len(s) == 3:
-        temp_yrstr = s[-1][1:-1]
-        #account for an living author
-        if len(temp_yrstr.split('-')) == 1:
-            return None
-        #account for a deceased author
-        return temp_yrstr.split('-')[1]
+    temp_yrstr = s[-1][1:-1]
+    year_substrings = temp_yrstr.split('-')
+
+    # if the author has a death year
+    if len(year_substrings[1]) > 0:
+        return year_substrings[1]
+    # if the author has no death year
+    else:
+        return None
 
 def get_surname(csv_substring):
     '''Returns the surname of an author given the substring of a csv file in which it appears.'''
@@ -93,8 +97,6 @@ class Author:
         self.birth_year = birth_year
         self.death_year = death_year
         self.books = books
-
-
 
     def __eq__(self, other):
         ''' For simplicity, we're going to assume that no two authors have the same name. '''
@@ -170,16 +172,17 @@ class BooksDataSource:
 
                 surname1 = get_surname(author1)
                 given_name1 = get_given_name(author1)
-                # birth_year1 = get_birth_year(author1)
+                birth_year1 = get_birth_year(author1)
+                death_year1 = get_death_year(author1)
 
                 surname2 = get_surname(author2)
                 given_name2 = get_given_name(author2)
-                # birth_year2 = get_birth_year(author2)
-
+                birth_year2 = get_birth_year(author2)
+                death_year2 = get_death_year(author2)
 
                 # create objects
-                temp_author1 = Author(surname1, given_name1)
-                temp_author2 = Author(surname2, given_name2)
+                temp_author1 = Author(surname1, given_name1, birth_year1, death_year1)
+                temp_author2 = Author(surname2, given_name2, birth_year2, death_year2)
                 
                 # if the list of authors is empty, then add the first 2 Author objects
                 if len(self.authors_list) == 0:
@@ -217,11 +220,11 @@ class BooksDataSource:
             else:
                 surname = get_surname(line[2])
                 given_name = get_given_name(line[2])
-                # birth_year = get_birth_year(line[2])
-                # death_year = get_death_year(line[2])
+                birth_year = get_birth_year(line[2])
+                death_year = get_death_year(line[2])
 
                 # this will need to be updated when the rest of the helper functions work
-                temp_author = Author(surname, given_name)
+                temp_author = Author(surname, given_name, birth_year, death_year)
                 
                 # if the list of authors is empty, then add the first Author object
                 if len(self.authors_list) == 0:
@@ -251,9 +254,14 @@ class BooksDataSource:
         file.close() # couldnt figure out how to open the file using 'with' so just close the file here
 
         # this for loop is to test that the authors_list is being created correctly
-        print("list of Author objects:")
+        print("List of Author objects:")
         for authors in self.authors_list:
             print(authors.surname + ", " + authors.given_name)
+            print(authors.birth_year)
+            if not authors.death_year:
+                print('--')
+            else:
+                print(authors.death_year)
 
         # how will we handle authors that have multiple books on the list? we dont want to create multiple author
         # objects for those cases. should we search through the whole list to look for other books that they have authored?
