@@ -29,43 +29,50 @@ def make_lowercase(csv_line):
         i += 2 # jump the middle substring bc its a date, so cant be lowercase
 
 def get_title(csv_substring):
-    '''Returns the title of a book given the subtring of a csv file in which it appears.'''
+    '''Returns the title of a book given the substring of a csv file in which it appears.'''
     title = csv_substring
     return title
 
 def get_pub_year(csv_substring):
-    '''Returns the publication year of a book given the subtring of a csv file in which it appears.'''
+    '''Returns the publication year of a book given the substring of a csv file in which it appears.'''
     pub_year = csv_substring
     return pub_year
 
 # this function could be useless
 def get_authors(csv_substring):
-    '''Returns the list of author(s) for a book given the subtring of a csv file in which it appears.'''
+    '''Returns the list of author(s) for a book given the substring of a csv file in which it appears.'''
     authors = []
     return authors
 
 def get_birth_year(csv_substring):
-    '''Returns the birth year of an author given the subtring of a csv file in which it appears.'''
+    '''Returns the birth year of an author given the substring of a csv file in which it appears.'''
     # will need to work with books with more than 1 author
     birth_year = None
     return birth_year
 
 def get_death_year(csv_substring):
-    '''Returns the death year of an author given the subtring of a csv file in which it appears.
+    '''Returns the death year of an author given the substring of a csv file in which it appears.
        Returns None if there is no death year.'''
     # will need to work with books with more than 1 author
     death_year = None
     return death_year
 
 def get_surname(csv_substring):
-    '''Returns the surname of an author given the subtring of a csv file in which it appears.'''
-    # will need to work with books with more than 1 author
-    pass
+    '''Returns the surname of an author given the substring of a csv file in which it appears.'''
+    # right now, we need to determine if there is more than 1 author, then pass in the parsed out single author into get_surname
+    # Consider fixing this limitation
+    s = csv_substring.split(' ') 
+    if len(s) > 3:
+        #return str(s[1]) + str(s[2])
+        return s[1] + ' ' +s[2]
+    else:
+        return  s[1]
 
 def get_given_name(csv_substring):
-    '''Returns the given name of an author given the subtring of a csv file in which it appears.'''
-    # will need to work with books with more than 1 author
-    pass
+    '''Returns the given name of an author given the substring of a csv file in which it appears.'''
+    # books with mulitple authors are already checked for before this function is called
+    s = csv_substring.split(' ')
+    return s[0]
 
 class Author:
     def __init__(self, surname='', given_name='', birth_year=None, death_year=None, books=[]):
@@ -140,31 +147,101 @@ class BooksDataSource:
             title = get_title(line[0])
             pub_year = get_pub_year(line[1])
             #authors = get_authors(line[2])
+            
+            books_written = [] # if the author has not been encountered before, create a list of their 1 book so far (inside for loop so it resets for all new authors)
+            
+            # if there are 2 authors
+            if 'and' in line[2]:
+                author_str = line[2].split(' and ')
+                author1 = author_str[0]
+                author2 = author_str[1]
 
-            # we dont want to create a new author object every time that there is a new line bc
-            # some authors are in the csv in multiple places
+                surname1 = get_surname(author1)
+                given_name1 = get_given_name(author1)
+                # birth_year1 = get_birth_year(author1)
 
-            # if statement **UNTESTED**
-            if authors not in self.authors_list: # not sure this will work bc comparing a string to a list of objects, test once we have name parsing working
-                birth_year = get_birth_year(line[2])
-                death_year = get_death_year(line[2])
+                surname2 = get_surname(author2)
+                given_name2 = get_given_name(author2)
+                # birth_year2 = get_birth_year(author2)
+
+
+                # create objects
+                temp_author1 = Author(surname1, given_name1)
+                temp_author2 = Author(surname2, given_name2)
+                
+                # if the list of authors is empty, then add the first 2 Author objects
+                if len(self.authors_list) == 0:
+                    self.authors_list.append(temp_author1)
+                    self.authors_list.append(temp_author2)
+                # if the list of authors is not empty
+                else:
+                    # create 2 booleans to store if an author obj is already stored in the list
+                    temp_author1_seen = False
+                    temp_author2_seen = False
+
+                    # check if the author is stored in the list
+                    for author in self.authors_list:
+                        if author == temp_author1:
+                            temp_author1_seen = True
+                        if author == temp_author2:
+                            temp_author2_seen = True
+
+                    # add an author to the list if they are not already in the list
+                    if not (temp_author1_seen):
+                        # edit the author object's books_written list to include the current book before appending
+                        self.authors_list.append(temp_author1)
+                    else:
+                        # edit the books_written list of the existing author object to include the current book
+                        pass
+
+                    if not (temp_author2_seen):
+                        # edit the author object's books_written list to include the current book before appending
+                        self.authors_list.append(temp_author2)
+                    else:
+                        # edit the books_written list of the existing author object to include the current book
+                        pass
+                    
+            # if there is just 1 author
+            else:
                 surname = get_surname(line[2])
                 given_name = get_given_name(line[2])
+                # birth_year = get_birth_year(line[2])
+                # death_year = get_death_year(line[2])
 
-                books_written = [] # if the author has not been encountered before, create a list of their 1 book so far (inside for loop so it resets for all new authors)
-                books_written.append(title)
-                # title parameter here needs to be a type list 
-                self.authors_list.append(Author(surname, given_name, birth_year, death_year, books_written))
-            else: # else if the author is already in the list, update its book list
-                #add the other book to their books list (will require searching through the list of objects)
-                pass
+                # this will need to be updated when the rest of the helper functions work
+                temp_author = Author(surname, given_name)
+                
+                # if the list of authors is empty, then add the first Author object
+                if len(self.authors_list) == 0:
+                    self.authors_list.append(temp_author)
+                else:
+                    temp_author_seen = False
+
+                    for author in self.authors_list:
+                        # if author does not already exist, add it to the list
+                        if author == temp_author:
+                            temp_author_seen = True
+                            break # break out of the for loop bc the author has been found
+
+                    # add an author to the list if they are not already in the list
+                    if not (temp_author_seen):
+                        # edit the author object's books_written list to include the current book before appending
+                        self.authors_list.append(temp_author)
+                    else:
+                        # edit the books_written list of the existing author object to include the current book
+                        pass
 
             # ****this is INCORRECT, the last instance variable is a list containing all Author
             # objects. this means a book object contains a list of all author objects who wrote them,
             # so book objects need to be created after author objects - see notes for ideas on how to do this efficiently
-            self.books_list.append(Book(title, pub_year, authors))
+            #self.books_list.append(Book(title, pub_year, authors))
             
         file.close() # couldnt figure out how to open the file using 'with' so just close the file here
+
+        # this for loop is to test that the authors_list is being created correctly
+        print("list of Author objects:")
+        for authors in self.authors_list:
+            print(authors.surname + ", " + authors.given_name)
 
         # how will we handle authors that have multiple books on the list? we dont want to create multiple author
         # objects for those cases. should we search through the whole list to look for other books that they have authored?
@@ -216,9 +293,13 @@ class BooksDataSource:
 
 
 if __name__ == '__main__':
-    # name = 'books1.csv'
-    # file = open("books1.csv")
+    #name = 'books1.csv'
+    # name = '1book2authors.csv'
+
+    #file = open("books1.csv")
     # file = open(name)
+
+    #file = open('1book2authors.csv')
 
     # reader = csv.reader(file, delimiter= ',')
 
@@ -227,4 +308,6 @@ if __name__ == '__main__':
     #     print(get_title(line[0]))
     #     print(get_pub_year(line[1]))
 
-    test = BooksDataSource('books1.csv')
+    test = BooksDataSource('specifictinybooks.csv')
+    
+    
