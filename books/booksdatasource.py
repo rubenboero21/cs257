@@ -29,37 +29,38 @@ def make_lowercase(csv_line):
         i += 2 # jump the middle substring bc its a date, so cant be lowercase
 
 def get_title(csv_substring):
-    '''Returns the title of a book given the subtring of a csv file in which it appears.'''
+    '''Returns the title of a book given the substring of a csv file in which it appears.'''
     title = csv_substring
     return title
 
 def get_pub_year(csv_substring):
-    '''Returns the publication year of a book given the subtring of a csv file in which it appears.'''
+    '''Returns the publication year of a book given the substring of a csv file in which it appears.'''
     pub_year = csv_substring
     return pub_year
 
 # this function could be useless
 def get_authors(csv_substring):
-    '''Returns the list of author(s) for a book given the subtring of a csv file in which it appears.'''
+    '''Returns the list of author(s) for a book given the substring of a csv file in which it appears.'''
     authors = []
     return authors
 
 def get_birth_year(csv_substring):
-    '''Returns the birth year of an author given the subtring of a csv file in which it appears.'''
+    '''Returns the birth year of an author given the substring of a csv file in which it appears.'''
     # will need to work with books with more than 1 author
     birth_year = None
     return birth_year
 
 def get_death_year(csv_substring):
-    '''Returns the death year of an author given the subtring of a csv file in which it appears.
+    '''Returns the death year of an author given the substring of a csv file in which it appears.
        Returns None if there is no death year.'''
     # will need to work with books with more than 1 author
     death_year = None
     return death_year
 
 def get_surname(csv_substring):
-    '''Returns the surname of an author given the subtring of a csv file in which it appears.'''
-    # books with mulitple authors are already checked for before this function is called
+    '''Returns the surname of an author given the substring of a csv file in which it appears.'''
+    # right now, we need to determine if there is more than 1 author, then pass in the parsed out single author into get_surname
+    # Consider fixing this limitation
     s = csv_substring.split(' ') 
     if len(s) > 3:
         #return str(s[1]) + str(s[2])
@@ -68,7 +69,7 @@ def get_surname(csv_substring):
         return  s[1]
 
 def get_given_name(csv_substring):
-    '''Returns the given name of an author given the subtring of a csv file in which it appears.'''
+    '''Returns the given name of an author given the substring of a csv file in which it appears.'''
     # books with mulitple authors are already checked for before this function is called
     s = csv_substring.split(' ')
     return s[0]
@@ -155,7 +156,7 @@ class BooksDataSource:
 
                 surname1 = get_surname(author1)
                 given_name1 = get_given_name(author1)
-                # birth_yea1r = get_birth_year(author1)
+                # birth_year1 = get_birth_year(author1)
 
                 surname2 = get_surname(author2)
                 given_name2 = get_given_name(author2)
