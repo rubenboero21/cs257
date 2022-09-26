@@ -63,7 +63,7 @@ def get_surname(csv_substring):
     s = csv_substring.split(' ') 
     if len(s) > 3:
         #return str(s[1]) + str(s[2])
-        return s[1] + s[2]
+        return s[1] + ' ' +s[2]
     else:
         return  s[1]
 
@@ -133,8 +133,6 @@ class BooksDataSource:
         self.books_list = [] # list of book objects
 
         for line in reader:
-            print("on new line")
-
             # CANNOT make the input to the objects lowercase, it will make all of the outputs
             # later on incorrect. will need to figure out case-insensitivity later
             # make_lowercase(line) # is it bad to have a function that transforms the csv line?
@@ -152,7 +150,6 @@ class BooksDataSource:
             
             # if there are 2 authors
             if 'and' in line[2]:
-                print("2 authors")
                 author_str = line[2].split(' and ')
                 author1 = author_str[0]
                 author2 = author_str[1]
@@ -182,20 +179,19 @@ class BooksDataSource:
 
                     # check if the author is stored in the list
                     for author in self.authors_list:
-                        if author != temp_author1:
+                        if author == temp_author1:
                             temp_author1_seen = True
-                        if author != temp_author2:
+                        if author == temp_author2:
                             temp_author2_seen = True
 
                     # add an author to the list if they are not already in the list
-                    if (temp_author1_seen):
+                    if not (temp_author1_seen):
                         self.authors_list.append(temp_author1)
-                    if (temp_author2_seen):
+                    if not (temp_author2_seen):
                         self.authors_list.append(temp_author2)
 
             # if there is just 1 author
             else:
-                #print("only 1 author")
                 surname = get_surname(line[2])
                 given_name = get_given_name(line[2])
                 # birth_year = get_birth_year(line[2])
@@ -208,17 +204,16 @@ class BooksDataSource:
                 if len(self.authors_list) == 0:
                     self.authors_list.append(temp_author)
                 else:
+                    temp_author_seen = False
+
                     for author in self.authors_list:
                         # if author does not already exist, add it to the list
-                        if author != temp_author:
-                            self.authors_list.append(temp_author)
-                
-                # for authors in self.authors_list:
-                #     print(authors.surname + ", " + authors.given_name)
-
-            surname = get_surname(line[2])
-            given_name = get_given_name(line[2])
-            # create 1 object
+                        if author == temp_author:
+                            temp_author_seen = True
+                            break # break out of the for loop bc the author has been found
+                   
+                    if not (temp_author_seen):
+                        self.authors_list.append(temp_author)
 
             books_written = [] # if the author has not been encountered before, create a list of their 1 book so far (inside for loop so it resets for all new authors)
             books_written.append(title)            
@@ -300,12 +295,6 @@ if __name__ == '__main__':
     #     print(get_title(line[0]))
     #     print(get_pub_year(line[1]))
 
-    #test = BooksDataSource('terry_pratchett.csv')
-    #test = BooksDataSource('justgaiman.csv')
-
-    # i think that the reader does't read a new line if its a book with 2 authors, but in any case, books with 2 authors breaks stuff
-    # doesnt work on this csv
     test = BooksDataSource('specifictinybooks.csv')
     
-    #test = BooksDataSource('1book2authors.csv')
     
