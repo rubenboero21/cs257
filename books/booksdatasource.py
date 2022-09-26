@@ -144,9 +144,8 @@ class BooksDataSource:
             title = get_title(line[0])
             pub_year = get_pub_year(line[1])
             #authors = get_authors(line[2])
-
-            # we dont want to create a new author object every time that there is a new line bc
-            # some authors are in the csv in multiple places
+            
+            books_written = [] # if the author has not been encountered before, create a list of their 1 book so far (inside for loop so it resets for all new authors)
             
             # if there are 2 authors
             if 'and' in line[2]:
@@ -186,10 +185,19 @@ class BooksDataSource:
 
                     # add an author to the list if they are not already in the list
                     if not (temp_author1_seen):
+                        # edit the author object's books_written list to include the current book before appending
                         self.authors_list.append(temp_author1)
-                    if not (temp_author2_seen):
-                        self.authors_list.append(temp_author2)
+                    else:
+                        # edit the books_written list of the existing author object to include the current book
+                        pass
 
+                    if not (temp_author2_seen):
+                        # edit the author object's books_written list to include the current book before appending
+                        self.authors_list.append(temp_author2)
+                    else:
+                        # edit the books_written list of the existing author object to include the current book
+                        pass
+                    
             # if there is just 1 author
             else:
                 surname = get_surname(line[2])
@@ -211,12 +219,14 @@ class BooksDataSource:
                         if author == temp_author:
                             temp_author_seen = True
                             break # break out of the for loop bc the author has been found
-                   
-                    if not (temp_author_seen):
-                        self.authors_list.append(temp_author)
 
-            books_written = [] # if the author has not been encountered before, create a list of their 1 book so far (inside for loop so it resets for all new authors)
-            books_written.append(title)            
+                    # add an author to the list if they are not already in the list
+                    if not (temp_author_seen):
+                        # edit the author object's books_written list to include the current book before appending
+                        self.authors_list.append(temp_author)
+                    else:
+                        # edit the books_written list of the existing author object to include the current book
+                        pass
 
             # ****this is INCORRECT, the last instance variable is a list containing all Author
             # objects. this means a book object contains a list of all author objects who wrote them,
