@@ -48,7 +48,7 @@ def get_birth_year(csv_substring):
     '''Returns the birth year of an author given the substring of a csv file in which it appears.'''
     # will need to work with books with more than 1 author
     s = csv_substring.split(' ') 
-    #account for a deceased author
+    #account for one author
     if len(s) == 3:
         temp_yrstr = s[-1][1:-1]
         return temp_yrstr.split('-')[0]
@@ -63,7 +63,14 @@ def get_death_year(csv_substring):
     #account for a deceased author
     if len(s) == 3:
         temp_yrstr = s[-1][1:-1]
-        return temp_yrstr.split('-')[0]
+        #account for an living author
+        if len(temp_yrstr.split('-')) == 1:
+            return None
+        #account for a deceased author
+        return temp_yrstr.split('-')[1]
+    
+    
+
     
     
 
