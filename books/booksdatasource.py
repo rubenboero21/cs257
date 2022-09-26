@@ -52,9 +52,9 @@ def get_birth_year(csv_substring):
     if len(s) == 3:
         temp_yrstr = s[-1][1:-1]
         return temp_yrstr.split('-')[0]
+    else: # its possible an author has no birth year
+        return None
     
-    
-
 def get_death_year(csv_substring):
     '''Returns the death year of an author given the substring of a csv file in which it appears.
        Returns None if there is no death year.'''
@@ -68,11 +68,6 @@ def get_death_year(csv_substring):
             return None
         #account for a deceased author
         return temp_yrstr.split('-')[1]
-    
-    
-
-    
-    
 
 def get_surname(csv_substring):
     '''Returns the surname of an author given the substring of a csv file in which it appears.'''
