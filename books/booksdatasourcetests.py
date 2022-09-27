@@ -82,7 +82,7 @@ class BooksDataSourceTester(unittest.TestCase):
         specific_data_source = BooksDataSource('specifictinybooks.csv')
         authors = specific_data_source.authors('Márquez')
         self.assertTrue(len(authors) == 1)
-        self.assertTrue(authors[0] == Author('Gabriel', 'García Márquez'))
+        self.assertTrue(authors[0] == Author('García Márquez', 'Gabriel'))
 
     # test that year search works when 2 years are input
     def test_two_years_input(self):
