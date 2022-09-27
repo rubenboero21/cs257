@@ -115,6 +115,12 @@ class Book:
     # to go along with __eq__ to enable you to use the built-in "sorted" function
     # to sort a list of Book objects.
 
+    def __lt__(self, other, sort_method):
+        if (self.title == other.title):
+            return self.publication_year < other.publication_year                
+        else:
+            return self.title < other.title
+
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
         ''' The books CSV file format looks like this:
@@ -278,7 +284,7 @@ class BooksDataSource:
             return complete_list
 
         else:
-            search_text.lower()
+            search_text = search_text.lower()
             for author in complete_list:
                 lower_surname = author.surname.lower()
                 lower_given_name = author.given_name.lower()
@@ -299,7 +305,12 @@ class BooksDataSource:
                 default -- same as 'title' (that is, if sort_by is anything other than 'year'
                             or 'title', just do the same thing you would do for 'title')
         '''
-        return []
+        complete_list = self.books_list
+        search_list = []
+        
+        if (search_text == None):
+            complete_list.sort()
+            return complete_list
 
     def books_between_years(self, start_year=None, end_year=None):
         ''' Returns a list of all the Book objects in this data source whose publication
@@ -347,10 +358,18 @@ if __name__ == '__main__':
     #     print('greater than')
 
     # data_source = BooksDataSource('tinybooks.csv')
-    data_source = BooksDataSource('specifictinybooks.csv')
+    # data_source = BooksDataSource('specifictinybooks.csv')
+    data_source = BooksDataSource('justgaiman.csv')
     # authors = data_source.authors()
-    authors = data_source.authors("prat")
+    # authors = data_source.authors("prat")
+    authors = data_source.authors("Gaiman")
     print(len(authors))
     for i in authors:
         print(i.given_name, i.surname)
+
+    # data_source = BooksDataSource('tinybooks.csv')
+    # books = data_source.books()
+    # print(len(books))
+    # for i in books:
+    #     print(i.title)
 
