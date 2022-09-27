@@ -141,20 +141,16 @@ class BooksDataSource:
         self.books_list = [] # list of book objects
 
         for line in reader:
-            # CANNOT make the input to the objects lowercase, it will make all of the outputs
-            # later on incorrect. will need to figure out case-insensitivity later
-            # make_lowercase(line) # is it bad to have a function that transforms the csv line?
-
             # the get title and pub_year functions do basically nothing, does it make sense to 
             # leave them as functions to make it easier to read + be consistent, or should we
             # not have them as functions? Also, does it make sense to need to pass in the
             # substring in which they appear?
             title = get_title(line[0])
             pub_year = get_pub_year(line[1])
-            #authors = get_authors(line[2])
-            
-            #books_written = [] # if the author has not been encountered before, create a list of their 1 book so far (inside for loop so it resets for all new authors)
-            
+
+            # a list to store all the authors who have written a given book (used in Book obj construction)
+            written_by = []
+
             # if there are 2 authors
             if 'and' in line[2]:
                 author_str = line[2].split(' and ')
@@ -171,50 +167,42 @@ class BooksDataSource:
                 birth_year2 = get_birth_year(author2)
                 death_year2 = get_death_year(author2)
 
-                # create objects
+                # we don't need any temp authors, just search by the surname and given name that we already have
                 temp_author1 = Author(surname1, given_name1, birth_year1, death_year1)
                 temp_author2 = Author(surname2, given_name2, birth_year2, death_year2)
                 
-                # if the list of authors is empty, then add the first 2 Author objects
-                if len(self.authors_list) == 0:
+                # create 2 booleans to store if an author obj is already stored in the list
+                temp_author1_seen = False
+                temp_author2_seen = False
+
+                # check if the author is stored in the list
+                for author in self.authors_list:
+                    if author == temp_author1:
+                        temp_author1_seen = True
+
+                        # updating the already existing author's list of written books
+                        author.books.append(title)
+                        written_by.append(temp_author1)
+
+                    if author == temp_author2:
+                        temp_author2_seen = True
+
+                        # updating the already existing author's list of written book                            
+                        author.books.append(title)
+                        written_by.append(temp_author2)
+
+                # add an author to the list if they are not already in the list
+                if not (temp_author1_seen):
+                    # edit the author object's books_written list to include the current book before appending
+                    temp_author1.books.append(title)
                     self.authors_list.append(temp_author1)
+                    written_by.append(temp_author1)
+
+                if not (temp_author2_seen):
+                    # edit the author object's books_written list to include the current book before appending
+                    temp_author2.books.append(title)
                     self.authors_list.append(temp_author2)
-
-                # if the list of authors is not empty
-                else:
-                    # create 2 booleans to store if an author obj is already stored in the list
-                    temp_author1_seen = False
-                    temp_author2_seen = False
-
-                    # check if the author is stored in the list
-                    for author in self.authors_list:
-                        if author == temp_author1:
-                            temp_author1_seen = True
-                            author.books.append(title)
-                            # updating the already existing author's list of written books
-
-                        if author == temp_author2:
-                            temp_author2_seen = True
-                            author.books.append(title)
-                            # updating the already existing author's list of written book                            
-
-
-                    # add an author to the list if they are not already in the list
-                    if not (temp_author1_seen):
-                        # edit the author object's books_written list to include the current book before appending
-                        temp_author1.books.append(title)
-                        self.authors_list.append(temp_author1)
-                    else:
-                        # edit the books_written list of the existing author object to include the current book
-                        pass
-
-                    if not (temp_author2_seen):
-                        # edit the author object's books_written list to include the current book before appending
-                        temp_author2.books.append(title)
-                        self.authors_list.append(temp_author2)
-                    else:
-                        # edit the books_written list of the existing author object to include the current book
-                        pass
+                    written_by.append(temp_author2)
                     
             # if there is just 1 author
             else:
@@ -223,48 +211,35 @@ class BooksDataSource:
                 birth_year = get_birth_year(line[2])
                 death_year = get_death_year(line[2])
 
-
-                # this will need to be updated when the rest of the helper functions work
+                # we don't need a temp author, just search by the surname and given name that we already have
                 temp_author = Author(surname, given_name, birth_year, death_year, [])
                 
-                
-                # if the list of authors is empty, then add the first Author object
-                if len(self.authors_list) == 0:
+                temp_author_seen = False
+
+                for author in self.authors_list:
+                    # if author does not already exist, add it to the list
+                    if author == temp_author:
+
+                        temp_author_seen = True
+                        # updating the already existing author's list of written books
+                        author.books.append(title)
+                        written_by.append(temp_author)
+                        break # break out of the for loop bc the author has been found
+
+                # add an author to the list if they are not already in the list
+                if not (temp_author_seen):
+                    # edit the author object's books_written list to include the current book before appending
                     temp_author.books.append(title)
                     self.authors_list.append(temp_author)
-                else:
-                    temp_author_seen = False
+                    written_by.append(temp_author)
 
-                    for author in self.authors_list:
-                        # if author does not already exist, add it to the list
-                        if author == temp_author:
-
-                            temp_author_seen = True
-                            # updating the already existing author's list of written books
-                            author.books.append(title)
-                            break # break out of the for loop bc the author has been found
-
-                    # add an author to the list if they are not already in the list
-                    if not (temp_author_seen):
-                        # edit the author object's books_written list to include the current book before appending
-                        temp_author.books.append(title)
-                        self.authors_list.append(temp_author)
-                    else:
-                        # edit the books_written list of the existing author object to include the current book
-                        pass
-
-            # for i in self.authors_list:
-            #     print(i.books)
-
-
-            # ****this is INCORRECT, the last instance variable is a list containing all Author
-            # objects. this means a book object contains a list of all author objects who wrote them,
-            # so book objects need to be created after author objects - see notes for ideas on how to do this efficiently
-            #self.books_list.append(Book(title, pub_year, authors))
+            # create the Book object
+            self.books_list.append(Book(title, pub_year, written_by))
             
         file.close() # couldnt figure out how to open the file using 'with' so just close the file here
 
-        # this for loop is to test that the authors_list is being created correctly
+        # these for loops are to test that the authors_list is being created correctly
+
         print("List of Author objects:")
         for authors in self.authors_list:
             print(authors.surname + ", " + authors.given_name)
@@ -276,18 +251,15 @@ class BooksDataSource:
             print(authors.books)
             print("========")
 
-        # how will we handle authors that have multiple books on the list? we dont want to create multiple author
-        # objects for those cases. should we search through the whole list to look for other books that they have authored?
-        # the look through the whole list thing seems unnecesarily inneficient 
-        # also, we need to pass in a list of books for the author class, so basically, how will we create that list of books? 
-        # 1. find an author 2. add the book to their list of books 3. look through the rest of the csv to see if the author appears again?
+        print()
 
-        # when parsing the author category, we could use a contains search to look for the 'and' in the author index
-        # then would need to parse things on either side of the and (and is the delimiter)
-
-        # for the multiple last names thing, get a parser, delemit at each space, and stop parsing when 
-        # you hit the '('. then entry 1 is first name, and everything else is last  name
-        pass
+        print("List of Book objects:")
+        for books in self.books_list:
+            print(books.title)
+            print(books.publication_year)
+            for i in books.authors:
+                print(i.given_name)
+            print("========")
 
     def authors(self, search_text=None):
         ''' Returns a list of all the Author objects in this data source whose names contain
