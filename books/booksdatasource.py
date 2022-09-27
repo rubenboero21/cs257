@@ -17,6 +17,7 @@
 
 import csv
 from re import search
+from turtle import title
 
 # should we define what the input/output type are for these functions like jeff does?
 
@@ -318,9 +319,36 @@ class BooksDataSource:
         complete_list = self.books_list
         search_list = []
         
-        if (search_text == None):
+        # the title search currently does not work. We need to know more about how to write the __lt__
+        # function to allow for 2 different cases
+
+        # this case will not work bc books cannot be sorted by title yet
+        if (search_text == None and sort_by == 'title'):
             complete_list.sort()
             return complete_list
+
+        elif (search_text == None and sort_by == 'year'):
+            complete_list.sort()
+            return complete_list
+
+        # this case will not work bc books cannot be sorted by title yet
+        elif (search_text != None and sort_by == 'title'):
+            search_text = search_text.lower()
+            for book in complete_list:
+                lower_title = book.title.lower()
+                if (search_text in book.title):
+                    search_list.append(book)
+            search_list.sort()
+            return search_list
+
+        elif (search_text != None and sort_by == 'year'):
+            search_text = search_text.lower()
+            for book in complete_list:
+                lower_title = book.title.lower()
+                if (search_text in lower_title):
+                    search_list.append(book)
+            search_list.sort()
+            return search_list
 
     def books_between_years(self, start_year=None, end_year=None):
         ''' Returns a list of all the Book objects in this data source whose publication
@@ -403,14 +431,15 @@ if __name__ == '__main__':
     # for i in authors:
     #     print(i.given_name, i.surname)
 
-    # data_source = BooksDataSource('tinybooks.csv')
+    data_source = BooksDataSource('tinybooks.csv')
     # books = data_source.books(sort_by='year')
-    # print(len(books))
-    # for i in books:
-    #     print(i.title)
-
-    data_source = BooksDataSource('justgaiman.csv')
-    books = data_source.books_between_years(start_year=1940)
+    books = data_source.books('neVer', 'year')
     print(len(books))
     for i in books:
         print(i.title)
+
+    # data_source = BooksDataSource('justgaiman.csv')
+    # books = data_source.books_between_years(start_year=1940)
+    # print(len(books))
+    # for i in books:
+    #     print(i.title)
