@@ -64,7 +64,6 @@ def get_surname(csv_substring):
     # Consider fixing this limitation
     s = csv_substring.split(' ') 
     if len(s) > 3:
-        #return str(s[1]) + str(s[2])
         return s[1] + ' ' +s[2]
     else:
         return  s[1]
@@ -114,6 +113,9 @@ class Book:
     # For sorting books, you could add a "def __lt__(self, other)" method
     # to go along with __eq__ to enable you to use the built-in "sorted" function
     # to sort a list of Book objects.
+
+    def __lt__(self, other):
+        pass
 
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
@@ -278,7 +280,7 @@ class BooksDataSource:
             return complete_list
 
         else:
-            search_text.lower()
+            search_text = search_text.lower()
             for author in complete_list:
                 lower_surname = author.surname.lower()
                 lower_given_name = author.given_name.lower()
@@ -346,10 +348,10 @@ if __name__ == '__main__':
     # else:
     #     print('greater than')
 
-    # data_source = BooksDataSource('tinybooks.csv')
-    data_source = BooksDataSource('specifictinybooks.csv')
+    data_source = BooksDataSource('tinybooks.csv')
+    # data_source = BooksDataSource('specifictinybooks.csv')
     # authors = data_source.authors()
-    authors = data_source.authors("prat")
+    authors = data_source.authors("mELVILLE")
     print(len(authors))
     for i in authors:
         print(i.given_name, i.surname)
