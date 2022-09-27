@@ -16,6 +16,7 @@
 '''
 
 import csv
+from re import search
 
 # should we define what the input/output type are for these functions like jeff does?
 
@@ -115,11 +116,20 @@ class Book:
     # to go along with __eq__ to enable you to use the built-in "sorted" function
     # to sort a list of Book objects.
 
-    def __lt__(self, other, sort_method):
-        if (self.title == other.title):
-            return self.publication_year < other.publication_year                
-        else:
+    def __lt__(self, other):
+        # this currently only works when sorting  by year, not by title
+        if (self.publication_year == other.publication_year):
             return self.title < other.title
+        else:
+            return self.publication_year < other.publication_year
+
+        # but this is how to sort by title
+        # if (self.title == other.title):
+        #     return self.publication_year < other.publication_year                
+        # else:
+        #     return self.title < other.title
+        
+
 
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
@@ -323,8 +333,33 @@ class BooksDataSource:
             during start_year should be included. If both are None, then all books
             should be included.
         '''
-        return []
+        complete_list = self.books_list
+        search_list = []
 
+        if (start_year == None and end_year == None):
+            complete_list.sort()
+            return complete_list
+
+        elif (start_year == None and end_year != None):
+            for book in complete_list:
+                if (int(book.publication_year) <= end_year):
+                    search_list.append(book)
+            search_list.sort()
+            return search_list
+
+        elif (start_year != None and end_year == None):
+            for book in complete_list:
+                if (int(book.publication_year) >= start_year):
+                    search_list.append(book)
+            search_list.sort()
+            return search_list
+        
+        else:
+            for book in complete_list:
+                if (int(book.publication_year) <= end_year and int(book.publication_year) >= start_year):
+                    search_list.append(book)
+            search_list.sort()
+            return search_list
 
 if __name__ == '__main__':
     #name = 'books1.csv'
@@ -359,17 +394,23 @@ if __name__ == '__main__':
 
     # data_source = BooksDataSource('tinybooks.csv')
     # data_source = BooksDataSource('specifictinybooks.csv')
-    data_source = BooksDataSource('justgaiman.csv')
+    # data_source = BooksDataSource('justgaiman.csv')
     # authors = data_source.authors()
     # authors = data_source.authors("prat")
-    authors = data_source.authors("Gaiman")
-    print(len(authors))
-    for i in authors:
-        print(i.given_name, i.surname)
+    # authors = data_source.authors("Gaiman")
+    # authors = data_source.authors('Márquez')
+    # print(len(authors))
+    # for i in authors:
+    #     print(i.given_name, i.surname)
 
     # data_source = BooksDataSource('tinybooks.csv')
-    # books = data_source.books()
+    # books = data_source.books(sort_by='year')
     # print(len(books))
     # for i in books:
     #     print(i.title)
 
+    data_source = BooksDataSource('justgaiman.csv')
+    books = data_source.books_between_years(start_year=1940)
+    print(len(books))
+    for i in books:
+        print(i.title)
