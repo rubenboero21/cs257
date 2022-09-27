@@ -29,12 +29,6 @@ def get_pub_year(csv_substring):
     pub_year = csv_substring
     return pub_year
 
-# this function could be useless
-def get_authors(csv_substring):
-    '''Returns the list of author(s) for a book given the substring of a csv file in which it appears.'''
-    authors = []
-    return authors
-
 def get_birth_year(csv_substring):
     '''Returns the birth year of an author given the substring of a csv file in which it appears.'''
     s = csv_substring.split(' ') 
@@ -168,8 +162,8 @@ class BooksDataSource:
                 death_year2 = get_death_year(author2)
 
                 # we don't need any temp authors, just search by the surname and given name that we already have
-                temp_author1 = Author(surname1, given_name1, birth_year1, death_year1)
-                temp_author2 = Author(surname2, given_name2, birth_year2, death_year2)
+                temp_author1 = Author(surname1, given_name1, birth_year1, death_year1, [])
+                temp_author2 = Author(surname2, given_name2, birth_year2, death_year2, [])
                 
                 # create 2 booleans to store if an author obj is already stored in the list
                 temp_author1_seen = False
@@ -190,6 +184,9 @@ class BooksDataSource:
                         # updating the already existing author's list of written book                            
                         author.books.append(title)
                         written_by.append(temp_author2)
+                    
+                    if (temp_author1_seen and temp_author2_seen):
+                        break
 
                 # add an author to the list if they are not already in the list
                 if not (temp_author1_seen):
@@ -199,7 +196,6 @@ class BooksDataSource:
                     written_by.append(temp_author1)
 
                 if not (temp_author2_seen):
-                    # edit the author object's books_written list to include the current book before appending
                     temp_author2.books.append(title)
                     self.authors_list.append(temp_author2)
                     written_by.append(temp_author2)
@@ -219,7 +215,6 @@ class BooksDataSource:
                 for author in self.authors_list:
                     # if author does not already exist, add it to the list
                     if author == temp_author:
-
                         temp_author_seen = True
                         # updating the already existing author's list of written books
                         author.books.append(title)

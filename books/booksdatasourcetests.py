@@ -127,7 +127,7 @@ class BooksDataSourceTester(unittest.TestCase):
 
     # test that case doesn't matter when searching titles
     def test_title_case(self):
-        tiny_data_source = BooksDataSource('tinydatasource.csv')
+        tiny_data_source = BooksDataSource('tinybooks.csv')
         books = tiny_data_source.books('EVER', 'title')
         self.assertTrue(len(books) == 2)
         self.assertTrue(books[0].title == 'Neverwhere')
@@ -135,7 +135,7 @@ class BooksDataSourceTester(unittest.TestCase):
 
     # test that case doesn't matter when searching authors
     def test_author_case(self):
-        tiny_data_source = BooksDataSource('tinydatasource.csv')
+        tiny_data_source = BooksDataSource('tinybooks.csv')
         authors = tiny_data_source.authors('mELVILLE')
         self.assertTrue(len(authors) == 1)
         self.assertTrue(authors[0] == Author('Melville', 'Herman'))
