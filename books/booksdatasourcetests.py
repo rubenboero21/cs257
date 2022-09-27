@@ -62,7 +62,7 @@ class BooksDataSourceTester(unittest.TestCase):
     # test that author search works with no search term
     def test_all_authors(self):
         tiny_data_source = BooksDataSource('tinybooks.csv')
-        authors = tiny_data_source.books()
+        authors = tiny_data_source.authors()
         self.assertTrue(len(authors) == 4)
         self.assertTrue(authors[0] == Author('Austen', 'Jane'))
         self.assertTrue(authors[1] == Author('Gaiman', 'Neil'))

@@ -268,13 +268,24 @@ class BooksDataSource:
             returns all of the Author objects. In either case, the returned list is sorted
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
-        list = self.authors_list
-        if search_text == None:
-            list.sort()
-            return list
-
         # to handle case insensitivity, try usng casefold() or lower()
-        return []
+
+        complete_list = self.authors_list
+        search_list = []
+
+        if (search_text == None):
+            complete_list.sort()
+            return complete_list
+
+        else:
+            search_text.lower()
+            for author in complete_list:
+                lower_surname = author.surname.lower()
+                lower_given_name = author.given_name.lower()
+                if (search_text in lower_surname or search_text in lower_given_name):
+                    search_list.append(author)
+            search_list.sort()
+            return search_list
 
     def books(self, search_text=None, sort_by='title'):
         ''' Returns a list of all the Book objects in this data source whose
@@ -324,6 +335,7 @@ if __name__ == '__main__':
 
     # special_ch = 'GAbRiEl GaRCíA MÁrQUez'
     # print(special_ch.casefold())
+    # print(special_ch.lower())
 
     # Anne = Author('Gaiman', 'Anne')
     # Neil = Author('Gaiman', 'Neil')
@@ -334,8 +346,11 @@ if __name__ == '__main__':
     # else:
     #     print('greater than')
 
-    data_source = BooksDataSource('tinybooks.csv')
-    authors = data_source.authors()
+    # data_source = BooksDataSource('tinybooks.csv')
+    data_source = BooksDataSource('specifictinybooks.csv')
+    # authors = data_source.authors()
+    authors = data_source.authors("prat")
     print(len(authors))
     for i in authors:
         print(i.given_name, i.surname)
+
