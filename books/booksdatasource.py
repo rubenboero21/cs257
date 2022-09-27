@@ -91,6 +91,12 @@ class Author:
     # to go along with __eq__ to enable you to use the built-in "sorted" function
     # to sort a list of Author objects.
 
+    def __lt__(self, other):
+        if self.surname == other.surname:
+            return self.given_name < other.given_name
+        else:
+            return self.surname < other.surname
+
 class Book:
     def __init__(self, title='', publication_year=None, authors=[]):
         ''' Note that the self.authors instance variable is a list of
@@ -235,26 +241,26 @@ class BooksDataSource:
 
         # these for loops are to test that the authors_list is being created correctly
 
-        print("List of Author objects:")
-        for authors in self.authors_list:
-            print(authors.surname + ", " + authors.given_name)
-            print(authors.birth_year)
-            if not authors.death_year:
-                print('--')
-            else:
-                print(authors.death_year)
-            print(authors.books)
-            print("========")
+        # print("List of Author objects:")
+        # for authors in self.authors_list:
+        #     print(authors.surname + ", " + authors.given_name)
+        #     print(authors.birth_year)
+        #     if not authors.death_year:
+        #         print('--')
+        #     else:
+        #         print(authors.death_year)
+        #     print(authors.books)
+        #     print("========")
 
-        print()
+        # print()
 
-        print("List of Book objects:")
-        for books in self.books_list:
-            print(books.title)
-            print(books.publication_year)
-            for i in books.authors:
-                print(i.given_name)
-            print("========")
+        # print("List of Book objects:")
+        # for books in self.books_list:
+        #     print(books.title)
+        #     print(books.publication_year)
+        #     for i in books.authors:
+        #         print(i.given_name)
+        #     print("========")
 
     def authors(self, search_text=None):
         ''' Returns a list of all the Author objects in this data source whose names contain
@@ -262,6 +268,12 @@ class BooksDataSource:
             returns all of the Author objects. In either case, the returned list is sorted
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
+        list = self.authors_list
+        if search_text == None:
+            list.sort()
+            return list
+
+        # to handle case insensitivity, try usng casefold() or lower()
         return []
 
     def books(self, search_text=None, sort_by='title'):
@@ -308,6 +320,22 @@ if __name__ == '__main__':
     #     print(get_title(line[0]))
     #     print(get_pub_year(line[1]))
 
-    test = BooksDataSource('specifictinybooks.csv')
-    
-    
+    # test = BooksDataSource('specifictinybooks.csv')
+
+    # special_ch = 'GAbRiEl GaRCíA MÁrQUez'
+    # print(special_ch.casefold())
+
+    # Anne = Author('Gaiman', 'Anne')
+    # Neil = Author('Gaiman', 'Neil')
+    # Terry = Author ('Pratchett', 'Terry')
+
+    # if (Terry < Neil):
+    #     print("less than")
+    # else:
+    #     print('greater than')
+
+    data_source = BooksDataSource('tinybooks.csv')
+    authors = data_source.authors()
+    print(len(authors))
+    for i in authors:
+        print(i.given_name, i.surname)
