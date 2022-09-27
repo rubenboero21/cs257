@@ -115,12 +115,7 @@ class Book:
     # to sort a list of Book objects.
 
     def __lt__(self, other):
-        # THIS DOESNT WORK, currently only works when sorting by title
-
-        if (self.title == other.title):
-            return self.publication_year < other.publication_year
-        else:
-            return self.title < other.title
+        pass
 
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
@@ -306,14 +301,7 @@ class BooksDataSource:
                 default -- same as 'title' (that is, if sort_by is anything other than 'year'
                             or 'title', just do the same thing you would do for 'title')
         '''
-        complete_list = self.books_list
-        search_list = []
-
-        # this will need to be changed, just for testing
-        if (search_text == None):
-            # __lt__ for books doesnt work
-            complete_list.sort()
-            return complete_list
+        return []
 
     def books_between_years(self, start_year=None, end_year=None):
         ''' Returns a list of all the Book objects in this data source whose publication
@@ -362,15 +350,9 @@ if __name__ == '__main__':
 
     data_source = BooksDataSource('tinybooks.csv')
     # data_source = BooksDataSource('specifictinybooks.csv')
-
     # authors = data_source.authors()
-    # authors = data_source.authors("mELVILLE")
-    # print(len(authors))
-    # for i in authors:
-    #     print(i.given_name, i.surname)
-
-    books = data_source.books()
-    print(len(books))
-    for i in books:
-        print(i.title)
+    authors = data_source.authors("mELVILLE")
+    print(len(authors))
+    for i in authors:
+        print(i.given_name, i.surname)
 
