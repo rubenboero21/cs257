@@ -102,9 +102,9 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(books[2].title == 'Good Omens')
 
     # test that year search works when only the start year is input
-    def test_only_end_year(self):
+    def test_only_start_year(self):
         gaiman_data_source = BooksDataSource('justgaiman.csv')
-        books = gaiman_data_source.books_between_years(start_year=1901)
+        books = gaiman_data_source.books_between_years(start_year=1940)
         self.assertTrue(len(books) == 1)
         self.assertTrue(books[0].title == 'Neverwhere')
 
