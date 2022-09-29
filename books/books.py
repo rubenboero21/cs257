@@ -26,11 +26,7 @@ def parse_command_line():
             if sys.argv[2] == '-h' or sys.argv[2] == '--help':
                 arguments['help'] = sys.argv[2]
 
-            # if the provided flag is invalid, quit
-            elif sys.argv[2] != 'h' or sys.argv[2] == '--help':
-                print(f"Flag {sys.argv[2]} is not a valid flag for the title search. Type -h or --help for more information.")
-                # this might be a bad way to do things
-                quit()
+            # need a case for if the user inputs a flag that DNE
 
             else:
                 arguments['search-term'] = sys.argv[2]
@@ -43,6 +39,10 @@ def parse_command_line():
             elif sys.argv[2] == '-t' or sys.argv[2] == '--title':
                 arguments['sort'] = sys.argv[2]
 
+                # if a search term is entered
+                if (len(sys.argv) > 3):
+                    arguments['search-term'] = sys.argv[3]
+
             elif sys.argv[2] == '-y' or sys.argv[2] == '--year':
                 arguments['sort'] = sys.argv[2]
 
@@ -52,7 +52,7 @@ def parse_command_line():
 
             # if the user inputs a flag that is invalid, stop running the code
             else:  
-                print(f"Flag {sys.argv[2]} is not a valid flag for the title search. Type -h or --help for more information.")
+                print(f"Flag {sys.argv[2]} is not a valid flag for the title search. Type 'title -h' or 'title --help' for more information.")
                 # this might be a bad way to do things
                 quit()
     
@@ -73,6 +73,7 @@ def main(arguments):
                 help_statement += "\nGiven a search string S, prints a list of authors whose names contain S (case-insensitive). For each such author, prints a list of the author's books. Authors are sorted alphabetically by surname. If there is a tie, it will be broken by first/given name. If no search string is provided, all authors will be printed."
                 print(help_statement)
 
+            # handles the case when a search term is passed into the author command
             elif 'search-term' in arguments:
                 search_term = arguments['search-term']
                 data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
@@ -90,11 +91,29 @@ def main(arguments):
                 help_statement += "\nGiven a search string S, prints a list of books whose titles contain S (case-insensitive). Books are sorted by title or publication year as specified. If no sort method is specified, books will default to be sorted by title. If no search string is provided, all books will be printed."
                 print(help_statement)
             
+            # handles the case when sorting by title and a search term is provided
             elif sys.argv[2] == '-t' or sys.argv[2] == '--title':
-                print('Title sort entered')
+                # CHECK THAT THIS WORKS ONCE THE TITLE SORT IS WORKING, IT DOES WEIRD THINGS RN
+                print('There is currently not functionality for this sort method')
+                if 'search-term' in arguments:
+                    search_term = arguments['search-term']
+                    data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+                    books = data_source.books(search_term, 'title')
 
-            # handles the case when a sort method and a search term is provided
+                    if (len(books) > 0):
+                        for i in books:
+                            authors = []
+
+                            for j in i.authors:
+                                authors.append(j.given_name + " " + j.surname)
+
+                            print(i.title, "by", authors)
+                    else:
+                        print(f"No books were found containing {search_term}")  
+
+            # handles the case when the sorting by year and a search term is provided
             elif sys.argv[2] == '-y' or sys.argv[2] == '--year':
+                #print('2')
                 if 'search-term' in arguments:
                     search_term = arguments['search-term']
                     data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
@@ -119,12 +138,23 @@ def main(arguments):
             for i in authors:
                 print(i. surname, i.given_name, ": ", i.books)
 
-    # case for when title search is sorted by year but has no search term
+    # case for when title search a sort method is specified but has no search term
     elif (len(sys.argv) > 2 and arguments['search-attribute'] == 'title'):
-        # code here now
         if arguments['sort'] == '-y' or arguments['sort'] == '--year':
             data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
             books = data_source.books(sort_by= 'year')
+
+            for i in books:
+                authors = []
+
+                for j in i.authors:
+                    authors.append(j.given_name + " " + j.surname)
+
+                print(i.title, "by", authors)
+        
+        elif arguments['sort'] == '-t' or arguments['sort'] == '--title':
+            data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+            books = data_source.books(sort_by= 'title')
 
             for i in books:
                 authors = []
