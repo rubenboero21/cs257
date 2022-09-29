@@ -111,13 +111,7 @@ class Book:
     # For sorting books, you could add a "def __lt__(self, other)" method
     # to go along with __eq__ to enable you to use the built-in "sorted" function
     # to sort a list of Book objects.
-
-    def __lt__(self, other):
-        # this currently only works when sorting  by year, not by title
-        if (self.publication_year == other.publication_year):
-            return self.title < other.title
-        else:
-            return self.publication_year < other.publication_year
+    #   - I used sorted() instead
         
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
@@ -140,7 +134,6 @@ class BooksDataSource:
         file = open(books_csv_file_name)
         reader = csv.reader(file, delimiter= ',')
         
-        # self. makes these an instance variable, and therefore accessible outside of the contructor method
         self.authors_list = [] # list of author objects
         self.books_list = [] # list of book objects
 
@@ -230,7 +223,6 @@ class BooksDataSource:
 
                 # add an author to the list if they are not already in the list
                 if not (temp_author_seen):
-                    # edit the author object's books_written list to include the current book before appending
                     temp_author.books.append(title)
                     self.authors_list.append(temp_author)
                     written_by.append(temp_author)
@@ -284,8 +276,8 @@ class BooksDataSource:
             return sorted_list
 
         elif (search_text == None and sort_by == 'year'):
-            complete_list.sort()
-            return complete_list
+            sorted_list = sorted(complete_list, key = lambda b: (b.publication_year, b.title))
+            return sorted_list
 
         elif (search_text != None and sort_by == 'title'):
             search_text = search_text.lower()
@@ -302,8 +294,8 @@ class BooksDataSource:
                 lower_title = book.title.lower()
                 if (search_text in lower_title):
                     search_list.append(book)
-            search_list.sort()
-            return search_list
+            sorted_list = sorted(search_list, key = lambda b: (b.publication_year, b.title))
+            return sorted_list
 
     def books_between_years(self, start_year=None, end_year=None):
         ''' Returns a list of all the Book objects in this data source whose publication
@@ -320,26 +312,26 @@ class BooksDataSource:
         search_list = []
 
         if (start_year == None and end_year == None):
-            complete_list.sort()
-            return complete_list
+            sorted_list = sorted(complete_list, key = lambda b: (b.publication_year, b.title))
+            return sorted_list
 
         elif (start_year == None and end_year != None):
             for book in complete_list:
                 if (int(book.publication_year) <= end_year):
                     search_list.append(book)
-            search_list.sort()
-            return search_list
+            sorted_list = sorted(search_list, key = lambda b: (b.publication_year, b.title))
+            return sorted_list
 
         elif (start_year != None and end_year == None):
             for book in complete_list:
                 if (int(book.publication_year) >= start_year):
                     search_list.append(book)
-            search_list.sort()
-            return search_list
+            sorted_list = sorted(search_list, key = lambda b: (b.publication_year, b.title))
+            return sorted_list
         
         else:
             for book in complete_list:
                 if (int(book.publication_year) <= end_year and int(book.publication_year) >= start_year):
                     search_list.append(book)
-            search_list.sort()
-            return search_list
+            sorted_list = sorted(search_list, key = lambda b: (b.publication_year, b.title))
+            return sorted_list
