@@ -4,7 +4,7 @@ Name
 Synopsis
 	python3 books.py title [-h|-t|-y] string
 	python3 books.py author [-h] string
-	python3 books.py year [-h|yearA|yearB]
+	python3 books.py year [-h|yearA and yearB|yearA|yearB]
 
 Description
 
