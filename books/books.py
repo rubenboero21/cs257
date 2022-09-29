@@ -3,7 +3,6 @@
 
 # REMEMBER TO TAG THIS FILE: git tag books-implementation
 
-from symbol import argument
 import booksdatasource
 import sys
 
@@ -28,24 +27,24 @@ def parse_command_line():
     return arguments
 
 def main(arguments):
-    if arguments['search-attribute'] == 'author':
-        if sys.argv[2] == '-h' or sys.argv[2] == '--help':
-            if arguments['help'] == '-h' or arguments['help'] == '--help':
-                help_statement = 'python3 books.py author [-h] string \n'
-                help_statement += '''\n Given a search string S, prints a list of authors whose names 
-                                    contain S (case-insensitive). For each such author, prints a list of 
-                                    the author's books. Authors are sorted alphabetically by surname. If 
-                                    there is a tie, it will be broken by first/given name. If no search 
-                                    string is provided, all authors will be printed.'''
-            print(help_statement)
-        else:
-            # actual functionality of author command goes here
-            data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
-            authors = data_source.authors(arguments['search-term'])
-            
-            for i in authors:
-                print(i.books)
-
+    if (len(sys.argv) > 2):
+        if arguments['search-attribute'] == 'author':
+            if sys.argv[2] == '-h' or sys.argv[2] == '--help':
+                if arguments['help'] == '-h' or arguments['help'] == '--help':
+                    help_statement = 'python3 books.py author [-h] string \n'
+                    help_statement += "\nGiven a search string S, prints a list of authors whose names contain S (case-insensitive). For each such author, prints a list of the author's books. Authors are sorted alphabetically by surname. If there is a tie, it will be broken by first/given name. If no search string is provided, all authors will be printed."
+                print(help_statement)
+            else:
+                data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+                authors = data_source.authors(arguments['search-term'])
+                
+                for i in authors:
+                    print(i.books)
+    else:
+        data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+        authors = data_source.authors()
+        for i in authors:
+            print(i.books)
 
 arguments = parse_command_line()
 if 'search-attribute' not in arguments:
