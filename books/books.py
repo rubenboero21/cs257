@@ -15,6 +15,7 @@ def parse_command_line():
     arguments = {}
     # if there is more than just books.py entered
     if len(sys.argv) > 1:
+        # should we rename 'search-attribute' to be 'command'?
         arguments['search-attribute'] = sys.argv[1]
 
     # if there is a command entered and something else (everything possible entererd)
@@ -53,7 +54,63 @@ def main(arguments):
 
             for i in authors:
                 print(i. surname, i.given_name, ": ", i.books)
-                
+
+    # print the default help statement - there has to be a better way to do this
+    elif (len(sys.argv) > 1 and (arguments['search-attribute'] == '-h' or arguments['search-attribute'] == '--help')):
+        '''   this gives weird spacing
+        f = open('usage.txt')
+        for line in f:
+            print(line)
+        f.close()'''
+        
+        print('''
+Synopsis
+	python3 books.py title [-h|-t|-y] string
+	python3 books.py author [-h] string
+	python3 books.py year [-h|yearA and yearB|yearA|yearB]
+
+Description
+
+	This is a program that will search through a CSV file to find and sort 
+	information. It can search for titles, authors, and dates of publication.
+
+	title
+		Given a search string S, prints a list of books whose titles contain S 
+		(case-insensitive). Books are sorted by title or publication year as 
+		specified. If no sort method is specified, books will default to be sorted 
+		by title. If no search string is provided, all books will be printed.
+	
+	author
+		Given a search string S, prints a list of authors whose names contain S 
+		(case-insensitive). For each such author, prints a list of the author's 
+		books. Authors are sorted alphabetically by surname. If there is a tie, 
+		it will be broken by first/given name. If no search string is provided, 
+		all authors will be printed.
+
+	year
+		Given a range of years A to B, prints a list of books published between 
+		years A and B, inclusive. Books are printed in order of publication year. 
+		Ties are broken by which title comes first alphabetically. If year A is 
+		not provided, then any book published before or during year B is printed. 
+		If year B is not provided, then any book published after or during year A 
+		are printed. If neither year A or B are provided, all books are printed.
+
+General Flags
+
+	-h, --help
+		Prints the information about the specified command.
+	
+Title search specific flags
+
+	-t, --title
+		The list of books matching search string will be printed in order of book 
+		title.
+	
+	-y, --year
+		The list of books matching search string will be printed in order of 
+		publication year.	
+	''')
+        
     # this case is reached if the command entered is invalid
     else:
         invalid_command = arguments['search-attribute']
