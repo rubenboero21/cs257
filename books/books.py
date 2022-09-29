@@ -26,10 +26,11 @@ def parse_command_line():
 
             else:
                 arguments['search-term'] = sys.argv[2]
-
+    print(arguments)
     return arguments
 
 def main(arguments):
+    print(len(sys.argv))
     if (len(sys.argv) > 2):
         if arguments['search-attribute'] == 'author':
             if sys.argv[2] == '-h' or sys.argv[2] == '--help':
@@ -45,14 +46,18 @@ def main(arguments):
                 for i in authors:
                     print(i. surname, i.given_name, ": ", i.books)
 
-    # this case handles if there is just a command passed in and nothing else (the super default cases)
-    elif (len(sys.argv) > 1):
-        if arguments['search-attribute'] == 'author':
-                data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
-                authors = data_source.authors()
+    # this case handles if the author command is used with no parameters
+    elif (len(sys.argv) > 1 and arguments['search-attribute'] == 'author'):
+            data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+            authors = data_source.authors()
+
+            for i in authors:
+                print(i. surname, i.given_name, ": ", i.books)
                 
-                for i in authors:
-                    print(i. surname, i.given_name, ": ", i.books)
+    # this case is reached if the command entered is invalid
+    else:
+        invalid_command = arguments['search-attribute']
+        print(f"{invalid_command} is not a valid command. Type -h or --help for more information on valid commands.")
 
 arguments = parse_command_line()
 if 'search-attribute' not in arguments:
