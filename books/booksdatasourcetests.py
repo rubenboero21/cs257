@@ -125,13 +125,13 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(books[1].title == 'Neverwhere')
         self.assertTrue(books[2].title == 'Thief of Time')
 
-    # test that case doesn't matter when searching titles
+    # test that case doesn't matter when searching titles and sorting by title
     def test_title_search_case(self):
         tiny_data_source = BooksDataSource('tinybooks.csv')
         books = tiny_data_source.books('EVER', 'title')
         self.assertTrue(len(books) == 2)
-        self.assertTrue(books[0].title == 'Neverwhere')
-        self.assertTrue(books[1].title == 'Never')
+        self.assertTrue(books[0].title == 'Never')
+        self.assertTrue(books[1].title == 'Neverwhere')
     
     # test that case doesn't matter when searching for titles and sorting by year
     def test_year_search_case(self):
