@@ -27,11 +27,9 @@ def parse_command_line():
 
             else:
                 arguments['search-term'] = sys.argv[2]
-    print(arguments)
     return arguments
 
 def main(arguments):
-    print(len(sys.argv))
     if (len(sys.argv) > 2):
         if arguments['search-attribute'] == 'author':
             if sys.argv[2] == '-h' or sys.argv[2] == '--help':
