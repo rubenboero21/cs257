@@ -311,14 +311,13 @@ class BooksDataSource:
         '''
         complete_list = self.books_list
         search_list = []
-        
-        # the title search currently does not work. We need to know more about how to write the __lt__
-        # function to allow for 2 different cases
 
         # this case will not work bc books cannot be sorted by title yet
         if (search_text == None and sort_by == 'title'):
-            complete_list.sort()
-            return complete_list
+            # complete_list.sort()
+            # return complete_list
+            sorted_list = sorted(complete_list, key = lambda b: (b.title, b.publication_year))
+            return sorted_list
 
         elif (search_text == None and sort_by == 'year'):
             complete_list.sort()
@@ -329,10 +328,12 @@ class BooksDataSource:
             search_text = search_text.lower()
             for book in complete_list:
                 lower_title = book.title.lower()
-                if (search_text in book.title):
+                if (search_text in lower_title):
                     search_list.append(book)
-            search_list.sort()
-            return search_list
+            sorted_list = sorted(search_list, key = lambda b: (b.title, b.publication_year))
+            # search_list.sort()
+            # return search_list
+            return sorted_list
 
         elif (search_text != None and sort_by == 'year'):
             search_text = search_text.lower()
@@ -425,8 +426,11 @@ if __name__ == '__main__':
     #     print(i.given_name, i.surname)
 
     data_source = BooksDataSource('tinybooks.csv')
+    books = data_source.books('EVER', 'title')
+    # data_source = BooksDataSource('specifictinybooks.csv')
     # books = data_source.books(sort_by='year')
-    books = data_source.books('neVer', 'year')
+    # books = data_source.books('neVer', 'year')
+    # books = data_source.books('ake', 'year')
     print(len(books))
     for i in books:
         print(i.title)
