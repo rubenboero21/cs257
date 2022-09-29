@@ -12,10 +12,9 @@
 '''
 
 import csv
-from re import search
-from turtle import title
 
 # should we define what the input/output type are for these functions like jeff does?
+# and should they all be inside of the BooksDataSource class?
 
 def get_title(csv_substring):
     '''Returns the title of a book given the substring of a csv file in which it appears.'''

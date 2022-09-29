@@ -20,10 +20,13 @@ def parse_command_line():
     # if there is a command entered and something else (everything possible entererd)
     if (len(sys.argv) > 2):
         if (sys.argv[1] == 'author'):
+
             if sys.argv[2] == '-h' or sys.argv[2] == '--help':
                 arguments['help'] = sys.argv[2]
+
             else:
                 arguments['search-term'] = sys.argv[2]
+
     return arguments
 
 def main(arguments):
@@ -34,17 +37,22 @@ def main(arguments):
                     help_statement = 'python3 books.py author [-h] string \n'
                     help_statement += "\nGiven a search string S, prints a list of authors whose names contain S (case-insensitive). For each such author, prints a list of the author's books. Authors are sorted alphabetically by surname. If there is a tie, it will be broken by first/given name. If no search string is provided, all authors will be printed."
                 print(help_statement)
-            else:
+
+            elif 'search-term' in arguments:
                 data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
                 authors = data_source.authors(arguments['search-term'])
                 
                 for i in authors:
-                    print(i.books)
-    else:
-        data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
-        authors = data_source.authors()
-        for i in authors:
-            print(i.books)
+                    print(i. surname, i.given_name, ": ", i.books)
+
+    # this case handles if there is just a command passed in and nothing else (the super default cases)
+    elif (len(sys.argv) > 1):
+        if arguments['search-attribute'] == 'author':
+                data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+                authors = data_source.authors()
+                
+                for i in authors:
+                    print(i. surname, i.given_name, ": ", i.books)
 
 arguments = parse_command_line()
 if 'search-attribute' not in arguments:
