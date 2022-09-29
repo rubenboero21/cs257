@@ -3,10 +3,6 @@
 
 # ******* git tag books-implementation ********
 
-# SORTING:
-# sorting based on key: 
-# https://www.techiedelight.com/sort-list-of-objects-python/#:~:text=A%20simple%20solution%20is%20to,only%20arguments%3A%20key%20and%20reverse.
-
 '''
     booksdatasource.py
     Jeff Ondich, 21 September 2022
