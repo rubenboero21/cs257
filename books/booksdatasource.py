@@ -118,12 +118,6 @@ class Book:
             return self.title < other.title
         else:
             return self.publication_year < other.publication_year
-
-        # but this is how to sort by title
-        # if (self.title == other.title):
-        #     return self.publication_year < other.publication_year                
-        # else:
-        #     return self.title < other.title
         
 class BooksDataSource:
     def __init__(self, books_csv_file_name):
@@ -140,7 +134,7 @@ class BooksDataSource:
             suitable instance variables for the BooksDataSource object containing
             a collection of Author objects and a collection of Book objects.
             '''
-        
+        # the following sources were used to get the file reader working
         # https://stackoverflow.com/questions/45120726/how-to-read-csv-file-lines-and-split-elements-in-line-into-list-of-lists
         # https://docs.python.org/3/library/csv.html
         file = open(books_csv_file_name)
@@ -151,10 +145,7 @@ class BooksDataSource:
         self.books_list = [] # list of book objects
 
         for line in reader:
-            # the get title and pub_year functions do basically nothing, does it make sense to 
-            # leave them as functions to make it easier to read + be consistent, or should we
-            # not have them as functions? Also, does it make sense to need to pass in the
-            # substring in which they appear?
+            #does it make sense to need to pass in the substring in which they appear?
             title = get_title(line[0])
             pub_year = get_pub_year(line[1])
 
@@ -249,36 +240,12 @@ class BooksDataSource:
             
         file.close() # couldnt figure out how to open the file using 'with' so just close the file here
 
-        # these for loops are to test that the authors_list is being created correctly
-
-        # print("List of Author objects:")
-        # for authors in self.authors_list:
-        #     print(authors.surname + ", " + authors.given_name)
-        #     print(authors.birth_year)
-        #     if not authors.death_year:
-        #         print('--')
-        #     else:
-        #         print(authors.death_year)
-        #     print(authors.books)
-        #     print("========")
-
-        # print()
-
-        # print("List of Book objects:")
-        # for books in self.books_list:
-        #     print(books.title)
-        #     print(books.publication_year)
-        #     for i in books.authors:
-        #         print(i.given_name)
-        #     print("========")
-
     def authors(self, search_text=None):
         ''' Returns a list of all the Author objects in this data source whose names contain
             (case-insensitively) the search text. If search_text is None, then this method
             returns all of the Author objects. In either case, the returned list is sorted
             by surname, breaking ties using given name (e.g. Ann Brontë comes before Charlotte Brontë).
         '''
-        # to handle case insensitivity, try usng casefold() or lower()
 
         complete_list = self.authors_list
         search_list = []
@@ -312,10 +279,7 @@ class BooksDataSource:
         complete_list = self.books_list
         search_list = []
 
-        # this case will not work bc books cannot be sorted by title yet
         if (search_text == None and sort_by == 'title'):
-            # complete_list.sort()
-            # return complete_list
             sorted_list = sorted(complete_list, key = lambda b: (b.title, b.publication_year))
             return sorted_list
 
@@ -323,7 +287,6 @@ class BooksDataSource:
             complete_list.sort()
             return complete_list
 
-        # this case will not work bc books cannot be sorted by title yet
         elif (search_text != None and sort_by == 'title'):
             search_text = search_text.lower()
             for book in complete_list:
@@ -331,8 +294,6 @@ class BooksDataSource:
                 if (search_text in lower_title):
                     search_list.append(book)
             sorted_list = sorted(search_list, key = lambda b: (b.title, b.publication_year))
-            # search_list.sort()
-            # return search_list
             return sorted_list
 
         elif (search_text != None and sort_by == 'year'):
@@ -382,61 +343,3 @@ class BooksDataSource:
                     search_list.append(book)
             search_list.sort()
             return search_list
-
-if __name__ == '__main__':
-    #name = 'books1.csv'
-    # name = '1book2authors.csv'
-
-    #file = open("books1.csv")
-    # file = open(name)
-
-    #file = open('1book2authors.csv')
-
-    # reader = csv.reader(file, delimiter= ',')
-
-    # for line in reader:
-    #     print(line[2])
-    #     print(get_title(line[0]))
-    #     print(get_pub_year(line[1]))
-
-    # test = BooksDataSource('specifictinybooks.csv')
-
-    # special_ch = 'GAbRiEl GaRCíA MÁrQUez'
-    # print(special_ch.casefold())
-    # print(special_ch.lower())
-
-    # Anne = Author('Gaiman', 'Anne')
-    # Neil = Author('Gaiman', 'Neil')
-    # Terry = Author ('Pratchett', 'Terry')
-
-    # if (Terry < Neil):
-    #     print("less than")
-    # else:
-    #     print('greater than')
-
-    # data_source = BooksDataSource('tinybooks.csv')
-    # data_source = BooksDataSource('specifictinybooks.csv')
-    # data_source = BooksDataSource('justgaiman.csv')
-    # authors = data_source.authors()
-    # authors = data_source.authors("prat")
-    # authors = data_source.authors("Gaiman")
-    # authors = data_source.authors('Márquez')
-    # print(len(authors))
-    # for i in authors:
-    #     print(i.given_name, i.surname)
-
-    data_source = BooksDataSource('tinybooks.csv')
-    books = data_source.books('EVER', 'title')
-    # data_source = BooksDataSource('specifictinybooks.csv')
-    # books = data_source.books(sort_by='year')
-    # books = data_source.books('neVer', 'year')
-    # books = data_source.books('ake', 'year')
-    print(len(books))
-    for i in books:
-        print(i.title)
-
-    # data_source = BooksDataSource('justgaiman.csv')
-    # books = data_source.books_between_years(start_year=1940)
-    # print(len(books))
-    # for i in books:
-    #     print(i.title)

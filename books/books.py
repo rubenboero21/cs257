@@ -87,23 +87,20 @@ def main(arguments):
             # handles the case when a search term is passed into the author command
             # if 'search-term' in arguments:
             search_term = arguments['search-term']
-            data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+            data_source = booksdatasource.BooksDataSource('books1.csv')
             authors = data_source.authors(search_term)
             
             if len(authors) > 0:
                 for i in authors:
-                    print(i. surname, i.given_name, ": ", i.books)
+                    print(i. surname, ",", i.given_name, ": ", i.books)
             else:
                 print(f"No authors were found containing {search_term}. If you meant to input a flag, type 'author -h' or 'author --help' to valid flags")
 
         elif arguments['search-attribute'] == 'title':
             # handles the case when sorting by title and a search term is provided
             if sys.argv[2] == '-t' or sys.argv[2] == '--title':
-                # CHECK THAT THIS WORKS ONCE THE TITLE SORT IS WORKING, IT DOES WEIRD THINGS RN
-                print('There is currently not functionality for this sort method')
-                # if 'search-term' in arguments:
                 search_term = arguments['search-term']
-                data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+                data_source = booksdatasource.BooksDataSource('books1.csv')
                 books = data_source.books(search_term, 'title')
 
                 if (len(books) > 0):
@@ -119,10 +116,9 @@ def main(arguments):
 
             # handles the case when the sorting by year and a search term is provided
             elif sys.argv[2] == '-y' or sys.argv[2] == '--year':
-                #print('2')
                 # if 'search-term' in arguments:
                 search_term = arguments['search-term']
-                data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+                data_source = booksdatasource.BooksDataSource('books1.csv')
                 books = data_source.books(search_term, 'year')
 
                 if (len(books) > 0):
@@ -132,12 +128,9 @@ def main(arguments):
                         for j in i.authors:
                             authors.append(j.given_name + " " + j.surname)
 
-                        print(i.title, "by", authors)
+                        print(i.title, "by", authors, ": (", i.publication_year, ")")
                 else:
                     print(f"No books were found containing {search_term}")
-
-        # elif arguments['search-attribute'] == 'year':
-        #     print("year")
 
     # search by year
     # if there is only a start year
@@ -145,7 +138,7 @@ def main(arguments):
         print('just start year')
 
         start_year= int(arguments['start-year'])
-        data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+        data_source = booksdatasource.BooksDataSource('books1.csv')
         books = data_source.books_between_years(start_year=start_year)
 
         if (len(books) > 0):
@@ -164,7 +157,7 @@ def main(arguments):
         print('just end year')
 
         end_year= int(arguments['end-year'])
-        data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+        data_source = booksdatasource.BooksDataSource('books1.csv')
         books = data_source.books_between_years(end_year=end_year)
 
         if (len(books) > 0):
@@ -184,7 +177,7 @@ def main(arguments):
 
         start_year= int(arguments['start-year'])
         end_year= int(arguments['end-year'])
-        data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+        data_source = booksdatasource.BooksDataSource('books1.csv')
         books = data_source.books_between_years(start_year, end_year)
 
         if (len(books) > 0):
@@ -201,7 +194,7 @@ def main(arguments):
     # case to print books when no years are input
     elif (len(sys.argv) == 2 and arguments['search-attribute'] == 'year'):
         print('no years')
-        data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+        data_source = booksdatasource.BooksDataSource('books1.csv')
         books = data_source.books_between_years()
 
         if (len(books) > 0):
@@ -238,7 +231,7 @@ def main(arguments):
 
     # this case handles if the author command is used with no parameters
     elif (len(sys.argv) > 1 and arguments['search-attribute'] == 'author'):
-            data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+            data_source = booksdatasource.BooksDataSource('books1.csv')
             authors = data_source.authors()
 
             for i in authors:
@@ -247,7 +240,7 @@ def main(arguments):
     # case for when title search a sort method is specified but has no search term
     elif (len(sys.argv) > 2 and arguments['search-attribute'] == 'title'):
         if arguments['sort'] == '-y' or arguments['sort'] == '--year':
-            data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+            data_source = booksdatasource.BooksDataSource('books1.csv')
             books = data_source.books(sort_by= 'year')
 
             if len(books) > 0:
@@ -262,7 +255,7 @@ def main(arguments):
                 print("No books were found in the CSV file")
         
         elif arguments['sort'] == '-t' or arguments['sort'] == '--title':
-            data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+            data_source = booksdatasource.BooksDataSource('books1.csv')
             books = data_source.books(sort_by= 'title')
 
             if len(books) > 0:
