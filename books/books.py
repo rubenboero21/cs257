@@ -1,8 +1,6 @@
 # this program was written by Ruben Boero and Xiaoying Qu
 # modelled from Jeff Ondich's sysargv-sample.py example
 
-# REMEMBER TO TAG THIS FILE: git tag books-implementation
-
 import booksdatasource
 import sys
 

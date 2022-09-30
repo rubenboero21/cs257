@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 # Interface implemented by Ruben and Xiaoying
 
-# ******* git tag books-implementation ********
-
 '''
     booksdatasource.py
     Jeff Ondich, 21 September 2022
