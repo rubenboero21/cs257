@@ -283,7 +283,7 @@ def main(arguments):
 Synopsis
 	python3 books.py title [-h|-t|-y] string
 	python3 books.py author [-h] string
-	python3 books.py year [-h|yearA and yearB|yearA|yearB]
+	python3 books.py year [-h|_ yearB|yearA _|yearA yearB]
 
 Description
 
@@ -310,6 +310,7 @@ Description
 		not provided, then any book published before or during year B is printed. 
 		If year B is not provided, then any book published after or during year A 
 		are printed. If neither year A or B are provided, all books are printed.
+        Note that to specify that no year is input, use the '_' character.
 
 General Flags
 
