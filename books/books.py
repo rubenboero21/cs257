@@ -124,35 +124,43 @@ def main(arguments):
 
     # case for when title search a sort method is specified but has no search term
     elif (len(sys.argv) > 2 and arguments['search-attribute'] == 'title'):
-        if arguments['sort'] == '-y' or arguments['sort'] == '--year':
-            data_source = booksdatasource.BooksDataSource('books1.csv')
-            books = data_source.books(sort_by= 'year')
+        if 'sort' in arguments:
+            print('here')
+            if arguments['sort'] == '-y' or arguments['sort'] == '--year':
+                data_source = booksdatasource.BooksDataSource('books1.csv')
+                books = data_source.books(sort_by= 'year')
 
-            if len(books) > 0:
-                for i in books:
-                    authors = []
+                if len(books) > 0:
+                    for i in books:
+                        authors = []
 
-                    for j in i.authors:
-                        authors.append(j.given_name + " " + j.surname)
+                        for j in i.authors:
+                            authors.append(j.given_name + " " + j.surname)
 
-                    print(i.title, "by", authors, ": (", i.publication_year, ")")
-            else:
-                print("No books were found in the CSV file")
-        
-        elif arguments['sort'] == '-t' or arguments['sort'] == '--title':
-            data_source = booksdatasource.BooksDataSource('books1.csv')
-            books = data_source.books(sort_by= 'title')
+                        print(i.title, "by", authors, ": (", i.publication_year, ")")
+                else:
+                    print("No books were found in the CSV file")
+            
+            elif arguments['sort'] == '-t' or arguments['sort'] == '--title':
+                data_source = booksdatasource.BooksDataSource('books1.csv')
+                books = data_source.books(sort_by= 'title')
 
-            if len(books) > 0:
-                for i in books:
-                    authors = []
+                if len(books) > 0:
+                    for i in books:
+                        authors = []
 
-                    for j in i.authors:
-                        authors.append(j.given_name + " " + j.surname)
+                        for j in i.authors:
+                            authors.append(j.given_name + " " + j.surname)
 
-                    print(i.title, "by", authors)
-            else:
-                print("No books were found in the CSV file")
+                        print(i.title, "by", authors)
+                else:
+                    print("No books were found in the CSV file")
+
+        # print the help statement for title search
+        elif 'help' in arguments:
+            help_statement = 'python3 books.py title [-h|-t|-y] string \n'
+            help_statement += "\nGiven a search string S, prints a list of books whose titles contain S (case-insensitive). Books are sorted by title or publication year as specified. If no sort method is specified, books will default to be sorted by title. If no search string is provided, all books will be printed."
+            print(help_statement)
 
     # default behavior for the title command (title command with no other parameters)
     elif len(sys.argv) > 1 and arguments['search-attribute'] == 'title':
@@ -240,19 +248,14 @@ def main(arguments):
             print("No books were found in the CSV file")
     # end year stuff
 
-    # case to print help statements 
+    # case to print help statement for author and year search (title is handled within the sort method input but no search 
+    # string case because of how input works differently for the title command)
     elif (len(sys.argv) > 2):
         if arguments['search-attribute'] == 'author':        
             if sys.argv[2] == '-h' or sys.argv[2] == '--help':
                 help_statement = 'python3 books.py author [-h] string \n'
                 help_statement += "\nGiven a search string S, prints a list of authors whose names contain S (case-insensitive). For each such author, prints a list of the author's books. Authors are sorted alphabetically by surname. If there is a tie, it will be broken by first/given name. If no search string is provided, all authors will be printed."
                 print(help_statement)     
-
-        elif arguments['search-attribute'] == 'title':
-            if sys.argv[2] == '-h' or sys.argv[2] == '--help':
-                help_statement = 'python3 books.py title [-h|-t|-y] string \n'
-                help_statement += "\nGiven a search string S, prints a list of books whose titles contain S (case-insensitive). Books are sorted by title or publication year as specified. If no sort method is specified, books will default to be sorted by title. If no search string is provided, all books will be printed."
-                print(help_statement)
 
         elif arguments['search-attribute'] == 'year':
             if sys.argv[2] == '-h' or sys.argv[2] == '--help':
