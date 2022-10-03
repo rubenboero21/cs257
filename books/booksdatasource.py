@@ -1,5 +1,8 @@
 #!/usr/bin/env python3
-# Interface implemented by Ruben and Xiaoying
+
+# Interface implemented by Ruben and Xiaoying with the help of an example provided by Alex Falk and 
+# Carl Zhang's booksdatasoure.py file: 
+# https://github.com/aafalk/cs257/blob/main/books/booksdatasource.py
 
 '''
     booksdatasource.py
@@ -11,9 +14,7 @@
 
 import csv
 
-# should we define what the input/output type are for these functions like jeff does?
-# and should they all be inside of the BooksDataSource class?
-
+# should these functions be inside of the BooksDataSource class?
 def get_title(csv_substring):
     '''Returns the title of a book given the substring of a csv file in which it appears.'''
     title = csv_substring
@@ -59,7 +60,6 @@ def get_surname(csv_substring):
     # Consider fixing this limitation
     s = csv_substring.split(' ') 
     if len(s) > 3:
-        #return str(s[1]) + str(s[2])
         return s[1] + ' ' +s[2]
     else:
         return  s[1]
@@ -136,70 +136,19 @@ class BooksDataSource:
         self.books_list = [] # list of book objects
 
         for line in reader:
-            #does it make sense to need to pass in the substring in which they appear?
             title = get_title(line[0])
             pub_year = get_pub_year(line[1])
 
             # a list to store all the authors who have written a given book (used in Book obj construction)
             written_by = []
 
-            # if there are 2 authors
-            if 'and' in line[2]:
-                author_str = line[2].split(' and ')
-                author1 = author_str[0]
-                author2 = author_str[1]
+            # the following line and strategy was adapted from Alex Falk and Carl Zhang's 
+            # booksdatasource.py file 
+            # https://github.com/aafalk/cs257/blob/main/books/booksdatasource.py
+            author_fields = line[2].split(' and ')
+            
+            for author in author_fields:
 
-                surname1 = get_surname(author1)
-                given_name1 = get_given_name(author1)
-                birth_year1 = get_birth_year(author1)
-                death_year1 = get_death_year(author1)
-
-                surname2 = get_surname(author2)
-                given_name2 = get_given_name(author2)
-                birth_year2 = get_birth_year(author2)
-                death_year2 = get_death_year(author2)
-
-                # we don't need any temp authors, just search by the surname and given name that we already have
-                temp_author1 = Author(surname1, given_name1, birth_year1, death_year1, [])
-                temp_author2 = Author(surname2, given_name2, birth_year2, death_year2, [])
-                
-                # create 2 booleans to store if an author obj is already stored in the list
-                temp_author1_seen = False
-                temp_author2_seen = False
-
-                # check if the author is stored in the list
-                for author in self.authors_list:
-                    if author == temp_author1:
-                        temp_author1_seen = True
-
-                        # updating the already existing author's list of written books
-                        author.books.append(title)
-                        written_by.append(temp_author1)
-
-                    if author == temp_author2:
-                        temp_author2_seen = True
-
-                        # updating the already existing author's list of written book                            
-                        author.books.append(title)
-                        written_by.append(temp_author2)
-                    
-                    if (temp_author1_seen and temp_author2_seen):
-                        break
-
-                # add an author to the list if they are not already in the list
-                if not (temp_author1_seen):
-                    # edit the author object's books_written list to include the current book before appending
-                    temp_author1.books.append(title)
-                    self.authors_list.append(temp_author1)
-                    written_by.append(temp_author1)
-
-                if not (temp_author2_seen):
-                    temp_author2.books.append(title)
-                    self.authors_list.append(temp_author2)
-                    written_by.append(temp_author2)
-                    
-            # if there is just 1 author
-            else:
                 surname = get_surname(line[2])
                 given_name = get_given_name(line[2])
                 birth_year = get_birth_year(line[2])
@@ -228,7 +177,7 @@ class BooksDataSource:
             # create the Book object
             self.books_list.append(Book(title, pub_year, written_by))
             
-        file.close() # couldnt figure out how to open the file using 'with' so just close the file here
+        file.close()
 
     def authors(self, search_text=None):
         ''' Returns a list of all the Author objects in this data source whose names contain
@@ -249,7 +198,8 @@ class BooksDataSource:
             for author in complete_list:
                 lower_surname = author.surname.lower()
                 lower_given_name = author.given_name.lower()
-                if (search_text in lower_surname or search_text in lower_given_name):
+                lower_full_name = lower_given_name + " " + lower_surname
+                if (search_text in lower_full_name):
                     search_list.append(author)
             search_list.sort()
             return search_list
@@ -333,3 +283,4 @@ class BooksDataSource:
                     search_list.append(book)
             sorted_list = sorted(search_list, key = lambda b: (b.publication_year, b.title))
             return sorted_list
+
