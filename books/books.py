@@ -35,8 +35,6 @@ else:
 if subcommand == 'title':
     data_source = booksdatasource.BooksDataSource('books1.csv')
 
-    print(sys.argv)
-
     # default title search with no search string
     if len(sys.argv) == 2:
         books = data_source.books(sort_by= 'title')
