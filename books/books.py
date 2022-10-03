@@ -1,343 +1,170 @@
-# this program was written by Ruben Boero and Xiaoying Qu
-# modelled from Jeff Ondich's sysargv-sample.py example
+# This program was written by Ruben Boero and Xiaoying Qu
 
-import booksdatasource
+# The program was adapted from Code by Alex Falk and Carl Zhang's books.py file 
+# https://github.com/aafalk/cs257/blob/main/books/books.py
+
 import sys
+import booksdatasource
 
-def usage_statement():
-    statement = f'Usage: {sys.argv[0]} . This is a program that will search through a CSV file to find and sort information. It can search for titles, authors, and dates of publication. \n'
-    statement += '\n    Use the -h or --help command to see more details.'
-    return statement
+def print_books(books_list):
+    '''Prints a list of book objects'''
+    if len(books_list) > 0:
+        for i in books_list:
+            authors = []
 
-def parse_command_line():
-    arguments = {}
-    # if there is more than just books.py entered
-    if len(sys.argv) > 1:
-        # should we rename 'search-attribute' to be 'command'?
-        arguments['search-attribute'] = sys.argv[1]
+            for j in i.authors:
+                authors.append(j.surname + ", " + j.given_name)
 
-    # if there is a command entered and something else 
-    if (len(sys.argv) > 2):
-        # author search
-        if (sys.argv[1] == 'author'):
-            if sys.argv[2] == '-h' or sys.argv[2] == '--help':
-                arguments['help'] = sys.argv[2]
-            # could use a case that catches if the user inputs an invalid flag
-            else:
-                arguments['search-term'] = sys.argv[2]
-    
-        # title search
-        elif (sys.argv[1] == 'title'):
-            if sys.argv[2] == '-h' or sys.argv[2] == '--help':
-                arguments['help'] = sys.argv[2]
-            
-            elif sys.argv[2] == '-t' or sys.argv[2] == '--title':
-                arguments['sort'] = sys.argv[2]
+            print(f"{i.title} by {authors}: ({i.publication_year})")
+    else:
+        print('No books were found in the CSV file within the given search parameters.') 
 
-                # if a search term is entered
-                if (len(sys.argv) > 3):
-                    arguments['search-term'] = sys.argv[3]
+def print_authors(authors_list):
+    '''Prints a list of author objects'''
+    if (len(authors_list) > 0):
+        for i in authors_list:
+            print(f"{i.surname}, {i.given_name}: {i.books}")
+    else:
+        print('No authors were found in the CSV file with that search string.') 
 
-            elif sys.argv[2] == '-y' or sys.argv[2] == '--year':
-                arguments['sort'] = sys.argv[2]
+if len(sys.argv) < 2:
+    sys.exit("Not enough arguments were input. Please use the 'help' subcommand for more information.")
+else:
+    subcommand = sys.argv[1]
 
-                # if a search term is entered
-                if (len(sys.argv) > 3):
-                    arguments['search-term'] = sys.argv[3]
+if subcommand == 'title':
+    print('title')
+    data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
 
-            # if the user inputs a flag that is invalid, stop running the code
-            else:  
-                print(f"Flag {sys.argv[2]} is not a valid flag for the title search. Type 'title -h' or 'title --help' for more information.")
-                # this might be a bad way to do things
-                quit()
-        
-        # year search
-        elif (sys.argv[1] == 'year'):
-            # need to be able to stop bad inpts from coming in
+    print(sys.argv)
 
-            if sys.argv[2] == '-h' or sys.argv[2] == '--help':
-                arguments['help'] = sys.argv[2]
-            
-            elif len(sys.argv) == 4:
-                # there is no start year
-                if sys.argv[2] == '_':
-                    arguments['end-year'] = sys.argv[3]
-                # if there is no end year
-                elif sys.argv[3] == '_':
-                    arguments['start-year'] = sys.argv[2]
-                # if both years are input
-                elif sys.argv[2] != '_' and sys.argv[3] != '_':
-                    arguments['start-year'] = sys.argv[2]
-                    arguments['end-year'] = sys.argv[3]
-    return arguments
-
-def main(arguments):
-    # the and is needed bc if an author command has 3 args then it must have a search, not the case for 
-    # title and year search. (Handles cases when search term is provided)
-    if (len(sys.argv) > 2) and 'search-term' in arguments:
-        if arguments['search-attribute'] == 'author':
-            # handles the case when a search term is passed into the author command
-            search_term = arguments['search-term']
-            data_source = booksdatasource.BooksDataSource('books1.csv')
-            authors = data_source.authors(search_term)
-            
-            if len(authors) > 0:
-                for i in authors:
-                    print(i.given_name, i.surname, ": ", i.books)
-            else:
-                print(f"No authors were found containing {search_term}. If you meant to input a flag, type 'author -h' or 'author --help' to valid flags")
-
-        elif arguments['search-attribute'] == 'title':
-            # handles the case when sorting by title and a search term is provided
-            if sys.argv[2] == '-t' or sys.argv[2] == '--title':
-                search_term = arguments['search-term']
-                data_source = booksdatasource.BooksDataSource('books1.csv')
-                books = data_source.books(search_term, 'title')
-
-                if (len(books) > 0):
-                    for i in books:
-                        authors = []
-
-                        for j in i.authors:
-                            authors.append(j.given_name + " " + j.surname)
-
-                        print(i.title, "by", authors)
-                else:
-                    print(f"No books were found containing {search_term}")  
-
-            # handles the case when the sorting by year and a search term is provided
-            elif sys.argv[2] == '-y' or sys.argv[2] == '--year':
-                search_term = arguments['search-term']
-                data_source = booksdatasource.BooksDataSource('books1.csv')
-                books = data_source.books(search_term, 'year')
-
-                if (len(books) > 0):
-                    for i in books:
-                        authors = []
-
-                        for j in i.authors:
-                            authors.append(j.given_name + " " + j.surname)
-
-                        print(i.title, "by", authors, ": (", i.publication_year, ")")
-                else:
-                    print(f"No books were found containing {search_term}")
-
-    # case for when title search a sort method is specified but has no search term
-    elif (len(sys.argv) > 2 and arguments['search-attribute'] == 'title'):
-        if 'sort' in arguments:
-            print('here')
-            if arguments['sort'] == '-y' or arguments['sort'] == '--year':
-                data_source = booksdatasource.BooksDataSource('books1.csv')
-                books = data_source.books(sort_by= 'year')
-
-                if len(books) > 0:
-                    for i in books:
-                        authors = []
-
-                        for j in i.authors:
-                            authors.append(j.given_name + " " + j.surname)
-
-                        print(i.title, "by", authors, ": (", i.publication_year, ")")
-                else:
-                    print("No books were found in the CSV file")
-            
-            elif arguments['sort'] == '-t' or arguments['sort'] == '--title':
-                data_source = booksdatasource.BooksDataSource('books1.csv')
-                books = data_source.books(sort_by= 'title')
-
-                if len(books) > 0:
-                    for i in books:
-                        authors = []
-
-                        for j in i.authors:
-                            authors.append(j.given_name + " " + j.surname)
-
-                        print(i.title, "by", authors)
-                else:
-                    print("No books were found in the CSV file")
-
-        # print the help statement for title search
-        elif 'help' in arguments:
-            help_statement = 'python3 books.py title [-h|-t|-y] string \n'
-            help_statement += "\nGiven a search string S, prints a list of books whose titles contain S (case-insensitive). Books are sorted by title or publication year as specified. If no sort method is specified, books will default to be sorted by title. If no search string is provided, all books will be printed."
-            print(help_statement)
-
-    # default behavior for the title command (title command with no other parameters)
-    elif len(sys.argv) > 1 and arguments['search-attribute'] == 'title':
-        data_source = booksdatasource.BooksDataSource('books1.csv')
+    # default title search with no search string
+    if len(sys.argv) == 2:
+        print('no search string')
         books = data_source.books(sort_by= 'title')
 
-        if len(books) > 0:
-            for i in books:
-                authors = []
+        print_books(books)
 
-                for j in i.authors:
-                    authors.append(j.given_name + " " + j.surname)
+    elif len(sys.argv) == 3:
+        # there is either search text, or no search text a help flag, or no seach text and a year flag
+        # , or no search text and a title flag
 
-                print(i.title, "by", authors)
+        # print the help statement for the title subcommand
+        if sys.argv[2] == '-h' or sys.argv[2] == '--help':
+            print('python3 books.py title [-h|-t|-y] [string]\n')
+            print("For additional information about the program use the 'help' subcommand.")
+
+        # print the list of all books sorted by year
+        elif sys.argv[2] == '-y' or sys.argv[2] == '--year':
+            print('year sort no search')
+            books = data_source.books(sort_by= 'year')
+
+            print_books(books)
+        
+        # print the list of all books sorted explicitly by title
+        elif sys.argv[2] == '-t' or sys.argv[2] == '--title':
+            print('title sort no search')
+            books = data_source.books(sort_by= 'title')
+
+            print_books(books)
+        
+        # print the list of all books containing the search string sorted in the default manner
         else:
-            print("No books were found in the CSV file")
+            print('default title sort with search')
+            search_str = sys.argv[2]
+            books = data_source.books(search_str, 'title')
 
-    # search by year
-    # if there is only a start year
-    elif (len(sys.argv) > 2) and 'start-year' in arguments and 'end-year' not in arguments:
-        start_year= int(arguments['start-year'])
-        data_source = booksdatasource.BooksDataSource('books1.csv')
-        books = data_source.books_between_years(start_year=start_year)
+            print_books(books)
 
-        if (len(books) > 0):
-            for i in books:
-                authors = []
+    elif len(sys.argv) == 4:
+        # print the list of books containing the search string sorted by year
+        if sys.argv[2] == '-y' or sys.argv[2] == '--year':
+            print('year sort with search string')
+            search_str = sys.argv[3]
+            books = data_source.books(search_str, 'year')
 
-                for j in i.authors:
-                    authors.append(j.given_name + " " + j.surname)
+            print_books(books)
 
-                print(i.title, "by", authors, ": (", i.publication_year, ")")
-        else:
-            print(f"No books were found after or during the year {start_year}")
+        # print the list of books containing the search string sorted explicitly by title
+        elif sys.argv[2] == '-t' or sys.argv[2] == '--title':
+            print('title sort with search string')
+            search_str = sys.argv[3]
+            books = data_source.books(search_str, 'title')
 
-    # if there is only an end year
-    elif (len(sys.argv) > 2) and 'start-year' not in arguments and 'end-year'  in arguments:
-        end_year= int(arguments['end-year'])
-        data_source = booksdatasource.BooksDataSource('books1.csv')
-        books = data_source.books_between_years(end_year=end_year)
+            print_books(books)
 
-        if (len(books) > 0):
-            for i in books:
-                authors = []
+elif subcommand == 'author':
+    print('author')
+    print(sys.argv)
 
-                for j in i.authors:
-                    authors.append(j.given_name + " " + j.surname)
+    data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
 
-                print(i.title, "by", authors, ": (", i.publication_year, ")")
-        else:
-            print(f"No books were found before or during the year {end_year}")
+    if len(sys.argv) == 2:     
+        # print a list of all author objects
+        authors = data_source.authors()
 
-    # if both years are inlcluded
-    elif (len(sys.argv) > 2) and 'start-year'  in arguments and 'end-year'  in arguments:
-        start_year= int(arguments['start-year'])
-        end_year= int(arguments['end-year'])
-        data_source = booksdatasource.BooksDataSource('books1.csv')
-        books = data_source.books_between_years(start_year, end_year)
-
-        if (len(books) > 0):
-            for i in books:
-                authors = []
-
-                for j in i.authors:
-                    authors.append(j.given_name + " " + j.surname)
-
-                print(i.title, "by", authors, ": (", i.publication_year, ")")
-        else:
-            print(f"No books were found between or during the years {start_year} and {end_year}")
+        print_authors(authors)
     
-    # case to print books when no years are input
-    elif (len(sys.argv) == 2 and arguments['search-attribute'] == 'year'):
-        data_source = booksdatasource.BooksDataSource('books1.csv')
+    elif len(sys.argv) == 3:
+        # print the help statement for author subcommand
+        if sys.argv[2] == '-h' or sys.argv[2] == '--help':
+            print('python3 books.py author [-h] [string]\n')
+            print("For additional information about the program use the 'help' subcommand.")
+        
+        # print the list of authors that contain a search string
+        else:
+            search_str = sys.argv[2]
+            authors = data_source.authors(search_str)
+
+            print_authors(authors)
+
+elif subcommand == 'year':
+    print('year')
+    print(sys.argv)
+    data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+
+    if len(sys.argv) == 3 and (sys.argv[2] == '-h' or sys.argv[2] == '--help'):
+        print('python3 books.py year [-h] _ _|_ yearB|yearA _|yearA yearB')
+        print("For additional information about the program use the 'help' subcommand.")
+
+    elif len(sys.argv) != 4:
+        sys.exit("Either the wrong number of arguments were input or an invalid flag was entered. Please use the 'help' subcommand for more information.")
+    
+    elif not sys.argv[2].isdigit() or sys.argv[2] != '_' or not sys.argv[3].isdigit() or sys.argv[3] != '_':
+        sys.exit("An invalid argument was provided to the year subcommand. Only the '_' character or an integer is valid input.\n \nType 'python3 books.py year -h' for more information about the year subcommand.")
+
+    elif sys.argv[2] == '_' and sys.argv[3] == '_':
+        print('no years')
         books = data_source.books_between_years()
 
-        if (len(books) > 0):
-            for i in books:
-                authors = []
+        print_books(books)
 
-                for j in i.authors:
-                    authors.append(j.given_name + " " + j.surname)
+    elif sys.argv[2] != '_' and sys.argv[3] == '_':
+        print('year A')
+        start_year = int(sys.argv[2])
+        books = data_source.books_between_years(start_year)
 
-                print(i.title, "by", authors, ": (", i.publication_year, ")")
-        else:
-            print("No books were found in the CSV file")
-    # end year stuff
+        print_books(books)
 
-    # case to print help statement for author and year search (title is handled within the sort method input but no search 
-    # string case because of how input works differently for the title command)
-    elif (len(sys.argv) > 2):
-        if arguments['search-attribute'] == 'author':        
-            if sys.argv[2] == '-h' or sys.argv[2] == '--help':
-                help_statement = 'python3 books.py author [-h] string \n'
-                help_statement += "\nGiven a search string S, prints a list of authors whose names contain S (case-insensitive). For each such author, prints a list of the author's books. Authors are sorted alphabetically by surname. If there is a tie, it will be broken by first/given name. If no search string is provided, all authors will be printed."
-                print(help_statement)     
+    elif sys.argv[2] == '_' and sys.argv[3] != '_':
+        print('year B')
+        end_year = int(sys.argv[3])
+        books = data_source.books_between_years(end_year= end_year)
 
-        elif arguments['search-attribute'] == 'year':
-            if sys.argv[2] == '-h' or sys.argv[2] == '--help':
-                help_statement = 'python3 books.py year [-h|_ yearB|yearA _|yearA yearB] \n'
-                help_statement += "\nGiven a range of years A to B, prints a list of books published between years A and B, inclusive. Books are printed in order of publication year. Ties are broken by which title comes first alphabetically. If year A is not provided, then any book published before or during year B is printed. If year B is not provided, then any book published after or during year A are printed. If neither year A or B are provided, all books are printed.Note that to specify that no year is input, use the '_' character."
-                print(help_statement)
+        print_books(books)
 
-    # this case handles if the author command is used with no parameters
-    elif (len(sys.argv) > 1 and arguments['search-attribute'] == 'author'):
-            data_source = booksdatasource.BooksDataSource('books1.csv')
-            authors = data_source.authors()
+    elif sys.argv[2] != '_' and sys.argv[3] != '_':
+        print('year A and B')
+        start_year = int(sys.argv[2])
+        end_year = int(sys.argv[3])
+        books = data_source.books_between_years(start_year, end_year)
 
-            for i in authors:
-                print(i. surname, i.given_name, ": ", i.books)
+        print_books(books)
 
-    # print the default help statement - there has to be a better way to do this
-    elif (len(sys.argv) > 1 and (arguments['search-attribute'] == '-h' or arguments['search-attribute'] == '--help')):
-        '''   this gives weird spacing
-        f = open('usage.txt')
-        for line in f:
-            print(line)
-        f.close()'''
-        
-        print('''
-Synopsis
-	python3 books.py title [-h|-t|-y] string
-	python3 books.py author [-h] string
-	python3 books.py year [-h|_ yearB|yearA _|yearA yearB]
-
-Description
-
-	This is a program that will search through a CSV file to find and sort 
-	information. It can search for titles, authors, and dates of publication.
-
-	title
-		Given a search string S, prints a list of books whose titles contain S 
-		(case-insensitive). Books are sorted by title or publication year as 
-		specified. If no sort method is specified, books will default to be sorted 
-		by title. If no search string is provided, all books will be printed.
-	
-	author
-		Given a search string S, prints a list of authors whose names contain S 
-		(case-insensitive). For each such author, prints a list of the author's 
-		books. Authors are sorted alphabetically by surname. If there is a tie, 
-		it will be broken by first/given name. If no search string is provided, 
-		all authors will be printed.
-
-	year
-		Given a range of years A to B, prints a list of books published between 
-		years A and B, inclusive. Books are printed in order of publication year. 
-		Ties are broken by which title comes first alphabetically. If year A is 
-		not provided, then any book published before or during year B is printed. 
-		If year B is not provided, then any book published after or during year A 
-		are printed. If neither year A or B are provided, all books are printed.
-        Note that to specify that no year is input, use the '_' character.
-
-General Flags
-
-	-h, --help
-		Prints the information about the specified command.
-	
-Title search specific flags
-
-	-t, --title
-		The list of books matching search string will be printed in order of book 
-		title.
-	
-	-y, --year
-		The list of books matching search string will be printed in order of 
-		publication year.	
-	''')
-    elif ('sort' in arguments and (arguments['sort'] != '-t' or '-h' or '-y' )):
-        print('invalid')
-        
-    # this case is reached if the search command entered is invalid
-    else:
-        invalid_command = arguments['search-attribute']
-        print(f"{invalid_command} is not a valid command. Type -h or --help for more information on valid commands.")
-
-arguments = parse_command_line()
-if 'search-attribute' not in arguments:
-    print(usage_statement())
+elif subcommand == 'help':
+    # the follwing 2 lines were taken from Alex Falk and Carl Zhang's books.py file
+    # https://github.com/aafalk/cs257/blob/main/books/books.py
+    with open('usage.txt', 'r') as file:
+        print(file.read())
 else:
-    main(arguments)
-
+    print(f"Subcommand '{subcommand}' not recognized. Use the 'help' subcommand for more information.")
