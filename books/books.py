@@ -33,14 +33,12 @@ else:
     subcommand = sys.argv[1]
 
 if subcommand == 'title':
-    print('title')
     data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
 
     print(sys.argv)
 
     # default title search with no search string
     if len(sys.argv) == 2:
-        print('no search string')
         books = data_source.books(sort_by= 'title')
 
         print_books(books)
@@ -56,21 +54,18 @@ if subcommand == 'title':
 
         # print the list of all books sorted by year
         elif sys.argv[2] == '-y' or sys.argv[2] == '--year':
-            print('year sort no search')
             books = data_source.books(sort_by= 'year')
 
             print_books(books)
         
         # print the list of all books sorted explicitly by title
         elif sys.argv[2] == '-t' or sys.argv[2] == '--title':
-            print('title sort no search')
             books = data_source.books(sort_by= 'title')
 
             print_books(books)
         
         # print the list of all books containing the search string sorted in the default manner
         else:
-            print('default title sort with search')
             search_str = sys.argv[2]
             books = data_source.books(search_str, 'title')
 
@@ -79,7 +74,6 @@ if subcommand == 'title':
     elif len(sys.argv) == 4:
         # print the list of books containing the search string sorted by year
         if sys.argv[2] == '-y' or sys.argv[2] == '--year':
-            print('year sort with search string')
             search_str = sys.argv[3]
             books = data_source.books(search_str, 'year')
 
@@ -87,16 +81,12 @@ if subcommand == 'title':
 
         # print the list of books containing the search string sorted explicitly by title
         elif sys.argv[2] == '-t' or sys.argv[2] == '--title':
-            print('title sort with search string')
             search_str = sys.argv[3]
             books = data_source.books(search_str, 'title')
 
             print_books(books)
 
 elif subcommand == 'author':
-    print('author')
-    print(sys.argv)
-
     data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
 
     if len(sys.argv) == 2:     
@@ -119,52 +109,56 @@ elif subcommand == 'author':
             print_authors(authors)
 
 elif subcommand == 'year':
-    print('year')
-    print(sys.argv)
     data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
 
+    # print the help statement
     if len(sys.argv) == 3 and (sys.argv[2] == '-h' or sys.argv[2] == '--help'):
         print('python3 books.py year [-h] _ _|_ yearB|yearA _|yearA yearB')
         print("For additional information about the program use the 'help' subcommand.")
 
+    # check that the correct number of arguments were passed in
     elif len(sys.argv) != 4:
         sys.exit("Either the wrong number of arguments were input or an invalid flag was entered. Please use the 'help' subcommand for more information.")
     
+    # check that the arguments are of the valid type
     elif not sys.argv[2].isdigit() or sys.argv[2] != '_' or not sys.argv[3].isdigit() or sys.argv[3] != '_':
         sys.exit("An invalid argument was provided to the year subcommand. Only the '_' character or an integer is valid input.\n \nType 'python3 books.py year -h' for more information about the year subcommand.")
 
+    # print all books
     elif sys.argv[2] == '_' and sys.argv[3] == '_':
-        print('no years')
         books = data_source.books_between_years()
 
         print_books(books)
 
+    # print books after a given start year
     elif sys.argv[2] != '_' and sys.argv[3] == '_':
-        print('year A')
         start_year = int(sys.argv[2])
         books = data_source.books_between_years(start_year)
 
         print_books(books)
 
+    # print before a given end year
     elif sys.argv[2] == '_' and sys.argv[3] != '_':
-        print('year B')
         end_year = int(sys.argv[3])
         books = data_source.books_between_years(end_year= end_year)
 
         print_books(books)
 
+    # print books between 2 given years
     elif sys.argv[2] != '_' and sys.argv[3] != '_':
-        print('year A and B')
         start_year = int(sys.argv[2])
         end_year = int(sys.argv[3])
         books = data_source.books_between_years(start_year, end_year)
 
         print_books(books)
 
+# print usage.txt
 elif subcommand == 'help':
     # the follwing 2 lines were taken from Alex Falk and Carl Zhang's books.py file
     # https://github.com/aafalk/cs257/blob/main/books/books.py
     with open('usage.txt', 'r') as file:
         print(file.read())
+
+# if this line is reached, an invalid subcommand was entered
 else:
     print(f"Subcommand '{subcommand}' not recognized. Use the 'help' subcommand for more information.")
