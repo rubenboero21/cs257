@@ -2,14 +2,17 @@ Name
 	books - Ruben and Xiaoying's book searching program
 
 Synopsis
-	python3 books.py title [-h|-t|-y] string
-	python3 books.py author [-h] string
-	python3 books.py year [-h|_ yearB|yearA _|yearA yearB]
+	python3 books.py help
+	python3 books.py title [-h|-t|-y] [string]
+	python3 books.py author [-h] [string]
+	python3 books.py year [-h] _ _|_ yearB|yearA _|yearA yearB
 
 Description
-
 	This is a program that will search through a CSV file to find and sort 
 	information. It can search for titles, authors, and dates of publication.
+	
+	help
+		Prints usage.txt.
 
 	title
 		Given a search string S, prints a list of books whose titles contain S 
@@ -34,12 +37,10 @@ Description
 		Note that to specify that no year is input, use the '_' character.
 
 General Flags
-
 	-h, --help
 		Prints the information about the specified command.
 	
 Title search specific flags
-
 	-t, --title
 		The list of books matching search string will be printed in order of book 
 		title.
