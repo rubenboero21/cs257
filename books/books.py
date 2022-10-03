@@ -152,7 +152,7 @@ elif subcommand == 'year':
 
 # print usage.txt
 elif subcommand == 'help':
-    # the follwing 2 lines were taken from Alex Falk and Carl Zhang's books.py file
+    # the follwing 2 lines were taken directly from Alex Falk and Carl Zhang's books.py file
     # https://github.com/aafalk/cs257/blob/main/books/books.py
     with open('usage.txt', 'r') as file:
         print(file.read())
