@@ -33,7 +33,7 @@ else:
     subcommand = sys.argv[1]
 
 if subcommand == 'title':
-    data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+    data_source = booksdatasource.BooksDataSource('books1.csv')
 
     print(sys.argv)
 
@@ -87,7 +87,7 @@ if subcommand == 'title':
             print_books(books)
 
 elif subcommand == 'author':
-    data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+    data_source = booksdatasource.BooksDataSource('books1.csv')
 
     if len(sys.argv) == 2:     
         # print a list of all author objects
@@ -109,7 +109,7 @@ elif subcommand == 'author':
             print_authors(authors)
 
 elif subcommand == 'year':
-    data_source = booksdatasource.BooksDataSource('specifictinybooks.csv')
+    data_source = booksdatasource.BooksDataSource('books1.csv')
 
     # print the help statement
     if len(sys.argv) == 3 and (sys.argv[2] == '-h' or sys.argv[2] == '--help'):
