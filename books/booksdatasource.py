@@ -14,7 +14,6 @@
 
 import csv
 
-# should these functions be inside of the BooksDataSource class?
 def get_title(csv_substring):
     '''Returns the title of a book given the substring of a csv file in which it appears.'''
     title = csv_substring
@@ -27,14 +26,14 @@ def get_pub_year(csv_substring):
 
 def get_birth_year(csv_substring):
     '''Returns the birth year of an author given the substring of a csv file in which it appears.'''
-    s = csv_substring.split(' ') 
+    author_info = csv_substring.split(' ') 
     # if there is an author with 1 last name
-    if len(s) == 3:
-        temp_yrstr = s[-1][1:-1]
+    if len(author_info) == 3:
+        temp_yrstr = author_info[-1][1:-1]
         return temp_yrstr.split('-')[0]
     # if there is an author with 2 last names
-    elif len(s) > 3: 
-        temp_yrstr = s[-1][1:-1]
+    elif len(author_info) > 3: 
+        temp_yrstr = author_info[-1][1:-1]
         return temp_yrstr.split('-')[0]
     # if there is no birth year given
     elif (len(temp_yrstr.split('-')) < 2):
@@ -43,8 +42,8 @@ def get_birth_year(csv_substring):
 def get_death_year(csv_substring):
     '''Returns the death year of an author given the substring of a csv file in which it appears.
        Returns None if there is no death year.'''
-    s = csv_substring.split(' ') 
-    temp_yrstr = s[-1][1:-1]
+    author_info = csv_substring.split(' ') 
+    temp_yrstr = author_info[-1][1:-1]
     year_substrings = temp_yrstr.split('-')
 
     # if the author has a death year
@@ -56,8 +55,6 @@ def get_death_year(csv_substring):
 
 def get_surname(csv_substring):
     '''Returns the surname of an author given the substring of a csv file in which it appears.'''
-    # right now, we need to determine if there is more than 1 author, then pass in the parsed out single author into get_surname
-    # Consider fixing this limitation
     s = csv_substring.split(' ') 
     if len(s) > 3:
         return s[1] + ' ' +s[2]
@@ -66,7 +63,6 @@ def get_surname(csv_substring):
 
 def get_given_name(csv_substring):
     '''Returns the given name of an author given the substring of a csv file in which it appears.'''
-    # books with mulitple authors are already checked for before this function is called
     s = csv_substring.split(' ')
     return s[0]
 
@@ -157,14 +153,17 @@ class BooksDataSource:
                 # we don't need a temp author, just search by the surname and given name that we already have
                 temp_author = Author(surname, given_name, birth_year, death_year, [])
                 
+                # only add the author object to authors_list if that author is not already 
+                # in the list
                 temp_author_seen = False
 
                 for author in self.authors_list:
                     # if author does not already exist, add it to the list
                     if author == temp_author:
                         temp_author_seen = True
-                        # updating the already existing author's list of written books
+                        # update the already existing author's list of written books
                         author.books.append(title)
+                        # also update the corresponding book object's list of authors
                         written_by.append(temp_author)
                         break # break out of the for loop bc the author has been found
 

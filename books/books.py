@@ -21,9 +21,13 @@ def print_books(books_list):
 
 def print_authors(authors_list):
     '''Prints a list of author objects'''
-    if (len(authors_list) > 0):
+    if len(authors_list) > 0:
         for i in authors_list:
-            print(f"{i.surname}, {i.given_name}: {i.books}")
+            if i.death_year != None:
+                print(f"{i.surname}, {i.given_name} ({i.birth_year}-{i.death_year}): {i.books}")
+            else:
+                print(f"{i.surname}, {i.given_name} ({i.birth_year}-): {i.books}")
+
     else:
         print('No authors were found in the CSV file with that search string.') 
 
