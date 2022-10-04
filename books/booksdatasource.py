@@ -188,11 +188,14 @@ class BooksDataSource:
         complete_list = self.authors_list
         search_list = []
 
+        # if no search text, sort and return all authors
         if (search_text == None):
             complete_list.sort()
             return complete_list
 
+        # else, search for the authors to add, then sort and return the list of authors
         else:
+            # making everything lower case for case-insensitivity
             search_text = search_text.lower()
             for author in complete_list:
                 lower_surname = author.surname.lower()
@@ -218,15 +221,20 @@ class BooksDataSource:
         complete_list = self.books_list
         search_list = []
 
+        # if there is no search term, sort and return out all books
         if (search_text == None and sort_by == 'title'):
             sorted_list = sorted(complete_list, key = lambda b: (b.title, b.publication_year))
             return sorted_list
 
+        # else if it's specified, sort all books by year
         elif (search_text == None and sort_by == 'year'):
             sorted_list = sorted(complete_list, key = lambda b: (b.publication_year, b.title))
             return sorted_list
 
+        # else if there is a search string, find all book titles that contain the string, sort them by 
+        # title and return them
         elif (search_text != None and sort_by == 'title'):
+            # making everything lower case for case-insensitivity
             search_text = search_text.lower()
             for book in complete_list:
                 lower_title = book.title.lower()
@@ -235,7 +243,10 @@ class BooksDataSource:
             sorted_list = sorted(search_list, key = lambda b: (b.title, b.publication_year))
             return sorted_list
 
+        # else if there is a search string, find all book titles that contain the string, sort them by 
+        # year and return them
         elif (search_text != None and sort_by == 'year'):
+            # making everything lower case for case-insensitivity
             search_text = search_text.lower()
             for book in complete_list:
                 lower_title = book.title.lower()
@@ -258,10 +269,13 @@ class BooksDataSource:
         complete_list = self.books_list
         search_list = []
 
+        # if no start or end year is provided, sort all books by year, and return them
         if (start_year == None and end_year == None):
             sorted_list = sorted(complete_list, key = lambda b: (b.publication_year, b.title))
             return sorted_list
 
+        # if just an end year is provided, sort books by year, then return all books that were 
+        # published before or during the end year
         elif (start_year == None and end_year != None):
             for book in complete_list:
                 if (int(book.publication_year) <= end_year):
@@ -269,6 +283,8 @@ class BooksDataSource:
             sorted_list = sorted(search_list, key = lambda b: (b.publication_year, b.title))
             return sorted_list
 
+        # if just an start year is provided, sort books by year, then return all books that were 
+        # published after or during the start year
         elif (start_year != None and end_year == None):
             for book in complete_list:
                 if (int(book.publication_year) >= start_year):
@@ -276,6 +292,8 @@ class BooksDataSource:
             sorted_list = sorted(search_list, key = lambda b: (b.publication_year, b.title))
             return sorted_list
         
+        # if both years are provided, sort books by year, then return all books that were published
+        # in between or during those years
         else:
             for book in complete_list:
                 if (int(book.publication_year) <= end_year and int(book.publication_year) >= start_year):
