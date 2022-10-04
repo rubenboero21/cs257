@@ -3,6 +3,8 @@
 # The program was adapted from Code by Alex Falk and Carl Zhang's books.py file 
 # https://github.com/aafalk/cs257/blob/main/books/books.py
 
+# This code was revised by Alex Falk, Carl Zhang, Aldo Polanco, and Yiming Xia
+
 import sys
 import booksdatasource
 

@@ -4,6 +4,8 @@
 # Carl Zhang's booksdatasoure.py file: 
 # https://github.com/aafalk/cs257/blob/main/books/booksdatasource.py
 
+# This code was revised by Alex Falk, Carl Zhang, Aldo Polanco, and Yiming Xia
+
 '''
     booksdatasource.py
     Jeff Ondich, 21 September 2022
