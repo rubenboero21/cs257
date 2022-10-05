@@ -31,6 +31,13 @@ class BooksDataSourceTester(unittest.TestCase):
         self.assertTrue(books[1].title == 'Never')
         self.assertTrue(books[2].title == 'Neverwhere')
         self.assertTrue(books[3].title == 'Omoo')
+    
+    def test_title_search_multiple_authors(self):
+        datasource = BooksDataSource('books1.csv')
+        books = datasource.books('omen')
+        self.assertTrue(len(books) == 1)
+        self.assertTrue(books[0].authors[0].surname == 'Gaiman')
+        self.assertTrue(books[0].authors[1].surname == 'Pratchett')
 
     # test that year search works with no search term and break a tie
     def test_all_books_year(self):
