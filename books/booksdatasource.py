@@ -26,9 +26,9 @@ def get_pub_year(csv_substring):
     pub_year = csv_substring
     return pub_year
 
-def get_birth_year(csv_substring):
+def get_birth_year(csv_author_info):
     '''Returns the birth year of an author given the substring of a csv file in which it appears.'''
-    author_info = csv_substring.split(' ') 
+    author_info = csv_author_info.split(' ') 
     # if there is an author with 1 last name
     if len(author_info) == 3:
         temp_yrstr = author_info[-1][1:-1]
@@ -41,10 +41,10 @@ def get_birth_year(csv_substring):
     elif (len(temp_yrstr.split('-')) < 2):
         return None
     
-def get_death_year(csv_substring):
+def get_death_year(csv_author_info):
     '''Returns the death year of an author given the substring of a csv file in which it appears.
        Returns None if there is no death year.'''
-    author_info = csv_substring.split(' ') 
+    author_info = csv_author_info.split(' ') 
     temp_yrstr = author_info[-1][1:-1]
     year_substrings = temp_yrstr.split('-')
 
@@ -55,18 +55,19 @@ def get_death_year(csv_substring):
     else:
         return None
 
-def get_surname(csv_substring):
+def get_surname(csv_author_info):
     '''Returns the surname of an author given the substring of a csv file in which it appears.'''
-    s = csv_substring.split(' ') 
-    if len(s) > 3:
-        return s[1] + ' ' +s[2]
-    else:
-        return  s[1]
+    author_info = csv_author_info.split(' ') 
 
-def get_given_name(csv_substring):
+    if len(author_info) > 3:
+        return author_info[1] + ' ' + author_info[2]
+    else:
+        return  author_info[1]
+
+def get_given_name(csv_author_info):
     '''Returns the given name of an author given the substring of a csv file in which it appears.'''
-    s = csv_substring.split(' ')
-    return s[0]
+    author_info = csv_author_info.split(' ')
+    return author_info[0]
 
 class Author:
     def __init__(self, surname='', given_name='', birth_year=None, death_year=None, books=[]):
@@ -144,15 +145,13 @@ class BooksDataSource:
             # booksdatasource.py file 
             # https://github.com/aafalk/cs257/blob/main/books/booksdatasource.py
             author_fields = line[2].split(' and ')
-            
+
             for author in author_fields:
+                surname = get_surname(author)
+                given_name = get_given_name(author)
+                birth_year = get_birth_year(author)
+                death_year = get_death_year(author)
 
-                surname = get_surname(line[2])
-                given_name = get_given_name(line[2])
-                birth_year = get_birth_year(line[2])
-                death_year = get_death_year(line[2])
-
-                # we don't need a temp author, just search by the surname and given name that we already have
                 temp_author = Author(surname, given_name, birth_year, death_year, [])
                 
                 # only add the author object to authors_list if that author is not already 
@@ -228,7 +227,7 @@ class BooksDataSource:
             sorted_list = sorted(complete_list, key = lambda b: (b.title, b.publication_year))
             return sorted_list
 
-        # else if it's specified, sort all books by year
+        # else if it's specified, sort and return all books by year
         elif (search_text == None and sort_by == 'year'):
             sorted_list = sorted(complete_list, key = lambda b: (b.publication_year, b.title))
             return sorted_list
@@ -302,4 +301,3 @@ class BooksDataSource:
                     search_list.append(book)
             sorted_list = sorted(search_list, key = lambda b: (b.publication_year, b.title))
             return sorted_list
-
