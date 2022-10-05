@@ -1,6 +1,6 @@
 # This program was written by Ruben Boero and Xiaoying Qu
 
-# The program was adapted from Code by Alex Falk and Carl Zhang's books.py file 
+# The program was adapted from code by Alex Falk and Carl Zhang's books.py file 
 # https://github.com/aafalk/cs257/blob/main/books/books.py
 
 # This code was revised by Alex Falk, Carl Zhang, Aldo Polanco, and Yiming Xia
@@ -48,9 +48,6 @@ if subcommand == 'title':
         print_books(books)
 
     elif len(sys.argv) == 3:
-        # there is either search text, or no search text a help flag, or no seach text and a year flag
-        # , or no search text and a title flag
-
         # print the help statement for the title subcommand
         if sys.argv[2] == '-h' or sys.argv[2] == '--help':
             print('python3 books.py title [-h|-t|-y] [string]\n')
@@ -125,36 +122,36 @@ elif subcommand == 'year':
         sys.exit("Either the wrong number of arguments were input or an invalid flag was entered. Please use the 'help' subcommand for more information.")
     
     # check that the arguments are of the valid type
-    elif not sys.argv[2].isdigit() or sys.argv[2] != '_' or not sys.argv[3].isdigit() or sys.argv[3] != '_':
+    elif (sys.argv[2].isdigit() or sys.argv[2] == '_') and (sys.argv[3].isdigit() or sys.argv[3] == '_'):
+        # print all books
+        if sys.argv[2] == '_' and sys.argv[3] == '_':
+            books = data_source.books_between_years()
+
+            print_books(books)
+
+        # print books after a given start year
+        elif sys.argv[2] != '_' and sys.argv[3] == '_':
+            start_year = int(sys.argv[2])
+            books = data_source.books_between_years(start_year)
+
+            print_books(books)
+
+        # print before a given end year
+        elif sys.argv[2] == '_' and sys.argv[3] != '_':
+            end_year = int(sys.argv[3])
+            books = data_source.books_between_years(end_year= end_year)
+
+            print_books(books)
+
+        # print books between 2 given years
+        elif sys.argv[2] != '_' and sys.argv[3] != '_':
+            start_year = int(sys.argv[2])
+            end_year = int(sys.argv[3])
+            books = data_source.books_between_years(start_year, end_year)
+
+            print_books(books)
+    else:
         sys.exit("An invalid argument was provided to the year subcommand. Only the '_' character or an integer is valid input.\n \nType 'python3 books.py year -h' for more information about the year subcommand.")
-
-    # print all books
-    elif sys.argv[2] == '_' and sys.argv[3] == '_':
-        books = data_source.books_between_years()
-
-        print_books(books)
-
-    # print books after a given start year
-    elif sys.argv[2] != '_' and sys.argv[3] == '_':
-        start_year = int(sys.argv[2])
-        books = data_source.books_between_years(start_year)
-
-        print_books(books)
-
-    # print before a given end year
-    elif sys.argv[2] == '_' and sys.argv[3] != '_':
-        end_year = int(sys.argv[3])
-        books = data_source.books_between_years(end_year= end_year)
-
-        print_books(books)
-
-    # print books between 2 given years
-    elif sys.argv[2] != '_' and sys.argv[3] != '_':
-        start_year = int(sys.argv[2])
-        end_year = int(sys.argv[3])
-        books = data_source.books_between_years(start_year, end_year)
-
-        print_books(books)
 
 # print usage.txt
 elif subcommand == 'help':
