@@ -114,7 +114,7 @@ elif subcommand == 'year':
 
     # print the help statement
     if len(sys.argv) == 3 and (sys.argv[2] == '-h' or sys.argv[2] == '--help'):
-        print('python3 books.py year [-h] _ _|_ yearB|yearA _|yearA yearB')
+        print('python3 books.py year [-h] _ _|_ yearB|yearA _|yearA yearB\n')
         print("For additional information about the program use the 'help' subcommand.")
 
     # check that the correct number of arguments were passed in
