@@ -11,8 +11,9 @@ import csv
 # source on how to write to mulitple files at once:
 # https://stackoverflow.com/questions/4617034/how-can-i-open-multiple-files-using-with-open-in-python
 
-with open('athletes_events.csv', 'r') as read_file:
-    with open('olympic_games.csv', 'w') as olympic_games_file, open('events.csv', 'w') as events_file, open('athletes.csv', 'w') as athletes_file:
+with open('athlete_events.csv', 'r') as read_file:
+    with open('olympic_games.csv', 'w') as olympic_games_file, open('events.csv', 'w') as events_file, \
+        open('athletes.csv', 'w') as athletes_file:
         reader = csv.reader(read_file, delimiter=',')
 
         olympic_games_writer = csv.writer(olympic_games_file)
@@ -25,7 +26,10 @@ with open('athletes_events.csv', 'r') as read_file:
 
         list_of_games = []
         list_of_events = []
-        list_of_athletes = []
+        # dict_of_games = {}
+        # dict_of_ecents = {}
+        # athletes is stored in dict bc there are a lot more of them
+        dict_of_athletes = {}
 
         next(reader) # skip the header line in the csv file
 
@@ -55,15 +59,17 @@ with open('athletes_events.csv', 'r') as read_file:
                 events_writer.writerow(events_line)
                 list_of_events.append(line[13])
                 events_ID_counter += 1
-            
-            # create athletes.csv
-            if line[1] not in list_of_athletes:
-                athletes_line.append(str(athletes_ID_counter))
-                athletes_line.append(line[1])
 
+            # create athletes.csv
+            if line[0] not in dict_of_athletes:
+                # set the ID of the current athlete to be true so that it is not searched for again
+                dict_of_athletes[line[0]] = True
+                # the ID is line[0] bc of the ID column in athlete_events.csv
+                athletes_line.append(line[0])
+                athletes_line.append(line[1])
                 athletes_writer.writerow(athletes_line)
-                list_of_athletes.append(line[1])
-                athletes_ID_counter += 1
+
+print('1st batch done')
 
 # create the noc.csv
 with open('noc_regions.csv', 'r') as read_file:
@@ -84,6 +90,8 @@ with open('noc_regions.csv', 'r') as read_file:
             noc_writer.writerow(noc_line)
             noc_ID_counter += 1
 
+print('noc.csv done')
+
 # create the medals csv file
 with open('medals.csv', 'w') as medals_file:
     medals_writer = csv.writer(medals_file)
@@ -96,11 +104,13 @@ with open('medals.csv', 'w') as medals_file:
     medals_line = ['4', 'Gold']
     medals_writer.writerow(medals_line)
 
+print('medals.csv done')
+
 # create the linking table
-# how can i split this line into mulitple lines?
-with open('athletes_events.csv', 'r') as main_read, open('olympic_games.csv', 'r') as olympic_games_read, open('events.csv', 'r') \
-    as events_read, open('athletes.csv', 'r') as athletes_read, open('noc.csv', 'r') as noc_read, open('medals.csv', 'r') \
-    as medals_read:
+with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r') as olympic_games_read, \
+    open('events.csv', 'r') as events_read, open('athletes.csv', 'r') as athletes_read, open('noc.csv', 'r') \
+    as noc_read, open('medals.csv', 'r') as medals_read:
+
     with open('athletes_noc_olympic_games_events_medals.csv', 'w') as write_file:
         main_reader = csv.reader(main_read, delimiter=',')
         olymic_games_reader = csv.reader(olympic_games_read, delimiter=',')
@@ -111,6 +121,22 @@ with open('athletes_events.csv', 'r') as main_read, open('olympic_games.csv', 'r
 
         writer = csv.writer(write_file)
 
+        # create a dictionary of NOC abbreviations, key is the abbreviation, info stored is the ID number
+        noc_dict = {}
+        for line in noc_read:
+            noc_info = line.split(',')
+            noc_dict[noc_info[1]] = noc_info[0]
+        
+        olympic_games_dict = {}
+        for line in olympic_games_read:
+            games_info = line.split(',')
+            # search by year and season bc before a certain year, winter and summer happened in the same year
+            olympic_games_dict[games_info[1] + games_info[2]] = games_info[0]
+        
+        events_dict = {}
+        for line in events_reader:
+            events_dict[line[1]] = line[0]
+
         next(main_reader) # skip the header line in the csv file
 
         for line in main_reader:
@@ -119,28 +145,25 @@ with open('athletes_events.csv', 'r') as main_read, open('olympic_games.csv', 'r
             athlete_ID = line[0]
             noc_abbr = line[7]
             olympic_year = line[9]
+            olympic_season = line[10]
             event = line[13]
             medal = line[14]
 
             linking_line.append(athlete_ID)
             
-            for noc_line in noc_reader:
-                if noc_line[1] == noc_abbr:
-                    noc_ID = noc_line[0]
-                    linking_line.append(noc_ID)
-                    break
+            # print(noc_abbr)
+            # search the dictionary of NOC abbreviations for the associated NOC ID
 
-            for olympic_games_line in olymic_games_reader:
-                if olympic_games_line[1] == olympic_year:
-                    olympic_ID = olympic_games_line[0]
-                    linking_line.append(olympic_ID)
-                    break
+            # there are some abbreviations in the athelete_events.csv file that are not present in the 
+            # noc_regions.csv. If this is the case, I give them an NOC ID of -1
+            if noc_abbr in noc_dict:
+                linking_line.append(noc_dict[noc_abbr])
+            else:
+                linking_line.append('-1')
+
+            linking_line.append(olympic_games_dict[olympic_year + olympic_season])
             
-            for events_line in events_reader:
-                if events_line[1] == event:
-                    event_ID = events_line[0]
-                    linking_line.append(event_ID)
-                    break
+            linking_line.append(events_dict[event])
             
             for medals_line in medals_reader:
                 if medals_line[1] == medal:
@@ -150,10 +173,9 @@ with open('athletes_events.csv', 'r') as main_read, open('olympic_games.csv', 'r
             
             writer.writerow(linking_line)
             
-            # send the readers back to the top of the file to search for the next athlete's info
-            noc_read.seek(0)
-            olympic_games_read.seek(0)
-            events_read.seek(0)
+            # send the medals reader back to the top of the file to search for the next athlete's info
             medals_read.seek(0)
-            
+
+print('linking table done')
+
             
