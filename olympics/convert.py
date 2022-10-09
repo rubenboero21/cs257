@@ -22,13 +22,13 @@ with open('athlete_events.csv', 'r') as read_file:
 
         olympics_ID_counter = 1 # start at 1 to match the CSV 
         events_ID_counter = 1
-        athletes_ID_counter = 1
 
         list_of_games = []
         list_of_events = []
+        
+        # if I have time, make dictionaries for games and events 
         # dict_of_games = {}
-        # dict_of_ecents = {}
-        # athletes is stored in dict bc there are a lot more of them
+        # dict_of_events = {}
         dict_of_athletes = {}
 
         next(reader) # skip the header line in the csv file
@@ -62,14 +62,12 @@ with open('athlete_events.csv', 'r') as read_file:
 
             # create athletes.csv
             if line[0] not in dict_of_athletes:
-                # set the ID of the current athlete to be true so that it is not searched for again
+                # set the ID of the current athlete to be true so that the athlete wont be added again
                 dict_of_athletes[line[0]] = True
                 # the ID is line[0] bc of the ID column in athlete_events.csv
                 athletes_line.append(line[0])
                 athletes_line.append(line[1])
                 athletes_writer.writerow(athletes_line)
-
-print('1st batch done')
 
 # create the noc.csv
 with open('noc_regions.csv', 'r') as read_file:
@@ -90,8 +88,6 @@ with open('noc_regions.csv', 'r') as read_file:
             noc_writer.writerow(noc_line)
             noc_ID_counter += 1
 
-print('noc.csv done')
-
 # create the medals csv file
 with open('medals.csv', 'w') as medals_file:
     medals_writer = csv.writer(medals_file)
@@ -104,8 +100,6 @@ with open('medals.csv', 'w') as medals_file:
     medals_line = ['4', 'Gold']
     medals_writer.writerow(medals_line)
 
-print('medals.csv done')
-
 # create the linking table
 with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r') as olympic_games_read, \
     open('events.csv', 'r') as events_read, open('athletes.csv', 'r') as athletes_read, open('noc.csv', 'r') \
@@ -113,7 +107,7 @@ with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r'
 
     with open('athletes_noc_olympic_games_events_medals.csv', 'w') as write_file:
         main_reader = csv.reader(main_read, delimiter=',')
-        olymic_games_reader = csv.reader(olympic_games_read, delimiter=',')
+        olympic_games_reader = csv.reader(olympic_games_read, delimiter=',')
         events_reader = csv.reader(events_read, delimiter=',')
         athletes_reader = csv.reader(athletes_read, delimiter=',')
         noc_reader = csv.reader(noc_read, delimiter=',')
@@ -123,15 +117,17 @@ with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r'
 
         # create a dictionary of NOC abbreviations, key is the abbreviation, info stored is the ID number
         noc_dict = {}
-        for line in noc_read:
-            noc_info = line.split(',')
-            noc_dict[noc_info[1]] = noc_info[0]
+        for line in noc_reader:
+            # noc_info = line.split(',')
+            # noc_dict[noc_info[1]] = noc_info[0]
+            noc_dict[line[1]] = line[0]
         
         olympic_games_dict = {}
-        for line in olympic_games_read:
-            games_info = line.split(',')
+        for line in olympic_games_reader:
+            # games_info = line.split(',')
             # search by year and season bc before a certain year, winter and summer happened in the same year
-            olympic_games_dict[games_info[1] + games_info[2]] = games_info[0]
+            # olympic_games_dict[games_info[1] + games_info[2]] = games_info[0]
+            olympic_games_dict[line[1] + line[2]] = line[0]
         
         events_dict = {}
         for line in events_reader:
@@ -148,10 +144,10 @@ with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r'
             olympic_season = line[10]
             event = line[13]
             medal = line[14]
-
+            
+            # construct the line to print to the linking table
             linking_line.append(athlete_ID)
             
-            # print(noc_abbr)
             # search the dictionary of NOC abbreviations for the associated NOC ID
 
             # there are some abbreviations in the athelete_events.csv file that are not present in the 
@@ -173,9 +169,6 @@ with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r'
             
             writer.writerow(linking_line)
             
-            # send the medals reader back to the top of the file to search for the next athlete's info
+            # send the medals reader back to the top of the medals.csv file to search for the next athlete's info
             medals_read.seek(0)
-
-print('linking table done')
-
             
