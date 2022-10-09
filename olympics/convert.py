@@ -118,17 +118,14 @@ with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r'
         # create a dictionary of NOC abbreviations, key is the abbreviation, info stored is the ID number
         noc_dict = {}
         for line in noc_reader:
-            # noc_info = line.split(',')
-            # noc_dict[noc_info[1]] = noc_info[0]
             noc_dict[line[1]] = line[0]
         
+        # create a dictionary of olympic games, key is the year + season, info stored is the ID number
         olympic_games_dict = {}
         for line in olympic_games_reader:
-            # games_info = line.split(',')
-            # search by year and season bc before a certain year, winter and summer happened in the same year
-            # olympic_games_dict[games_info[1] + games_info[2]] = games_info[0]
             olympic_games_dict[line[1] + line[2]] = line[0]
         
+        # create a dictionary of events, key is the name of the event, info stored is the ID number
         events_dict = {}
         for line in events_reader:
             events_dict[line[1]] = line[0]
