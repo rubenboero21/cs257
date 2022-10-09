@@ -11,7 +11,7 @@ ORDER BY name ASC;
 
 SELECT athletes.name, events.event, olympic_games.year, olympic_games.season, medals.class
 FROM athletes, events, olympic_games, medals, athletes_noc_olympic_games_events_medals
-WHERE athletes.name LIKE '%Louganis%'
+WHERE athletes.name LIKE '%Greg% %Louganis%'
 AND athletes.id = athletes_noc_olympic_games_events_medals.athlete_id
 AND events.id = athletes_noc_olympic_games_events_medals.event_id
 AND olympic_games.id = athletes_noc_olympic_games_events_medals.olympic_game_id
