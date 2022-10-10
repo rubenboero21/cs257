@@ -71,7 +71,7 @@ with open('athlete_events.csv', 'r') as read_file:
 
 # create the noc.csv
 with open('noc_regions.csv', 'r') as read_file:
-    with open('noc.csv', 'w') as noc_file:
+    with open('nocs.csv', 'w') as noc_file:
         reader = csv.reader(read_file, delimiter=',')
         noc_writer = csv.writer(noc_file)
         noc_ID_counter = 1
@@ -102,10 +102,10 @@ with open('medals.csv', 'w') as medals_file:
 
 # create the linking table
 with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r') as olympic_games_read, \
-    open('events.csv', 'r') as events_read, open('athletes.csv', 'r') as athletes_read, open('noc.csv', 'r') \
+    open('events.csv', 'r') as events_read, open('athletes.csv', 'r') as athletes_read, open('nocs.csv', 'r') \
     as noc_read, open('medals.csv', 'r') as medals_read:
 
-    with open('athletes_noc_olympic_games_events_medals.csv', 'w') as write_file:
+    with open('athletes_nocs_olympic_games_events_medals.csv', 'w') as write_file:
         main_reader = csv.reader(main_read, delimiter=',')
         olympic_games_reader = csv.reader(olympic_games_read, delimiter=',')
         events_reader = csv.reader(events_read, delimiter=',')
@@ -145,7 +145,7 @@ with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r'
             # construct the line to print to the linking table
             linking_line.append(athlete_ID)
             
-            # search the dictionary of NOC abbreviations for the associated NOC ID
+            # search the dictionary of dictionaries of each table for the corresponding id
 
             # there are some abbreviations in the athelete_events.csv file that are not present in the 
             # noc_regions.csv. If this is the case, I give them an NOC ID of -1
@@ -158,14 +158,16 @@ with open('athlete_events.csv', 'r') as main_read, open('olympic_games.csv', 'r'
             
             linking_line.append(events_dict[event])
             
+            # the medals table is so small, I didn't make a dictionary
             for medals_line in medals_reader:
                 if medals_line[1] == medal:
                     medal_ID = medals_line[0]
                     linking_line.append(medal_ID)
                     break
-            
-            writer.writerow(linking_line)
-            
             # send the medals reader back to the top of the medals.csv file to search for the next athlete's info
             medals_read.seek(0)
+
+            writer.writerow(linking_line)
+            
+
             

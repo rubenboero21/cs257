@@ -15,7 +15,7 @@ CREATE TABLE events (
     event text
 );
 
-CREATE TABLE noc (
+CREATE TABLE nocs (
     id SERIAL,
     abbreviation char(3),
     region text
@@ -26,7 +26,7 @@ CREATE TABLE medals (
     class text
 );
 
-CREATE TABLE athletes_noc_olympic_games_events_medals (
+CREATE TABLE athletes_nocs_olympic_games_events_medals (
     athlete_id integer,
     noc_id integer,
     olympic_game_id integer,
