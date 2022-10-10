@@ -17,7 +17,7 @@ AND events.id = athletes_noc_olympic_games_events_medals.event_id
 AND olympic_games.id = athletes_noc_olympic_games_events_medals.olympic_game_id
 AND medals.id = athletes_noc_olympic_games_events_medals.medal_id
 AND medals.class != 'NA'
-ORDER BY year ASC;
+ORDER BY olympic_games.year ASC;
 
 SELECT noc.abbreviation, COUNT(medals.class)
 FROM noc, medals, athletes_noc_olympic_games_events_medals
