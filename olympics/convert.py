@@ -30,7 +30,7 @@ with open('athlete_events.csv', 'r') as read_file:
         next(reader) # skip the header line in the athlete_events.csv file
 
         for line in reader:
-            athlete_ID = line[0]
+            athlete_id = line[0]
             athlete_name = line[1]
             olympic_game = line[8]
             olympic_games_year = line[9]
@@ -46,10 +46,10 @@ with open('athlete_events.csv', 'r') as read_file:
 
             # create olympic_games.csv and olympic games dictionary
             if olympic_game not in dict_of_olympic_games:
-                olympic_game_ID = len(dict_of_olympic_games) + 1
-                dict_of_olympic_games[olympic_game] = olympic_game_ID
+                olympic_game_id = len(dict_of_olympic_games) + 1
+                dict_of_olympic_games[olympic_game] = olympic_game_id
 
-                olympic_games_line.append(olympic_game_ID)
+                olympic_games_line.append(olympic_game_id)
                 olympic_games_line.append(olympic_games_year)
                 olympic_games_line.append(olympic_games_season)
                 olympic_games_line.append(olympic_games_city)
@@ -58,33 +58,33 @@ with open('athlete_events.csv', 'r') as read_file:
             # create events.csv and events dictionary
             if event_name not in dict_of_events:
                 # following 2 lines of code taken from Jeff's olympics-convert file
-                event_ID = len(dict_of_events) + 1
-                dict_of_events[event_name] = event_ID
+                event_id = len(dict_of_events) + 1
+                dict_of_events[event_name] = event_id
 
-                events_line.append(event_ID)
+                events_line.append(event_id)
                 events_line.append(event_name)
                 events_writer.writerow(events_line)
 
             # create athletes.csv and athletes dictionary
             if athlete_name not in dict_of_athletes:
                 # set the ID of the current athlete to be true so that the athlete wont be added again
-                dict_of_athletes[athlete_name] = athlete_ID
+                dict_of_athletes[athlete_name] = athlete_id
                 # the ID is line[0] bc of the ID column in athlete_events.csv
-                athletes_line.append(athlete_ID)
+                athletes_line.append(athlete_id)
                 athletes_line.append(athlete_name)
                 athletes_writer.writerow(athletes_line)
             
             # create the sports.csv and sports dictionary
             if sport_name not in dict_of_sports:
-                sport_ID = len(dict_of_sports) + 1
-                dict_of_sports[sport_name] = sport_ID
+                sport_id = len(dict_of_sports) + 1
+                dict_of_sports[sport_name] = sport_id
 
-                sports_line.append(sport_ID)
+                sports_line.append(sport_id)
                 sports_line.append(sport_name)
                 sports_writer.writerow(sports_line)
 
 dict_of_nocs = {}
-# create the noc.csv
+# create the noc.csv and the dictionary of NOCs
 with open('noc_regions.csv', 'r') as read_file:
     with open('nocs.csv', 'w') as noc_file:
         reader = csv.reader(read_file, delimiter=',')
@@ -96,11 +96,11 @@ with open('noc_regions.csv', 'r') as read_file:
             noc_line = []
             noc_abbreviation = line[0]
             noc_region = line[1]
-            noc_ID = len(dict_of_nocs) + 1
+            noc_id = len(dict_of_nocs) + 1
             
-            dict_of_nocs[noc_abbreviation] = noc_ID
+            dict_of_nocs[noc_abbreviation] = noc_id
             
-            noc_line.append(noc_ID)
+            noc_line.append(noc_id)
             noc_line.append(noc_abbreviation)
             noc_line.append(noc_region)
             noc_writer.writerow(noc_line)
@@ -146,21 +146,21 @@ with open('athlete_events.csv') as original_data_file,\
         medal_class = line[14]
 
         # athlete ID can be pulled directly from the athlete_events.csv file
-        athlete_ID = line[0]
+        athlete_id = line[0]
         # the noc_regions.csv file has SGP listed as the abbreviation for Singapore, I changed the noc_regions abbreviation
         # for Singapore to be SIN to match the athlete_events.csv. I have included a case for if this change is not made.
         if noc_abbrevation in dict_of_nocs:
-            noc_ID = dict_of_nocs[noc_abbrevation]
+            noc_id = dict_of_nocs[noc_abbrevation]
         else:
-            noc_ID = -1
+            noc_id = -1
         # get the rest of the IDs from the corresponding dictionaries
-        olympic_game_ID = dict_of_olympic_games[olympic_game]
-        event_ID = dict_of_events[event_name]
-        sport_ID = dict_of_sports[sport_name]
-        medal_ID = dict_of_medals[medal_class]
+        olympic_game_id = dict_of_olympic_games[olympic_game]
+        event_id = dict_of_events[event_name]
+        sport_id = dict_of_sports[sport_name]
+        medal_id = dict_of_medals[medal_class]
 
-        # write the line for the linking table
-        writer.writerow([athlete_ID, noc_ID, olympic_game_ID, event_ID, sport_ID, medal_ID])
+        # write the line for the linking table, adapted from Jeff's code
+        writer.writerow([athlete_id, noc_id, olympic_game_id, event_id, sport_id, medal_id])
 
             
 
