@@ -1,4 +1,5 @@
 # This program was written by Ruben Boero
+# Jeff's olympics-convert file was used as an example
 
 # The CSV files used in this program can be found on this site:
 # https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results
@@ -14,14 +15,17 @@ import csv
 dict_of_olympic_games = {}
 dict_of_events = {}
 dict_of_athletes = {}
+dict_of_sports = {}
+
 with open('athlete_events.csv', 'r') as read_file:
     with open('olympic_games.csv', 'w') as olympic_games_file, open('events.csv', 'w') as events_file, \
-        open('athletes.csv', 'w') as athletes_file:
+        open('athletes.csv', 'w') as athletes_file, open('sports.csv', 'w') as sports_file:
         reader = csv.reader(read_file, delimiter=',')
 
         olympic_games_writer = csv.writer(olympic_games_file)
         events_writer = csv.writer(events_file)
         athletes_writer = csv.writer(athletes_file)
+        sports_writer = csv.writer(sports_file)
 
         next(reader) # skip the header line in the athlete_events.csv file
 
@@ -32,13 +36,15 @@ with open('athlete_events.csv', 'r') as read_file:
             olympic_games_year = line[9]
             olympic_games_season = line[10]
             olympic_games_city = line[11]
+            sport_name = line[12]
             event_name = line[13]
 
             olympic_games_line = []
             events_line = []
             athletes_line = []
+            sports_line = []
 
-            # create olympic_games.csv
+            # create olympic_games.csv and olympic games dictionary
             if olympic_game not in dict_of_olympic_games:
                 olympic_game_ID = len(dict_of_olympic_games) + 1
                 dict_of_olympic_games[olympic_game] = olympic_game_ID
@@ -49,7 +55,7 @@ with open('athlete_events.csv', 'r') as read_file:
                 olympic_games_line.append(olympic_games_city)
                 olympic_games_writer.writerow(olympic_games_line)
 
-            # create events.csv
+            # create events.csv and events dictionary
             if event_name not in dict_of_events:
                 # following 2 lines of code taken from Jeff's olympics-convert file
                 event_ID = len(dict_of_events) + 1
@@ -59,7 +65,7 @@ with open('athlete_events.csv', 'r') as read_file:
                 events_line.append(event_name)
                 events_writer.writerow(events_line)
 
-            # create athletes.csv
+            # create athletes.csv and athletes dictionary
             if athlete_name not in dict_of_athletes:
                 # set the ID of the current athlete to be true so that the athlete wont be added again
                 dict_of_athletes[athlete_name] = athlete_ID
@@ -67,6 +73,15 @@ with open('athlete_events.csv', 'r') as read_file:
                 athletes_line.append(athlete_ID)
                 athletes_line.append(athlete_name)
                 athletes_writer.writerow(athletes_line)
+            
+            # create the sports.csv and sports dictionary
+            if sport_name not in dict_of_sports:
+                sport_ID = len(dict_of_sports) + 1
+                dict_of_sports[sport_name] = sport_ID
+
+                sports_line.append(sport_ID)
+                sports_line.append(sport_name)
+                sports_writer.writerow(sports_line)
 
 dict_of_nocs = {}
 # create the noc.csv
@@ -112,7 +127,7 @@ with open('medals.csv', 'w') as medals_file:
 
 # create the linking table
 with open('athlete_events.csv') as original_data_file,\
-        open('athletes_nocs_olympic_games_events_medals.csv', 'w') as write_file:
+        open('athletes_nocs_olympic_games_events_sports_medals.csv', 'w') as write_file:
     
     reader = csv.reader(original_data_file)
     writer = csv.writer(write_file)
@@ -126,6 +141,7 @@ with open('athlete_events.csv') as original_data_file,\
         olympic_games_year = line[9]
         olympic_games_season = line[10]
         olympic_games_city = line[11]
+        sport_name = line[12]
         event_name = line[13]
         medal_class = line[14]
 
@@ -140,10 +156,11 @@ with open('athlete_events.csv') as original_data_file,\
         # get the rest of the IDs from the corresponding dictionaries
         olympic_game_ID = dict_of_olympic_games[olympic_game]
         event_ID = dict_of_events[event_name]
+        sport_ID = dict_of_sports[sport_name]
         medal_ID = dict_of_medals[medal_class]
 
         # write the line for the linking table
-        writer.writerow([athlete_ID, noc_ID, olympic_game_ID, event_ID, medal_ID])
+        writer.writerow([athlete_ID, noc_ID, olympic_game_ID, event_ID, sport_ID, medal_ID])
 
             
 
