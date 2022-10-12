@@ -127,3 +127,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Do not allow myself to push my psql username, password, and databse names
+config.py
