@@ -1,5 +1,6 @@
-I was not sure how to handle the data entries such as age, sex, team, etc. that could possibly change from 
-games to games, so I chose to not include those items in my database.
+I was not sure how to handle the data entries such as age, sex, weight, team, etc. that could possibly change from games to games, so I chose to not include those items in my database.
+UPDATE:
+I have not made the change, but if to include entries such as age and weight, I would add these items to rows in the linking table. This would require updating the CREATE TABLE statements in olympics-schema.sql and also updating how the linking table is created in convert.py.
 
 In the noc_regions.csv file, I changed line 180 from 'SIN,Singapore,' to 'SGP,Singapore,' in order to match 
 the athlete_events.csv NOC column. If this change is not made, all athletes from Singapore will be given an
