@@ -1,0 +1,5 @@
+Synopsis
+	python3 olympics.py -h | --help
+
+Description
+	This is a program that will query an olympics database.
