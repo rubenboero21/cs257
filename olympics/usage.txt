@@ -5,15 +5,20 @@ Synopsis
  	python3 olympics.py sport_count
 
 Description
-	This is a program that will query an olympics database.
+	olympics.py is a program that will query an olympics database.
 
 	athletes
-		Prints a list of all athletes sorted by a given NOC abbreviation. If no 		NOC is provided, no athletes will be printed.
+		Prints a list of all athletes sorted by a given NOC abbreviation. If no 
+		NOC is provided, no athletes will be printed. Search term is case
+		insensitive.
 	
 	noc_medals
 		Prints a list of all the NOCs and the number of gold medals they have won.
 		Sorted in decreasing order by number of medals.
-
-	sport_count
-		Prints a list of all the sports played in the olympics along with the 
-		number of times athletes that have competed in said sport.
+	
+	top_athletes
+		Prints a list of the top 81 athletes with the most gold medals ordered by 
+		descending number of medals first, then by name alphabetically. (The top 
+		81 are chosen because after that, there are ties for 4 gold medals, and it 
+		seemed wrong to print an athlete just because their name is higher up in
+		the alphabet.)
