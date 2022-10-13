@@ -1,5 +1,19 @@
 Synopsis
 	python3 olympics.py -h | --help
+	python3 olympics.py athletes 'noc abbreviation'
+	python3 olympics.py noc_medals
+ 	python3 olympics.py sport_count
 
 Description
 	This is a program that will query an olympics database.
+
+	athletes
+		Prints a list of all athletes sorted by a given NOC abbreviation. If no 		NOC is provided, no athletes will be printed.
+	
+	noc_medals
+		Prints a list of all the NOCs and the number of gold medals they have won.
+		Sorted in decreasing order by number of medals.
+
+	sport_count
+		Prints a list of all the sports played in the olympics along with the 
+		number of times athletes that have competed in said sport.
