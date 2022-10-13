@@ -159,6 +159,9 @@ with open('athlete_events.csv') as original_data_file,\
         # write the line for the linking table, adapted from Jeff's code
         writer.writerow([athlete_id, noc_id, olympic_game_id, event_id, sport_id, medal_id])
 
+        # if i want to inlucde weight, age, sex, etc. i could add it to the end of the linking table row
+        # then modifty the table accordingly
+
             
 
             
