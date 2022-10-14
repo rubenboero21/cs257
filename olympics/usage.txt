@@ -2,7 +2,7 @@ Synopsis
 	python3 olympics.py -h | --help
 	python3 olympics.py athletes 'noc abbreviation'
 	python3 olympics.py noc_medals
- 	python3 olympics.py sport_count
+ 	python3 olympics.py top_athletes
 
 Description
 	olympics.py is a program that will query an olympics database.

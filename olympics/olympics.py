@@ -118,6 +118,8 @@ if subcommand == 'athletes':
 
         for athlete in athletes:
             print(athlete)
+    else:
+        print("Please provide a valid NOC 3 digit abbreviation.\nType 'python3 olympics.py --help' for more information.")
 
 # handles the query that lists how many gold medals each NOC has won
 elif subcommand == 'noc_medals':
