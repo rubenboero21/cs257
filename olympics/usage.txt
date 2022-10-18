@@ -5,7 +5,7 @@ Synopsis
  	python3 olympics.py top_athletes
 
 Description
-	olympics.py is a program that will query an olympics database.
+	olympics.py is a program that queries an olympics database.
 
 	athletes
 		Prints a list of all athletes sorted by a given NOC abbreviation. If no 

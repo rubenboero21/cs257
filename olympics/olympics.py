@@ -118,6 +118,8 @@ if subcommand == 'athletes':
 
         for athlete in athletes:
             print(athlete)
+    
+    # print the error statement when not enough arguments are input by the user
     else:
         print("Please provide a valid NOC 3 digit abbreviation.\nType 'python3 olympics.py --help' for more information.")
 
