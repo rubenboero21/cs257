@@ -1,1 +1,18 @@
-Serafin Patino and Ruben Boero
+Authors: Serafin Patino and Ruben Boero
+
+A CSV of all the Pokémon and their stats from the first 8 generations of the game.
+
+https://www.kaggle.com/datasets/mariotormo/complete-pokemon-dataset-updated-090420
+
+
+Our target user is someone who is already well versed with all of the game mechanics of Pokémon.
+
+Story: 
+1) As a user, I can search for any attribute that a Pokémon can have (name, index number, ability, type, etc.), so that I can get a list of all Pokémon with the given attribute. Then from that list, a Pokémon can be selected, and information specific to that given Pokémon is displayed.
+
+2) As a user, I can sort by general information about a group of Pokémon such as what generation they belong to, what egg group they're in, if the Pokémon is legendary, etc. and display a list of all Pokémon that are part of that group.
+
+Implementation:
+1) We could have a search bar. Once the search term is entered, a new page is shown with the results of the search. Each Pokémon in the result list can be clicked on, and information about it can be viewed. We will only allow search strings to be entered with the exception of the index value of the Pokémon. So, for example, weight cannot be searched for.
+
+2) We could have a page that contains a drop down menu. This menu entries will include fields such as generations 1-8, egg group, legendary status, etc. Multiple fields can be selected to be displayed at once with a check box. Alternatively, we could have a page with links to the general categories and these links take the user to a page with a more specific drop down menu.
