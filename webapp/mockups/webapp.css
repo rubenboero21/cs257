@@ -1,18 +1,14 @@
 /* This file was created by Ruben Boero and Serafin Patino */
 
-
-/* We used the following W3 tutorial to make a search bar:
-https://www.w3schools.com/howto/howto_css_searchbar.asp */
-/* Add a black background color to the top navigation bar */
-
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-.searchcontainer{
+.search_container{
   position: absolute;
+  /* top height is neded to make the position: absolute hold the search bar in the same place */
   top: 300px;
   width: 100%;
   min-height: 100vh;
