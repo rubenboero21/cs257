@@ -11,15 +11,17 @@ https://www.w3schools.com/howto/howto_css_searchbar.asp */
     box-sizing: border-box;
 }
 
-.container{
+.searchcontainer{
+  position: absolute;
+  top: 300px;
   width: 100%;
   min-height: 100vh;
   padding: 5%;
-  display: flex;
+  /* display: absolute; */
   align-items: center;
   justify-content: center;
-
 }
+
 .searchbar{
   width: 100%;
   max-width: 700px;
@@ -62,9 +64,10 @@ https://www.w3schools.com/howto/howto_css_searchbar.asp */
   margin-left: auto;
   margin-right: auto;
   /* margin-bottom: auto; */
-  margin-top: 10px;
+  margin-top: 100px;
   align-items: center;
   justify-content: center;
+  background-color: orange;
 }
 
 /* img{
@@ -82,3 +85,16 @@ https://www.w3schools.com/howto/howto_css_searchbar.asp */
   margin-left: auto;
   margin-right: auto;
 } */
+
+.main_link {
+  display: flex;
+  margin: 5px;
+  border: 2px;
+  background-color: orange;
+
+}
+
+#advanced_search {
+  height: 30px;
+  text-align: right;
+}
