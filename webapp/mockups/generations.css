@@ -1,8 +1,4 @@
 .title_container {
-    /* display: block;
-    margin-left: auto;
-    margin-right: auto; */
-    /* position: absolute; */
     text-align: center;
     padding: 10px;
 }
@@ -20,10 +16,14 @@
     justify-content: center;
   }
 
-#advanced_search {
+#search_bar {
 height: 30px;
 text-align: right;
 margin-left: 500px;
+}
+
+#advanced_search {
+    font-size: small;
 }
 
 .header {
@@ -34,4 +34,9 @@ margin-left: 500px;
 
 .empty_space {
     padding: 50px;
+}
+
+/* https://stackoverflow.com/questions/3463621/css-label-text-right-below-input-element */
+div.pair {
+    float:left;
 }
