@@ -14,7 +14,21 @@
 .header {
     display: flex;
     /* https://teamtreehouse.com/community/how-to-position-a-flex-item-to-the-far-right-in-the-flexbox */
-    justify-content: space-between;
+    /* justify-content: space-between; */
+}
+#home_logo {
+    width: 80px;
+    height: 100%;
+}
+
+#header_text {
+    /* text-align: center; */
+    /* Im trying to figure out how to center a banner at the top of the page, not sure how to do it other 
+    than by eyeballing it with relative. Whats a better way to do this? */
+    position: relative;
+    left: 25%;
+    font-size: 110%;
+
 }
 
 .empty_space {
