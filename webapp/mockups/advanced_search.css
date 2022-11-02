@@ -32,9 +32,13 @@
 
     /* List of different border styles:display:
     https://www.w3schools.com/css/css_border.asp */
+
     border: outset;
     width: 30px;
     height: 50px;
+    /* Relative positions + 5px makes the go button aligh horizontally with the search bar */
+    position: relative;
+    bottom: 5px;
 }
 
 /* https://stackoverflow.com/questions/30916387/placeholder-font-size-bigger-than-16px
@@ -56,7 +60,6 @@ input[type = "text"] {
 }
 
 #check_boxes {
-    background-color: ghostwhite;
     text-align: left;
     margin-left: 4%;
 }
