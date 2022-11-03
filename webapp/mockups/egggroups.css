@@ -1,3 +1,5 @@
+/* This file was created by Ruben Boero and Serafin Patino */
+
 table, td, th {
     /* border: 1px solid black; */
     margin: 0 auto;
@@ -5,10 +7,6 @@ table, td, th {
 th, td {
     border: 3px solid black;
     border-radius: 10px;
-}
-footer{
-    text-align: center;
-    vertical-align: center;
 }
 /* #pokedex{
     display: block;
