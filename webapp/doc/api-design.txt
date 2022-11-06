@@ -4,10 +4,10 @@ REQUEST: /pokemon
 RESPONSE: a JSON list of dictionaries containing all the pokemon in our 
 database organized by the ID number of the pokemon
 
-REQUEST: /pokemon?name{search_text}
-         /pokemon?ability{search_text}
-         /pokemon?type{search_text}
-         /pokemon?id{search_text}
+REQUEST: /pokemon?name={search_text}
+         /pokemon?ability={search_text}
+         /pokemon?type={search_text}
+         /pokemon?id={search_text}
 RESPONSE: a JSON list of dictionaries containing all the pokemon in the
 database that fit the search term organized by ascending ID number
 
