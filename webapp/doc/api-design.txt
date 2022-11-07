@@ -1,12 +1,8 @@
 This file was created by Ruben Boero and Serafin Patino
 
-REQUEST: /pokemon
+REQUEST: /pokemon?name={search_name}&ability={search_ability}&type={search_type}&id={search_id}
 RESPONSE: a JSON list of dictionaries containing all the pokemon in our 
-database organized by the ID number of the pokemon
-
-REQUEST: /pokemon/<search_category?name={}&ability={search_text}&type={search_text}&id={search_text}>
-RESPONSE: a JSON list of dictionaries containing all the pokemon in the
-database that fit the search term organized by ascending ID number
+database that match the optional parameters organized by the ID number of the pokemon
 
 REQUEST: /generations
 RESPONSE: a JSON list of all the generations ordered in ascending order
