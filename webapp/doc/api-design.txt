@@ -59,7 +59,7 @@ RESPONSE: a JSON list of dictionaries containing all pokemon with a given
 type ordered by descending ID number
 
 
-3 endpoints
+4 endpoints
 	pokemon
 	egg groups
 	types
