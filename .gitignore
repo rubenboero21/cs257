@@ -130,3 +130,18 @@ dmypy.json
 
 # Do not allow myself to push my psql username, password, and databse names
 config.py
+
+# Hiding testing files from git so they don't clog up my terminal display
+books/1book2authors.csv
+books/terry_pratchett.csv
+olympics/athlete_events.csv
+olympics/athletes.csv
+olympics/athletes_nocs_olympic_games_events_sports_medals.csv
+olympics/events.csv
+olympics/medals.csv
+olympics/noc_regions.csv
+olympics/nocs.csv
+olympics/olympic_games.csv
+olympics/sports.csv
+olympics/test.csv
+olympics/test.py
