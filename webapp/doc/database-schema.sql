@@ -7,7 +7,7 @@
     spatk integer,
     def integer,
     spdef integer,
-    Spd integer
+    spd integer
 );
 
 CREATE TABLE egg_groups (
