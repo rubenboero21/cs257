@@ -19,6 +19,9 @@ REQUEST: /generation1
          /generation2
          ...
          /generation8
+
+** change this to be 1 endpoint with optional parameters at the end, like:
+	/generation?gen={gen}
 RESPONSE: a JSON list of dictionaries containing all pokemon from generation
 1, 2, ..., 8
 
@@ -54,3 +57,10 @@ REQUEST: /normal_types
          /fairy_types
 RESPONSE: a JSON list of dictionaries containing all pokemon with a given
 type ordered by descending ID number
+
+
+3 endpoints
+	pokemon
+	egg groups
+	types
+	generations
