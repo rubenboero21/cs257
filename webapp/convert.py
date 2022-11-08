@@ -55,11 +55,11 @@ with open ('small.csv', 'r') as read_file, \
             # ---- Creating abilities.csv ----
 
             ability1 = row[16]
-            print('ab1 ', ability1)
+            # print('ab1 ', ability1)
             ability2 = row[17]
-            print('ab2 ', ability2)
+            # print('ab2 ', ability2)
             ability3 = row[18]
-            print('ab3 ', ability3)
+            # print('ab3 ', ability3)
 
             # if the ability is not in the dictionary, add it to the dictionary and the csv
             if ability1 not in dict_of_abilities:
@@ -67,12 +67,12 @@ with open ('small.csv', 'r') as read_file, \
                 dict_of_abilities[ability1] = id
                 ability_writer.writerow([id, ability1])
 
-            elif ability2 not in dict_of_abilities:
+            if ability2 not in dict_of_abilities:
                 id = len(dict_of_abilities)
                 dict_of_abilities[ability2] = id
                 ability_writer.writerow([id, ability2])
                 
-            elif ability3 not in dict_of_abilities:
+            if ability3 not in dict_of_abilities:
                 id = len(dict_of_abilities)
                 dict_of_abilities[ability3] = id
                 ability_writer.writerow([id, ability3])
@@ -133,7 +133,7 @@ with open ('generations.csv', 'w') as write_file:
 
 
 # create the linking table
-with open ('pokemon_data.csv', 'r') as read_file, \
+with open ('small.csv', 'r') as read_file, \
     open ('linking_table.csv', 'w') as write_file:
 
     linking_reader = csv.reader(read_file)
