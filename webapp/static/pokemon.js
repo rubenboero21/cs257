@@ -40,6 +40,7 @@ function loadGenerationSelector() {
     .then(function(generations) {
         // Add the <option> elements to the <select> element
         let selectorBody = '';
+        // adding a default value to be at the top of the drop down
         selectorBody += '<option value="' + '--' + '">' + '--' + '</option>\n';
         for (let k = 0; k < generations.length; k++) {
             let generation = generations[k];
@@ -74,9 +75,9 @@ function onGenerationsSelectionChanged() {
         }
 
         // Put the table body we just built inside the table that's already on the page.
-        let generations_table = document.getElementById('generations_table');
-        if (generations_table) {
-            generations_table.innerHTML = tableBody;
+        let generationsTable = document.getElementById('generations_table');
+        if (generationsTable) {
+            generationsTable.innerHTML = tableBody;
         }
     })
 

@@ -5,6 +5,8 @@
 
     A small Flask application that provides a barelywebsite with an accompanying
     API (which is also tiny) to support that website.
+
+    Modified by Ruben Boero and Serafin Patino
 '''
 import flask
 import argparse
@@ -14,12 +16,18 @@ app = flask.Flask(__name__, static_folder='static', template_folder='templates')
 app.register_blueprint(api.api, url_prefix='/api')
 
 @app.route('/')
-def generations():
-    return flask.render_template('index.html')
-    
-@app.route('/generations') 
 def home():
     return flask.render_template('generations.html')
+
+# please ignore these routes, they are used for the creation of the website as a whole, not
+# this asignment 
+# @app.route('/')
+# def home():
+#     return flask.render_template('index.html')
+    
+# @app.route('/generations') 
+# def generations():
+#     return flask.render_template('generations.html')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A Pokémon search engine/database')
