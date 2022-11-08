@@ -21,7 +21,6 @@ def generations():
 def home():
     return flask.render_template('generations.html')
 
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A Pokémon search engine/database')
     parser.add_argument('host', help='the host to run on')

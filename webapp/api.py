@@ -38,12 +38,7 @@ def get_generations():
         cursor = connection.cursor()
         #what's the purpose of tuple in jeff's example
         cursor.execute(query, tuple())
-        # print('here')
-        # print(cursor)
-        print("cursor: ", cursor)
         for row in cursor:
-            print('inside for loop')
-            # print("row[0]: ", row[0])
             generation = row[0]
             generations_list.append(generation)
         cursor.close()

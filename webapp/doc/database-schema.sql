@@ -47,6 +47,7 @@ CREATE TABLE linking_table (
     ability1_id integer,
     ability2_id integer,
     ability3_id integer,
+    generation_id integer,
     egg_group1_id integer,
     egg_group2_id integer,
     legendary_id integer,
