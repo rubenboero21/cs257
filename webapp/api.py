@@ -46,29 +46,28 @@ def get_generations():
     except Exception as e:
         print(e, file=sys.stderr)
 
-    print(json.dumps(generations_list))
     return json.dumps(generations_list)
 
-# @api.route('/books/author/<author_id>')
-# def get_books_for_author(author_id):
-#     query = '''SELECT books.id, books.title, books.publication_year
-#                FROM books, authors, books_authors
-#                WHERE books.id = books_authors.book_id
-#                  AND authors.id = books_authors.author_id
-#                  AND authors.id = %s
-#                ORDER BY books.publication_year'''
-#     book_list = []
-#     try:
-#         connection = get_connection()
-#         cursor = connection.cursor()
-#         cursor.execute(query, (author_id,))
-#         for row in cursor:
-#             book = {'id':row[0], 'title':row[1], 'publication_year':row[2]}
-#             book_list.append(book)
-#         cursor.close()
-#         connection.close()
-#     except Exception as e:
-#         print(e, file=sys.stderr)
+@api.route('/generation/<gen_name>')
+def get_books_for_author(gen_name):
+    query = '''SELECT pokemon.name
+               FROM pokemon, generations, linking_table
+               WHERE pokemon.id = linking_table.pokemon_id
+               AND generations.id = linking_table.generation_id
+               AND generations.name = %s;
+            '''
+    pokemon_list = []
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        cursor.execute(query, (gen_name,))
+        for row in cursor:
+            pokemon = row[0]
+            pokemon_list.append(pokemon)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
 
-#     return json.dumps(book_list)
+    return json.dumps(pokemon_list)
 
