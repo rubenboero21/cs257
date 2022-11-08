@@ -4,8 +4,8 @@
     name text,
     hp integer,
     atk integer,
-    spatk integer,
     def integer,
+    spatk integer,
     spdef integer,
     spd integer
 );
@@ -30,10 +30,6 @@ CREATE TABLE abilities (
     name text
 );
 
-CREATE TABLE species (
-    id SERIAL,
-    name text
-);
 
 CREATE TABLE generations (
     id SERIAL,
@@ -51,10 +47,8 @@ CREATE TABLE linking_table (
     egg_group1_id integer,
     egg_group2_id integer,
     legendary_id integer,
-    specie_id integer,
     height float,
     weight float,
-    catch_rate float,
     normal_resist float,
     fire_resist float,
     water_resist float,
