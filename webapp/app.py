@@ -17,17 +17,11 @@ app.register_blueprint(api.api, url_prefix='/api')
 
 @app.route('/')
 def home():
-    return flask.render_template('generations.html')
-
-# please ignore these routes, they are used for the creation of the website as a whole, not
-# this asignment 
-# @app.route('/')
-# def home():
-#     return flask.render_template('index.html')
+    return flask.render_template('index.html')
     
-# @app.route('/generations') 
-# def generations():
-#     return flask.render_template('generations.html')
+@app.route('/generations') 
+def generations():
+    return flask.render_template('generations.html')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A Pokémon search engine/database')
