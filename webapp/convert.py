@@ -55,11 +55,8 @@ with open ('small.csv', 'r') as read_file, \
             # ---- Creating abilities.csv ----
 
             ability1 = row[16]
-            # print('ab1 ', ability1)
             ability2 = row[17]
-            # print('ab2 ', ability2)
             ability3 = row[18]
-            # print('ab3 ', ability3)
 
             # if the ability is not in the dictionary, add it to the dictionary and the csv
             if ability1 not in dict_of_abilities:
@@ -87,7 +84,8 @@ with open ('small.csv', 'r') as read_file, \
                 id = len(dict_of_types)
                 dict_of_types[type1] = id
                 type_writer.writerow([id, type1])
-            elif type2 not in dict_of_types:
+            
+            if type2 not in dict_of_types:
                 id = len(dict_of_types)
                 dict_of_types[type2] = id
                 type_writer.writerow([id, type2])
@@ -102,7 +100,8 @@ with open ('small.csv', 'r') as read_file, \
                 id = len(dict_of_egg_groups)
                 dict_of_egg_groups[group1] = id
                 egg_group_writer.writerow([id, group1])
-            elif group2 not in dict_of_egg_groups:
+                
+            if group2 not in dict_of_egg_groups:
                 id = len(dict_of_egg_groups)
                 dict_of_egg_groups[group2] = id
                 egg_group_writer.writerow([id, group2])
