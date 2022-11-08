@@ -50,6 +50,7 @@ def get_generations():
 
 @api.route('/generation/<gen_name>')
 def get_books_for_author(gen_name):
+    # This query must be update to work with whatever our database is
     query = '''SELECT pokemon.name
                FROM pokemon, generations, linking_table
                WHERE pokemon.id = linking_table.pokemon_id
