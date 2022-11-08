@@ -13,8 +13,8 @@
         <!-- The following site was used to learn how to make an image a link:
         https://pagedart.com/blog/linking-images-in-html/ -->
         <div>
-            <a href = "home.html"><img alt= "Logo" id="logo" src="logo.png"></a>
-            <a href = "home.html">Home</a>
+            <a href = "/"><img id = "logo" alt = "Logo" src="{{ url_for('static', filename='logo.png') }}"></a>
+            <a href = "/">Home</a>
         </div>
 
         <!-- https://stackoverflow.com/questions/3463621/css-label-text-right-below-input-element -->
@@ -35,16 +35,7 @@
         <!-- The following page was used to learn how to make a drop down menu in html:
             https://www.w3schools.com/tags/tag_select.asp -->
         <label for = "generations menu">Choose a generation:</label>
-        <select name = "generations menu" id>
-            <option value = "Gen 1">Gen 1</option>
-            <option value = "Gen 2">Gen 2</option>
-            <option value = "Gen 3">Gen 3</option>        
-            <option value = "Gen 4">Gen 4</option>
-            <option value = "Gen 5">Gen 5</option>
-            <option value = "Gen 6">Gen 6</option>
-            <option value = "Gen 7">Gen 7</option>  
-            <option value = "Gen 8">Gen 8</option>
-        </select>
+        <select name = "generations menu" id = "generation_selector"></select>
     </div>
 </body>
 </html>

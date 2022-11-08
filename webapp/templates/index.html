@@ -11,7 +11,7 @@
 
 <body>
 
-    <img alt="Logo" id="logo" src="logo.png">
+    <a href = "/"><img id = "logo" alt = "Logo" src="{{ url_for('static', filename='logo.png') }}"></a>
 
     <div class = "search_container">
         <input id = "search_bar" name = "search_bar" type="text" placeholder="search anything"/>
@@ -24,7 +24,7 @@
         <div id="advanced_search"> <a href = "advanced_search.html">Advanced Search</a></div>
 
         <div style="display: flex; justify-content:  center;">
-            <div class="main_link"><a href = "generations.html">Generation</div>
+            <div class="main_link"><a href = "/generations">Generations</div>
             <div class="main_link"><a href = "legendaries.html">Legendaries</div>
             <div class="main_link"><a href = "egggroups.html">Egg Groups</div>
             <div class="main_link"><a href = "pokedex.html">Pokédex</div>

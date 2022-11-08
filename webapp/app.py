@@ -13,9 +13,14 @@ import api
 app = flask.Flask(__name__, static_folder='static', template_folder='templates')
 app.register_blueprint(api.api, url_prefix='/api')
 
-@app.route('/') 
-def home():
+@app.route('/')
+def generations():
     return flask.render_template('index.html')
+    
+@app.route('/generations') 
+def home():
+    return flask.render_template('generations.html')
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A Pokémon search engine/database')

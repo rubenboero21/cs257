@@ -4,6 +4,8 @@
     Updated 8 November 2021
 
     Tiny Flask API to support the tiny books web application.
+
+    Modified by Ruben Boero and Serafin Patino
 '''
 import sys
 import flask
@@ -21,68 +23,57 @@ def get_connection():
                             user=config.user,
                             password=config.password)
 
-@api.route('/authors/') 
-def get_authors():
-    ''' Returns a list of all the authors in our database. See
-        get_author_by_id below for description of the author
-        resource representation.
-
-        By default, the list is presented in alphabetical order
-        by surname, then given_name. You may, however, use
-        the GET parameter sort to request sorting by birth year.
-
-            http://.../authors/?sort=birth_year
-
+@api.route('/generations') 
+def get_generations():
+    ''' Returns a list of all the pokemon in a given generation. 
+        By default the list is in ascending order by idx number.  
+            http://.../generations
         Returns an empty list if there's any database failure.
     '''
-    query = '''SELECT id, given_name, surname, birth_year, death_year
-               FROM authors ORDER BY '''
-
-    sort_argument = flask.request.args.get('sort')
-    if sort_argument == 'birth_year':
-        query += 'birth_year'
-    else:
-        query += 'surname, given_name'
-
-    author_list = []
+    query = '''SELECT name FROM generations
+               ORDER BY id ASC;'''
+    generations_list = []
     try:
         connection = get_connection()
         cursor = connection.cursor()
+        #what's the purpose of tuple in jeff's example
         cursor.execute(query, tuple())
+        # print('here')
+        # print(cursor)
+        print("cursor: ", cursor)
         for row in cursor:
-            author = {'id':row[0],
-                      'given_name':row[1],
-                      'surname':row[2],
-                      'birth_year':row[3],
-                      'death_year':row[4]}
-            author_list.append(author)
+            print('inside for loop')
+            # print("row[0]: ", row[0])
+            generation = row[0]
+            generations_list.append(generation)
         cursor.close()
         connection.close()
     except Exception as e:
         print(e, file=sys.stderr)
 
-    return json.dumps(author_list)
+    print(json.dumps(generations_list))
+    return json.dumps(generations_list)
 
-@api.route('/books/author/<author_id>')
-def get_books_for_author(author_id):
-    query = '''SELECT books.id, books.title, books.publication_year
-               FROM books, authors, books_authors
-               WHERE books.id = books_authors.book_id
-                 AND authors.id = books_authors.author_id
-                 AND authors.id = %s
-               ORDER BY books.publication_year'''
-    book_list = []
-    try:
-        connection = get_connection()
-        cursor = connection.cursor()
-        cursor.execute(query, (author_id,))
-        for row in cursor:
-            book = {'id':row[0], 'title':row[1], 'publication_year':row[2]}
-            book_list.append(book)
-        cursor.close()
-        connection.close()
-    except Exception as e:
-        print(e, file=sys.stderr)
+# @api.route('/books/author/<author_id>')
+# def get_books_for_author(author_id):
+#     query = '''SELECT books.id, books.title, books.publication_year
+#                FROM books, authors, books_authors
+#                WHERE books.id = books_authors.book_id
+#                  AND authors.id = books_authors.author_id
+#                  AND authors.id = %s
+#                ORDER BY books.publication_year'''
+#     book_list = []
+#     try:
+#         connection = get_connection()
+#         cursor = connection.cursor()
+#         cursor.execute(query, (author_id,))
+#         for row in cursor:
+#             book = {'id':row[0], 'title':row[1], 'publication_year':row[2]}
+#             book_list.append(book)
+#         cursor.close()
+#         connection.close()
+#     except Exception as e:
+#         print(e, file=sys.stderr)
 
-    return json.dumps(book_list)
+#     return json.dumps(book_list)
 
