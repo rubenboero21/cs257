@@ -133,7 +133,7 @@ with open ('generations.csv', 'w') as write_file:
 
 
 # create the linking table
-with open ('small.csv', 'r') as read_file, \
+with open ('pokemon_data.csv', 'r') as read_file, \
     open ('linking_table.csv', 'w') as write_file:
 
     linking_reader = csv.reader(read_file)
