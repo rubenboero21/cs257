@@ -162,7 +162,6 @@ with open ('pokemon_data.csv', 'r') as read_file, \
         group1 = row[31]
         group2 = row[32]
 
-
         height = row[13]
         weight = row[14]
         normal_resist = row [35]
@@ -196,12 +195,11 @@ with open ('pokemon_data.csv', 'r') as read_file, \
         group1_id = dict_of_egg_groups[group1]
         group2_id = dict_of_egg_groups[group2]
         
-
-        if is_sub_legendary == 1:
+        if is_sub_legendary == str(1):
             legendary_id = dict_of_legendaries['sub-legendary']
-        elif is_legendary == 1:
+        elif is_legendary == str(1):
             legendary_id = dict_of_legendaries['legendary']
-        elif is_mythic == 1:
+        elif is_mythic == str(1):
             legendary_id = dict_of_legendaries['mythical']
         else:
             legendary_id = dict_of_legendaries['non-legendary']
