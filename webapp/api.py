@@ -52,11 +52,18 @@ def get_generations():
 def get_pokemon_for_generation(gen_name):
 # def get_books_for_author(gen_name):
     # This query must be update to work with whatever our database is
-    query = '''SELECT pokemon.name
-               FROM pokemon, generations, linking_table
-               WHERE pokemon.id = linking_table.pokemon_id
-               AND generations.id = linking_table.generation_id
-               AND generations.name = %s;
+    query = '''SELECT  pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name
+            FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
+            WHERE 1 = 1
+            AND pokemon.id = linking_table.pokemon_id
+            AND ab1.id = linking_table.ability1_id
+            AND ab2.id = linking_table.ability2_id
+            AND ab3.id = linking_table.ability3_id
+            AND typ1.id = linking_table.type1_id
+            AND typ2.id = linking_table.type2_id
+            AND generations.id = linking_table.generation_id
+            AND generations.name = %s
+            ORDER BY pokemon.dex_num ASC;
             '''
     pokemon_list = []
     try:
@@ -64,8 +71,11 @@ def get_pokemon_for_generation(gen_name):
         cursor = connection.cursor()
         cursor.execute(query, (gen_name,))
         for row in cursor:
-            pokemon = row[0]
-            pokemon_list.append(pokemon)
+            # pokemon = row[0]
+
+            # pokemon_list.append(pokemon)
+            pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
+                'ability3':row[4], 'type1':row[5], 'type2':row[6]})
         cursor.close()
         connection.close()
     except Exception as e:
