@@ -12,7 +12,7 @@ dict_of_egg_groups = {}
 dict_of_abilities = {}
 
 
-with open ('small.csv', 'r') as read_file, \
+with open ('pokemon_data.csv', 'r') as read_file, \
     open ('pokedex.csv', 'w') as pokedex_file, \
     open ('types.csv', 'w') as types_file, \
     open ('egg_groups.csv', 'w') as egg_file, \

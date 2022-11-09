@@ -2,12 +2,12 @@
     id SERIAL,
     dex_num integer,
     name text,
-    hp integer,
-    atk integer,
-    def integer,
-    spatk integer,
-    spdef integer,
-    spd integer
+    hp float,
+    atk float,
+    def float,
+    spatk float,
+    spdef float,
+    spd float
 );
 
 CREATE TABLE egg_groups (
