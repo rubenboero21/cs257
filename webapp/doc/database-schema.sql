@@ -1,4 +1,4 @@
-    CREATE TABLE pokemon (
+CREATE TABLE pokemon (
     id SERIAL,
     dex_num integer,
     name text,
