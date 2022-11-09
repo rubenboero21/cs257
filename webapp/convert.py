@@ -204,7 +204,7 @@ with open ('pokemon_data.csv', 'r') as read_file, \
         else:
             legendary_id = dict_of_legendaries['non-legendary']
 
-        linking_writer.writerow([pokemon_id, type1_id, type1_id, ability1_id, ability2_id, \
+        linking_writer.writerow([pokemon_id, type1_id, type2_id, ability1_id, ability2_id, \
             ability3_id,generation_id, group1_id, group2_id, legendary_id, height, weight, \
             normal_resist, fire_resist, water_resist, electric_resist, grass_resist, \
             ice_resist, fighting_resist, poison_resist,ground_resist, flying_resist, \
