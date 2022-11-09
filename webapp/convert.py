@@ -1,7 +1,8 @@
 #this file was created by Ruben Boero and Serafin Patino
 # https://www.kaggle.com/datasets/mariotormo/complete-pokemon-dataset-updated-090420 
-# we're using the 4.20 csv version
 # This is a link to the database
+# we're using the 4.20 csv version, we also deleted line 241 which
+# contained slowking, as all his data was empty
 import csv
 
 dict_of_pokemon= {}
