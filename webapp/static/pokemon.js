@@ -69,13 +69,15 @@ function onGenerationsSelectionChanged() {
 
     .then(function(pokemon_results) {
         let tableBody = '';
-        for (let k = 0; k < pokemon_results.length; k++) {
-            let pokemon = pokemon_results[k];
-            tableBody += '<tr>' + pokemon + '</tr>\n';
+        // Create the header of the table
+        tableBody += '<tr id = "table_header"><td>Pokémon</td></tr>'
+        for (let k = 1; k < pokemon_results.length + 1; k++) {
+            let pokemon = pokemon_results[k - 1];
+            tableBody += '<tr><td>'+ pokemon + '</td></tr>\n';
         }
 
         // Put the table body we just built inside the table that's already on the page.
-        let generationsTable = document.getElementById('generations_table');
+        let generationsTable = document.getElementById('generation_table');
         if (generationsTable) {
             generationsTable.innerHTML = tableBody;
         }

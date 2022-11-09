@@ -42,3 +42,21 @@ margin-left: 500px;
 div.search_text_pair {
     float:left;
 }
+
+#generation_table {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    text-align: left;
+    width: 90%;
+}
+
+table, td, th {
+    border: 2px solid black;
+}
+
+#table_header {
+    font-size: large;
+    color: rgb(79, 75, 75);
+    font-weight: bold;
+}
