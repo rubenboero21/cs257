@@ -22,6 +22,13 @@ function initialize() {
     if (legendary_dropdown){
         legendary_dropdown.onchange = onLegendaryCategorySelectionChanged;
     }
+
+    let egg_group_checkbox = document.getElementById('egg_group_selector');
+    console.log('inside init: ' + egg_group_checkbox)
+
+    if (egg_group_checkbox){
+        egg_group_checkbox.onchange = onEggGroupSelectionChanged;
+    }
 }
 
 // Returns the base URL of the API, onto which endpoint
@@ -139,6 +146,7 @@ function loadLegendariesSelector() {
 
 function onLegendaryCategorySelectionChanged() {
     let legendary_category = this.value; 
+
     let url = getAPIBaseURL() + '/legendaries/' + legendary_category;
 
     fetch(url, {method: 'get'})
@@ -187,10 +195,10 @@ function loadEggGroupsSelector() {
             let egg_group = egg_groups[k];
             // every 2nd egg group ends a row
             if (k % 2 == 0 && k != 0) {
-                selectorBody += '<td><input type="checkbox" name=' + '"' + egg_group + 'checkbox"/>' + egg_group + '</td></tr>'
+                selectorBody += '<td><input type="checkbox" id="' + egg_group + '" name="' + egg_group + '"/>' + egg_group + '</td></tr>'
             }
             else {
-                selectorBody += '<tr><td><input type="checkbox" name=' + '"' + egg_group + 'checkbox"/>' + egg_group + '</td>';
+                selectorBody += '<td><input type="checkbox" id="' + egg_group + '" name="' + egg_group + '"/>' + egg_group + '</td>';
             }
         }
 
@@ -203,5 +211,40 @@ function loadEggGroupsSelector() {
     // Log the error if anything went wrong during the fetch.
     .catch(function(error) {
         console.log(error);
+    });
+}
+
+function onEggGroupSelectionChanged() {
+    let egg_group = this.value; 
+    egg_group = 'Field'
+
+    console.log("inside change " + egg_group)
+    let url = getAPIBaseURL() + '/egg_group/' + egg_group;
+
+    fetch(url, {method: 'get'})
+
+    .then((response) => response.json())
+
+    .then(function(pokemon_results) {
+        let tableBody = '';
+        // Create the header of the table
+        tableBody += '<tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>'
+        // Create the body of the table
+        for (let k = 0; k < pokemon_results.length; k++) {
+            let pokemon = pokemon_results[k];
+            tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
+            '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
+            '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
+            '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
+        }
+
+        let eggGroupResults = document.getElementById('egg_group_results');
+        if (eggGroupResults) {
+            eggGroupResults.innerHTML = tableBody;
+        }
+        })
+
+    .catch(function(error) {
+    console.log(error);
     });
 }
