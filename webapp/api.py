@@ -86,8 +86,7 @@ def get_legendaries():
             http://.../legendaries
         Returns an empty list if there's any database failure.
     '''
-    query = '''SELECT name FROM legendaries
-               ORDER BY id ASC;'''
+    query = '''SELECT name FROM legendaries'''
     legendaries_list = []
     try:
         connection = get_connection()
@@ -104,7 +103,7 @@ def get_legendaries():
 
     return json.dumps(legendaries_list)
 
-@api.route('/legendary/<legendary_category>')
+@api.route('/legendaries/<legendary_category>')
 def get_pokemon_for_legendary_category(legendary_category):
     query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
             FROM legendaries, pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table

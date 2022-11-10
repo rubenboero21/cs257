@@ -2,6 +2,8 @@
  * books.js
  * Jeff Ondich, 27 April 2016
  * Updated, 5 November 2020
+ * 
+ * Modified by Ruben Boero and Serafin Patino
  */
 
 window.onload = initialize;
@@ -17,7 +19,7 @@ function initialize() {
 
     let legendary_dropdown = document.getElementById('legendary_selector');
     if (legendary_dropdown){
-        legendary_dropdown.onchange = onLegendaryCategorySelectionChangedl;
+        legendary_dropdown.onchange = onLegendaryCategorySelectionChanged;
     }
 }
 
@@ -97,7 +99,6 @@ function onGenerationsSelectionChanged() {
     console.log(error);
     });
 }
-
 
 function onLegendaryCategorySelectionChanged() {
     let legendary_category = this.value; 

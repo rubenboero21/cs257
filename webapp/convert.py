@@ -12,7 +12,7 @@ dict_of_generations = {}
 dict_of_egg_groups = {}
 dict_of_abilities = {}
 
-
+# note we renamed the kaggle csv to 'pokemon_data.csv'
 with open ('pokemon_data.csv', 'r') as read_file, \
     open ('pokedex.csv', 'w') as pokedex_file, \
     open ('types.csv', 'w') as types_file, \
