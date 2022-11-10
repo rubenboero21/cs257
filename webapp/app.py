@@ -23,6 +23,10 @@ def home():
 def generations():
     return flask.render_template('generations.html')
 
+@app.route('/legendaries') 
+def legendaries():
+    return flask.render_template('legendaries.html')
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A Pokémon search engine/database')
     parser.add_argument('host', help='the host to run on')
