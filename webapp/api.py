@@ -23,6 +23,7 @@ def get_connection():
                             user=config.user,
                             password=config.password)
 
+# -------Generations Page-------
 @api.route('/generations') 
 def get_generations():
     ''' Returns a list of all the pokemon in a given generation. 
@@ -78,7 +79,7 @@ def get_pokemon_for_generation(gen_name):
 
     return json.dumps(pokemon_list)
 
-
+# -------Legendaries Page-------
 @api.route('/legendaries') 
 def get_legendaries():
     ''' Returns a list of all the pokemon in a given legendary category. 
@@ -86,7 +87,7 @@ def get_legendaries():
             http://.../legendaries
         Returns an empty list if there's any database failure.
     '''
-    query = '''SELECT name FROM legendaries'''
+    query = '''SELECT name FROM legendaries;'''
     legendaries_list = []
     try:
         connection = get_connection()
@@ -133,3 +134,29 @@ def get_pokemon_for_legendary_category(legendary_category):
         print(e, file=sys.stderr)
 
     return json.dumps(pokemon_list)
+
+# -------Egg Types Page-------
+@api.route('/egg_groups') 
+def get_egg_groups():
+    ''' Returns a list of all the pokemon in a given egg group. 
+        By default the list is sorted alphabetically.  
+            http://.../egg_groups
+        Returns an empty list if there's any database failure.
+    '''
+    query = '''SELECT name FROM egg_groups
+            ORDER BY name;'''
+    egg_group_list = []
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        #what's the purpose of tuple in jeff's example
+        cursor.execute(query, tuple())
+        for row in cursor:
+            egg_group = row[0]
+            egg_group_list.append(egg_group)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(egg_group_list)

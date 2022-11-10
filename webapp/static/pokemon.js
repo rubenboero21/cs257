@@ -11,6 +11,7 @@ window.onload = initialize;
 function initialize() {
     loadGenerationSelector();
     loadLegendariesSelector();
+    loadEggGroupsSelector();
 
     let generation_dropdown = document.getElementById('generation_selector');
     if (generation_dropdown) {
@@ -33,6 +34,7 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
+// -------Generations-------
 function loadGenerationSelector() {
     let url = getAPIBaseURL() + '/generations';
 
@@ -100,6 +102,41 @@ function onGenerationsSelectionChanged() {
     });
 }
 
+// -------Legendaries-------
+function loadLegendariesSelector() {
+    let url = getAPIBaseURL() + '/legendaries';
+
+    // Send the request to the books API /legendaries endpoint
+    fetch(url, {method: 'get'})
+
+    // When the results come back, transform them from a JSON string into
+    // a Javascript object.
+    .then((response) => response.json())
+
+    // Once you have your list of legendaries, use it to build
+    // an HTML table displaying the legendaries names and.
+    .then(function(legendaries) {
+        // Add the <option> elements to the <select> element
+        let selectorBody = '';
+        // adding a default value to be at the top of the drop down
+        selectorBody += '<option value="' + '--' + '">' + '--' + '</option>\n';
+        for (let k = 0; k < legendaries.length; k++) {
+            let legendary_category = legendaries[k];
+            selectorBody += '<option value="' + legendary_category + '">' + legendary_category + '</option>\n';
+        }
+
+        let selector = document.getElementById('legendary_selector');
+        if (selector) {
+            selector.innerHTML = selectorBody;
+        }
+    })
+
+    // Log the error if anything went wrong during the fetch.
+    .catch(function(error) {
+        console.log(error);
+    });
+}
+
 function onLegendaryCategorySelectionChanged() {
     let legendary_category = this.value; 
     let url = getAPIBaseURL() + '/legendaries/' + legendary_category;
@@ -134,29 +171,30 @@ function onLegendaryCategorySelectionChanged() {
     });
 }
 
-function loadLegendariesSelector() {
-    let url = getAPIBaseURL() + '/legendaries';
+// -------Egg_Groups-------
+function loadEggGroupsSelector() {
+    let url = getAPIBaseURL() + '/egg_groups';
 
-    // Send the request to the books API /legendaries endpoint
     fetch(url, {method: 'get'})
 
-    // When the results come back, transform them from a JSON string into
-    // a Javascript object.
     .then((response) => response.json())
 
-    // Once you have your list of legendaries, use it to build
-    // an HTML table displaying the legendaries names and.
-    .then(function(legendaries) {
-        // Add the <option> elements to the <select> element
+    .then(function(egg_groups) {
         let selectorBody = '';
-        // adding a default value to be at the top of the drop down
-        selectorBody += '<option value="' + '--' + '">' + '--' + '</option>\n';
-        for (let k = 0; k < legendaries.length; k++) {
-            let legendary_category = legendaries[k];
-            selectorBody += '<option value="' + legendary_category + '">' + legendary_category + '</option>\n';
+
+        // start at k = 1 bc the first egg group is a null value
+        for (let k = 1; k < egg_groups.length; k++) {
+            let egg_group = egg_groups[k];
+            // every 2nd egg group ends a row
+            if (k % 2 == 0 && k != 0) {
+                selectorBody += '<td><input type="checkbox" name=' + '"' + egg_group + 'checkbox"/>' + egg_group + '</td></tr>'
+            }
+            else {
+                selectorBody += '<tr><td><input type="checkbox" name=' + '"' + egg_group + 'checkbox"/>' + egg_group + '</td>';
+            }
         }
 
-        let selector = document.getElementById('legendary_selector');
+        let selector = document.getElementById('egg_group_selector');
         if (selector) {
             selector.innerHTML = selectorBody;
         }

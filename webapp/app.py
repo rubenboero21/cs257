@@ -27,6 +27,14 @@ def generations():
 def legendaries():
     return flask.render_template('legendaries.html')
 
+@app.route('/egg_groups') 
+def egg_groups():
+    return flask.render_template('egg_groups.html')
+
+@app.route('/types') 
+def types():
+    return flask.render_template('types.html')
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A Pokémon search engine/database')
     parser.add_argument('host', help='the host to run on')
