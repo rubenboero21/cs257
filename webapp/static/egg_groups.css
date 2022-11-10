@@ -1,8 +1,9 @@
 /* This file was created by Ruben Boero and Serafin Patino */
 
 table, td, th {
-    /* border: 1px solid black; */
     margin: 0 auto;
+    width: 88%;
+    text-align: center;
 }
 
 td {
@@ -17,7 +18,8 @@ tr {
 th, td {
     border: 3px solid black;
     border-radius: 10px;
-    padding-left: 250px;
+    /* the padding breaks the results table*/
+    /* padding-left: 20%; */
     text-align: left;
 }
 
@@ -59,3 +61,20 @@ margin-left: 500px;
     align-items: center;
     justify-content: center;
 }
+
+/* #egg_group_results {
+    margin-left: auto;
+    margin-right: auto;
+    border-collapse: collapse;
+    text-align: left;
+    width: 90%;
+    border: 2px solid black;
+} */
+
+#table_header {
+    font-size: large;
+    color: rgb(79, 75, 75);
+    font-weight: bold;
+}
+
+
