@@ -22,13 +22,6 @@ function initialize() {
     if (legendary_dropdown){
         legendary_dropdown.onchange = onLegendaryCategorySelectionChanged;
     }
-
-    let egg_group_checkbox = document.getElementById('egg_group_selector');
-    console.log('inside init: ' + egg_group_checkbox)
-
-    if (egg_group_checkbox){
-        egg_group_checkbox.onchange = onEggGroupSelectionChanged;
-    }
 }
 
 // Returns the base URL of the API, onto which endpoint
@@ -193,12 +186,13 @@ function loadEggGroupsSelector() {
         // start at k = 1 bc the first egg group is a null value
         for (let k = 1; k < egg_groups.length; k++) {
             let egg_group = egg_groups[k];
+            // using type radio to only allow one button to be selected at once
             // every 2nd egg group ends a row
             if (k % 2 == 0 && k != 0) {
-                selectorBody += '<td><input type="checkbox" id="' + egg_group + '" name="' + egg_group + '"/>' + egg_group + '</td></tr>'
+                selectorBody += '<td><input type="radio" onchange="onEggGroupSelectionChanged(event)" id="' + egg_group + '" name="egg_box"/>' + egg_group + '</td></tr>'
             }
             else {
-                selectorBody += '<td><input type="checkbox" id="' + egg_group + '" name="' + egg_group + '"/>' + egg_group + '</td>';
+                selectorBody += '<td><input type="radio" onchange="onEggGroupSelectionChanged(event)" id="' + egg_group + '" name="egg_box"/>' + egg_group + '</td>';
             }
         }
 
@@ -214,11 +208,11 @@ function loadEggGroupsSelector() {
     });
 }
 
-function onEggGroupSelectionChanged() {
-    let egg_group = this.value; 
-    egg_group = 'Field'
+function onEggGroupSelectionChanged(event) {
+    // event is the context around clicking the box
+    // target is the check box, target.id is the text
+    egg_group = event.target.id
 
-    console.log("inside change " + egg_group)
     let url = getAPIBaseURL() + '/egg_group/' + egg_group;
 
     fetch(url, {method: 'get'})

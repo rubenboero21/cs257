@@ -35,6 +35,12 @@ def egg_groups():
 def types():
     return flask.render_template('types.html')
 
+# need to figure out how to pass in variables into the def pokemon_detail function, those parameters
+# will be used to make the page dynamic. ALso need to know how to make a template of the page
+# @app.route('/<ID>')
+# def pokemon_detail(useful variables):
+#     return flask.render_template(same useful)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A Pokémon search engine/database')
     parser.add_argument('host', help='the host to run on')
