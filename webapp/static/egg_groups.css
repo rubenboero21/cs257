@@ -4,11 +4,11 @@ table, td, th {
     margin: 0 auto;
     width: 88%;
     text-align: center;
+    border-collapse: collapse;
 }
 
 td {
     width: 200px;
-    font-weight: bold;
 }
 
 tr {
@@ -17,7 +17,6 @@ tr {
 
 th, td {
     border: 3px solid black;
-    border-radius: 10px;
     /* the padding breaks the results table*/
     /* padding-left: 20%; */
     text-align: left;
@@ -62,15 +61,6 @@ margin-left: 500px;
     justify-content: center;
 }
 
-/* #egg_group_results {
-    margin-left: auto;
-    margin-right: auto;
-    border-collapse: collapse;
-    text-align: left;
-    width: 90%;
-    border: 2px solid black;
-} */
-
 #table_header {
     font-size: large;
     color: rgb(79, 75, 75);
@@ -78,3 +68,7 @@ margin-left: 500px;
 }
 
 
+.less_space {
+    padding: 20px;
+
+}
