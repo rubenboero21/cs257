@@ -35,10 +35,9 @@ def egg_groups():
 def types():
     return flask.render_template('types.html')
 
-# need to figure out how to pass in variables into the def pokemon_detail function, those parameters
-# will be used to make the page dynamic. ALso need to know how to make a template of the page
-# could we make a call to the server from this route to give us all info abt a pokemon?
-# @app.route('/<ID>')
+# send in the info needed for the pokemon specific page in the url. construct the URL in the JS after
+# the JSON dump. then this route can parse out each piece of information
+# @app.route('/pokemon/<ID-dex_num-name-etc.>')
 # def pokemon_detail(useful variables):
 #     return flask.render_template(same useful variables)
 

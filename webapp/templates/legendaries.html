@@ -13,16 +13,18 @@
     <div class = "header">
         <!-- The following site was used to learn how to make an image a link:
         https://pagedart.com/blog/linking-images-in-html/ -->
-        <div>
-            <a href = "/"><img alt= "Logo" id="logo" src="{{ url_for('static', filename='logo.png') }}"></a>
-            <a href = "/">Home</a>
-        </div>
-
-        <!-- https://stackoverflow.com/questions/3463621/css-label-text-right-below-input-element -->
+        <a href = "/"><img id = "logo" alt = "Logo" src="{{ url_for('static', filename='logo.png') }}"></a>
+        <a href = "/">Home</a>
+        <a href = "/generations">Generations</a>
+        <a href = "/legendaries">Legendaries</a>
+        <a href = "/egg_groups">Egg Groups</a>
+        <a href = "/types">Types</a>
+        <a href = "/pokedex">Pokédex</a>
+        
         <div class="search_text_pair">
             <input name = "search_bar" type="text" placeholder="search anything"/>
             <input type="submit" value="Go"><br /> <!-- <br /> is line break-->
-            <label for="search_bar" id = "advanced_search"><a href = "advanced_search.html">Advanced Search</a></label>
+            <label for="search_bar" id = "advanced_search"><a href = "">Advanced Search</a></label>
         </div>
     </div>
 
