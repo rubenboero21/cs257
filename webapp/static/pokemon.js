@@ -194,6 +194,7 @@ function loadEggGroupsSelector() {
             else {
                 selectorBody += '<td><input type="radio" onchange="onEggGroupSelectionChanged(event)" id="' + egg_group + '" name="egg_box"/>' + egg_group + '</td>';
             }
+            // onchange calls a function when the radio button is clicked
         }
 
         let selector = document.getElementById('egg_group_selector');
