@@ -35,6 +35,10 @@ def egg_groups():
 def types():
     return flask.render_template('types.html')
 
+@app.route('/pokedex')
+def pokedex():
+    return flask.render_template('pokedex.html')
+
 # send in the info needed for the pokemon specific page in the url. construct the URL in the JS after
 # the JSON dump. then this route can parse out each piece of information
 # @app.route('/pokemon/<ID-dex_num-name-etc.>')
