@@ -37,9 +37,10 @@ def types():
 
 # need to figure out how to pass in variables into the def pokemon_detail function, those parameters
 # will be used to make the page dynamic. ALso need to know how to make a template of the page
+# could we make a call to the server from this route to give us all info abt a pokemon?
 # @app.route('/<ID>')
 # def pokemon_detail(useful variables):
-#     return flask.render_template(same useful)
+#     return flask.render_template(same useful variables)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('A Pokémon search engine/database')
