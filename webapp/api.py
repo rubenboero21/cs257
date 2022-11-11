@@ -134,6 +134,65 @@ def get_pokemon_for_legendary_category(legendary_category):
         print(e, file=sys.stderr)
 
     return json.dumps(pokemon_list)
+# -------Types Page-------
+@api.route('/types')
+def get_types():
+    ''' Returns a list of all types. 
+        By default the list is sorted alphabetically.  
+            http://.../egg_groups
+        Returns an empty list if there's any database failure.
+    '''
+    query = '''SELECT name FROM types
+            ORDER BY name;'''
+    type_list = []
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        #what's the purpose of tuple in jeff's example
+        cursor.execute(query, tuple())
+        for row in cursor:
+            type = row[0]
+            type_list.append(type)
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(type_list)
+
+@api.route('/type/<search_type>') 
+def get_pokemon_from_type(search_type):
+    ''' Returns a list of all the pokemon with a given type. 
+            http://.../type/<search_type>
+        Returns an empty list if there's any database failure.
+    '''
+    query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
+            FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
+            WHERE 1 = 1
+            AND pokemon.id = linking_table.pokemon_id
+            AND ab1.id = linking_table.ability1_id
+            AND ab2.id = linking_table.ability2_id
+            AND ab3.id = linking_table.ability3_id
+            AND typ1.id = linking_table.type1_id
+            AND typ2.id = linking_table.type2_id
+            AND generations.id = linking_table.generation_id
+            AND (typ1.name = %s OR typ2.name = %s)
+            ORDER BY pokemon.dex_num ASC;'''
+    pokemon_list = []
+    try:
+        connection = get_connection()
+        cursor = connection.cursor()
+        #what's the purpose of tuple in jeff's example
+        cursor.execute(query, (search_type, search_type,))
+        for row in cursor:
+            pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
+                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
+        cursor.close()
+        connection.close()
+    except Exception as e:
+        print(e, file=sys.stderr)
+
+    return json.dumps(pokemon_list)
 
 # -------Egg Types Page-------
 @api.route('/egg_groups') 
@@ -164,7 +223,6 @@ def get_egg_groups():
 @api.route('/egg_group/<egg_group>') 
 def get_pokemon_from_egg_group(egg_group):
     ''' Returns a list of all the pokemon in a given egg group. 
-        By default the list is sorted alphabetically.  
             http://.../egg_groups/<egg_group>
         Returns an empty list if there's any database failure.
     '''

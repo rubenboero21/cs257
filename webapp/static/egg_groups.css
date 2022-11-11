@@ -17,8 +17,6 @@ tr {
 
 th, td {
     border: 3px solid black;
-    /* the padding breaks the results table*/
-    /* padding-left: 20%; */
     text-align: left;
 }
 
@@ -63,12 +61,9 @@ margin-left: 500px;
 
 #table_header {
     font-size: large;
-    color: rgb(79, 75, 75);
     font-weight: bold;
 }
 
-
 .less_space {
     padding: 20px;
-
 }

@@ -1,14 +1,22 @@
 /* This file was created by Ruben Boero and Serafin Patino */
 
 table, td, th {
+    border-collapse: collapse;
     margin: 0 auto;
+    text-align: center;
+    width: 88%;
+}
+td {
+    width: 200px;
 }
 
 th, td {
     border: 3px solid black;
-    border-radius: 10px;
-    padding-left: 60px;
     text-align: left;
+}
+
+tr {
+    align-items: left;
 }
 
 .title_container {
@@ -48,4 +56,13 @@ margin-left: 500px;
     height: 80px;
     align-items: center;
     justify-content: center;
+}
+
+.less_space {
+    padding: 20px;
+}
+
+#table_header {
+    font-size: large;
+    font-weight: bold;
 }
