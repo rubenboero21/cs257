@@ -25,6 +25,16 @@ function initialize() {
     if (legendary_dropdown){
         legendary_dropdown.onchange = onLegendaryCategorySelectionChanged;
     }
+
+    // let search_dropdown = document.getElementById('search_dropdown');
+    // if (search_dropdown){
+    //     search_dropdown.onchange = onSearchDropdownSelectionChanged;
+    // }
+
+    let go_button = document.getElementById('go_button');
+    if (go_button){
+        go_button.onclick = onGoButtonClicked;
+    }
 }
 
 // Returns the base URL of the API, onto which endpoint
@@ -343,6 +353,59 @@ function onEggGroupSelectionChanged(event) {
             eggGroupResults.innerHTML = tableBody;
         }
         })
+
+    .catch(function(error) {
+    console.log(error);
+    });
+}
+
+// -------Search Bar-------
+function onSearchDropdownSelectionChanged() {
+    let search_category = this.value;
+    console.log(search_category)
+}
+
+function onGoButtonClicked() { 
+    var search_text = document.getElementById('search_bar').value
+    var search_dropdown = document.getElementById('search_dropdown');
+    var search_category = search_dropdown.value;
+    
+    // we really want search text to be optional, but we couldnt figure
+    // out how to make it work with the API call, so we did this instead
+    if (search_text == '') {
+        search_text = 'default'
+    }
+    let url = getAPIBaseURL() + '/search/' + search_category + '/' + search_text;
+    // console.log(typeof search_category)
+    // console.log(typeof search_text)
+    fetch(url, {method: 'get'})
+
+    .then((response) => response.json())
+
+    .then(function(search_results) {
+        let tableBody = ''
+        for (let k = 0; k < search_results.length; k++) {
+            let pokemon = search_results[k];
+            if (k %2 == 0) {
+                tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
+                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
+                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
+                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
+            } 
+            else {
+                tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
+                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
+                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
+                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
+            }        
+        }
+
+        let searchTable = document.getElementById('search_results_table');
+        if (searchTable) {
+            searchTable.innerHTML = tableBody;
+        }
+
+    })
 
     .catch(function(error) {
     console.log(error);
