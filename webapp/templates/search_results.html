@@ -35,6 +35,14 @@
     
         <div class = "empty_space"></div>
     
-        <table id="search_results_table">{{search_results}}</table>
+        <!-- <table id="search_results_table">{{search_results}}</table> -->
+        <table id="search_results_table">
+            {%for item in search_results%}
+            <tr>
+                <td>{{item['dex_num']}}</td>
+                <td>{{item['name']}}</td>
+            </tr>
+            {%endfor%}
+        </table>
     </body>
 </body>

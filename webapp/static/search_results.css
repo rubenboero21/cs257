@@ -45,3 +45,10 @@ table, td, th {
     font-size: large;
     font-weight: bold;
 }
+
+tr:nth-child(2n){
+    background-color: #E2FCFF;
+}
+
+
+

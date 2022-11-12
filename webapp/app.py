@@ -29,28 +29,6 @@ def get_connection():
                             user=config.user,
                             password=config.password)
 
-def createTableHTML(search_results, alternatingLineColor):
-    tableBody = ''
-    # Create the header of the table
-    tableBody += '<tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>'
-    # Create the body of the table
-    counter = 0
-    for pokemon in search_results:
-        if counter % 2 == 0:
-            tableBody += '<tr><td>'+ str(pokemon['dex_num']) + '<td>'+ pokemon['name']+ '</td>' + \
-            '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + \
-            '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + \
-            '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n'
-        else: 
-            tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ str(pokemon['dex_num']) + '<td>'+ pokemon['name']+ '</td>' + \
-            '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + \
-            '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + \
-            '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n'
-        
-        counter += 1 
-
-    return tableBody
-
 @app.route('/')
 def home():
     return flask.render_template('index.html')
@@ -116,9 +94,9 @@ def display_search_results(category, search_text):
             except Exception as e:
                 print(e, file=sys.stderr)
 
-            search_results_table = createTableHTML(pokemon_list, '#E2FCFF')
+            # return the list of dictionaries to the html, then parse it inside HTML
+            return flask.render_template('search_results.html', search_results=pokemon_list)
 
-            return flask.render_template('search_results.html', search_results=search_results_table)
 
         elif category == 'pokedex_number':
             query = ''''''
@@ -126,9 +104,6 @@ def display_search_results(category, search_text):
             query = ''''''
         elif category == 'type':
             query = ''''''
-
-    # return flask.render_template('search_results.html')
-
 
 # send in the info needed for the pokemon specific page in the url. construct the URL in the JS after
 # the JSON dump. then this route can parse out each piece of information
