@@ -50,7 +50,7 @@ function createTableHTML(search_results, alternatingLineColor) {
     // Create the body of the table
     for (let k = 0; k < search_results.length; k++) {
         let pokemon = search_results[k];
-        if (k %2 == 0) {
+        if (k % 2 == 0) {
             tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
             '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
             '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
@@ -323,21 +323,23 @@ function onGoButtonClicked() {
     if (search_text == '') {
         search_text = 'default'
     }
-    let url = getAPIBaseURL() + '/search/' + search_category + '/' + search_text;
-    fetch(url, {method: 'get'})
+    let url = '/search_results/' + search_category + '/' + search_text;
+    console.log(url)
+    window.location.href = url
+    // fetch(url, {method: 'get'})
 
-    .then((response) => response.json())
+    // .then((response) => response.json())
 
-    .then(function(search_results) {
-        let tableBody = createTableHTML(search_results, alternatingLineColor)
+    // .then(function(search_results) {
+    //     let tableBody = createTableHTML(search_results, alternatingLineColor)
 
-        let searchTable = document.getElementById('search_results_table');
-        if (searchTable) {
-            searchTable.innerHTML = tableBody;
-        }
-    })
+    //     let searchTable = document.getElementById('search_results_table');
+    //     if (searchTable) {
+    //         searchTable.innerHTML = tableBody;
+    //     }
+    // })
 
-    .catch(function(error) {
-    console.log(error);
-    });
+    // .catch(function(error) {
+    // console.log(error);
+    // });
 }

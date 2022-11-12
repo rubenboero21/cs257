@@ -256,53 +256,51 @@ def get_pokemon_from_egg_group(egg_group):
 
     return json.dumps(pokemon_list)
 
-@api.route('/search/<category>/<search_text>')
-def get_search_results(category, search_text):
-    if search_text == 'default':
-        if category == 'pokemon':
-            query = ''''''
-        elif category == 'pokedex_number':
-            query = ''''''
-        elif category == 'ability':
-            query = ''''''
-        elif category == 'type':
-            query = ''''''
-    else: # if there is search text
-        if category == 'pokemon':
-            query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
-                    FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
-                    WHERE 1 = 1
-                    AND pokemon.id = linking_table.pokemon_id
-                    AND ab1.id = linking_table.ability1_id
-                    AND ab2.id = linking_table.ability2_id
-                    AND ab3.id = linking_table.ability3_id
-                    AND typ1.id = linking_table.type1_id
-                    AND typ2.id = linking_table.type2_id
-                    AND generations.id = linking_table.generation_id
-                    AND pokemon.name ILIKE CONCAT ('%%',%s,'%%')
-                    ORDER BY pokemon.dex_num ASC;'''
-            pokemon_list = []
-            try:
-                connection = get_connection()
-                cursor = connection.cursor()
-                #what's the purpose of tuple in jeff's example
-                cursor.execute(query, (search_text,))
-                for row in cursor:
-                    pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
-                        'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
-                cursor.close()
-                connection.close()
-            except Exception as e:
-                print(e, file=sys.stderr)
+# @api.route('/search/<category>/<search_text>')
+# def get_search_results(category, search_text):
+    # if search_text == 'default':
+    #     if category == 'pokemon':
+    #         query = ''''''
+    #     elif category == 'pokedex_number':
+    #         query = ''''''
+    #     elif category == 'ability':
+    #         query = ''''''
+    #     elif category == 'type':
+    #         query = ''''''
+    # else: # if there is search text
+    #     if category == 'pokemon':
+    #         query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
+    #                 FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
+    #                 WHERE 1 = 1
+    #                 AND pokemon.id = linking_table.pokemon_id
+    #                 AND ab1.id = linking_table.ability1_id
+    #                 AND ab2.id = linking_table.ability2_id
+    #                 AND ab3.id = linking_table.ability3_id
+    #                 AND typ1.id = linking_table.type1_id
+    #                 AND typ2.id = linking_table.type2_id
+    #                 AND generations.id = linking_table.generation_id
+    #                 AND pokemon.name ILIKE CONCAT ('%%',%s,'%%')
+    #                 ORDER BY pokemon.dex_num ASC;'''
+    #         pokemon_list = []
+    #         try:
+    #             connection = get_connection()
+    #             cursor = connection.cursor()
+    #             #what's the purpose of tuple in jeff's example
+    #             cursor.execute(query, (search_text,))
+    #             for row in cursor:
+    #                 pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
+    #                     'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
+    #             cursor.close()
+    #             connection.close()
+    #         except Exception as e:
+    #             print(e, file=sys.stderr)
 
-            return json.dumps(pokemon_list)        
-        elif category == 'pokedex_number':
-            query = ''''''
-        elif category == 'ability':
-            query = ''''''
-        elif category == 'type':
-            query = ''''''
+    #         return json.dumps(pokemon_list)        
+    #     elif category == 'pokedex_number':
+    #         query = ''''''
+    #     elif category == 'ability':
+    #         query = ''''''
+    #     elif category == 'type':
+    #         query = ''''''
             
-    list = [category, search_text]
-
-    return json.dumps(list)
+    # return json.dumps(list)
