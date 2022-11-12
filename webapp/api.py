@@ -302,9 +302,7 @@ def get_search_results(category, search_text):
             query = ''''''
         elif category == 'type':
             query = ''''''
-
-    print(category)
-    print(search_text)
+            
     list = [category, search_text]
 
     return json.dumps(list)
