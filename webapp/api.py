@@ -139,7 +139,7 @@ def get_pokemon_for_legendary_category(legendary_category):
 def get_types():
     ''' Returns a list of all types. 
         By default the list is sorted alphabetically.  
-            http://.../egg_groups
+            http://.../types
         Returns an empty list if there's any database failure.
     '''
     query = '''SELECT name FROM types
