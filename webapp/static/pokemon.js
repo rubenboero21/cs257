@@ -26,11 +26,6 @@ function initialize() {
         legendary_dropdown.onchange = onLegendaryCategorySelectionChanged;
     }
 
-    // let search_dropdown = document.getElementById('search_dropdown');
-    // if (search_dropdown){
-    //     search_dropdown.onchange = onSearchDropdownSelectionChanged;
-    // }
-
     let go_button = document.getElementById('go_button');
     if (go_button){
         go_button.onclick = onGoButtonClicked;
@@ -45,6 +40,30 @@ function getAPIBaseURL() {
                     + ':' + window.location.port
                     + '/api';
     return baseURL;
+}
+
+// Returns the HTML for the table to display search results
+function createTableHTML(search_results, alternatingLineColor) {
+    let tableBody = '';
+    // Create the header of the table
+    tableBody += '<tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>'
+    // Create the body of the table
+    for (let k = 0; k < search_results.length; k++) {
+        let pokemon = search_results[k];
+        if (k %2 == 0) {
+            tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
+            '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
+            '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
+            '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
+        } 
+        else {
+            tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
+            '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
+            '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
+            '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
+        }        
+    }
+    return tableBody
 }
 
 // -------Generations-------
@@ -91,25 +110,8 @@ function onGenerationsSelectionChanged() {
     .then((response) => response.json())
 
     .then(function(pokemon_results) {
-    let tableBody = '';
-    // Create the header of the table
-    tableBody += '<tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td></tr>'
-    // Create the body of the table
-    for (let k = 0; k < pokemon_results.length; k++) {
-    let pokemon = pokemon_results[k];
-    if (k % 2 == 0) {
-        tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-        '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-        '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-        '<td>' + pokemon['type2']+ '</td>' + '</td></tr>\n';
-    }
-    else {
-        tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-        '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-        '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-        '<td>' + pokemon['type2']+ '</td>' + '</td></tr>\n';
-    }
-    }
+        let tableBody = createTableHTML(pokemon_results, alternatingLineColor)
+
 
     // Put the table body we just built inside the table that's already on the page.
     let generationsTable = document.getElementById('generation_table');
@@ -169,25 +171,7 @@ function onLegendaryCategorySelectionChanged() {
     .then((response) => response.json())
 
     .then(function(pokemon_results) {
-        let tableBody = '';
-        // Create the header of the table
-        tableBody += '<tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>'
-        // Create the body of the table
-        for (let k = 0; k < pokemon_results.length; k++) {
-            let pokemon = pokemon_results[k];
-            if (k % 2 == 0) {
-                tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-            }
-            else {
-                tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-            }
-        }
+        let tableBody = createTableHTML(pokemon_results, alternatingLineColor)
 
         // Put the table body we just built inside the table that's already on the page.
         let legendariesTable = document.getElementById('legendary_table');
@@ -249,25 +233,7 @@ function onTypeSelectionChanged(event) {
     .then((response) => response.json())
 
     .then(function(pokemon_results) {
-        let tableBody = '';
-        // Create the header of the table
-        tableBody += '<tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>'
-        // Create the body of the table
-        for (let k = 0; k < pokemon_results.length; k++) {
-            let pokemon = pokemon_results[k];
-            if (k % 2 == 0) {
-                tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-            }
-            else {
-                tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-            }
-        }
+        let tableBody = createTableHTML(pokemon_results, alternatingLineColor)
 
         let typeResults = document.getElementById('type_results');
         if (typeResults) {
@@ -328,25 +294,7 @@ function onEggGroupSelectionChanged(event) {
     .then((response) => response.json())
 
     .then(function(pokemon_results) {
-        let tableBody = '';
-        // Create the header of the table
-        tableBody += '<tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>'
-        // Create the body of the table
-        for (let k = 0; k < pokemon_results.length; k++) {
-            let pokemon = pokemon_results[k];
-            if (k %2 == 0) {
-                tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-            } 
-            else {
-                tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-            }
-        }
+        let tableBody = createTableHTML(pokemon_results, alternatingLineColor)
 
         let eggGroupResults = document.getElementById('egg_group_results');
         if (eggGroupResults) {
@@ -376,35 +324,17 @@ function onGoButtonClicked() {
         search_text = 'default'
     }
     let url = getAPIBaseURL() + '/search/' + search_category + '/' + search_text;
-    // console.log(typeof search_category)
-    // console.log(typeof search_text)
     fetch(url, {method: 'get'})
 
     .then((response) => response.json())
 
     .then(function(search_results) {
-        let tableBody = ''
-        for (let k = 0; k < search_results.length; k++) {
-            let pokemon = search_results[k];
-            if (k %2 == 0) {
-                tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-            } 
-            else {
-                tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td>'+ pokemon['name']+ '</td>' + 
-                '<td>' + pokemon['ability1']+ '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-                '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-                '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-            }        
-        }
+        let tableBody = createTableHTML(search_results, alternatingLineColor)
 
         let searchTable = document.getElementById('search_results_table');
         if (searchTable) {
             searchTable.innerHTML = tableBody;
         }
-
     })
 
     .catch(function(error) {
