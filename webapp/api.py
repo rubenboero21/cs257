@@ -134,6 +134,7 @@ def get_pokemon_for_legendary_category(legendary_category):
         print(e, file=sys.stderr)
 
     return json.dumps(pokemon_list)
+    
 # -------Types Page-------
 @api.route('/types')
 def get_types():

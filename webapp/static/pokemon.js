@@ -318,6 +318,8 @@ function onGoButtonClicked() {
     var search_dropdown = document.getElementById('search_dropdown');
     var search_category = search_dropdown.value;
     
+    console.log(search_text)
+
     // we really want search text to be optional, but we couldnt figure
     // out how to make it work with the API call, so we did this instead
     if (search_text == '') {
@@ -326,20 +328,4 @@ function onGoButtonClicked() {
     let url = '/search_results/' + search_category + '/' + search_text;
     console.log(url)
     window.location.href = url
-    // fetch(url, {method: 'get'})
-
-    // .then((response) => response.json())
-
-    // .then(function(search_results) {
-    //     let tableBody = createTableHTML(search_results, alternatingLineColor)
-
-    //     let searchTable = document.getElementById('search_results_table');
-    //     if (searchTable) {
-    //         searchTable.innerHTML = tableBody;
-    //     }
-    // })
-
-    // .catch(function(error) {
-    // console.log(error);
-    // });
 }

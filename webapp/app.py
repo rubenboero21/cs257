@@ -14,7 +14,6 @@ import api
 import sys
 import config
 import psycopg2
-import json
 
 app = flask.Flask(__name__, static_folder='static', template_folder='templates')
 app.register_blueprint(api.api, url_prefix='/api')
@@ -53,57 +52,154 @@ def types():
 def pokedex():
     return flask.render_template('pokedex.html')
 
+# is there a way to shorten the length of this function? 
+# the queries need different number of search inputs, but other than that,
+# theyre the same execute command
 @app.route('/search_results/<category>/<search_text>')
 # def display_search_results():
 def display_search_results(category, search_text):
 
     if search_text == 'default':
-        if category == 'pokemon':
-            query = ''''''
-        elif category == 'pokedex_number':
-            query = ''''''
-        elif category == 'ability':
-            query = ''''''
-        elif category == 'type':
-            query = ''''''
-    else: # if there is search text
-        if category == 'pokemon':
-            query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
-                    FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
-                    WHERE 1 = 1
-                    AND pokemon.id = linking_table.pokemon_id
-                    AND ab1.id = linking_table.ability1_id
-                    AND ab2.id = linking_table.ability2_id
-                    AND ab3.id = linking_table.ability3_id
-                    AND typ1.id = linking_table.type1_id
-                    AND typ2.id = linking_table.type2_id
-                    AND generations.id = linking_table.generation_id
-                    AND pokemon.name ILIKE CONCAT ('%%',%s,'%%')
-                    ORDER BY pokemon.dex_num ASC;'''
-            pokemon_list = []
-            try:
-                connection = get_connection()
-                cursor = connection.cursor()
-                #what's the purpose of tuple in jeff's example
-                cursor.execute(query, (search_text,))
-                for row in cursor:
-                    pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
-                        'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
-                cursor.close()
-                connection.close()
-            except Exception as e:
-                print(e, file=sys.stderr)
+        query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
+                FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
+                WHERE 1 = 1
+                AND pokemon.id = linking_table.pokemon_id
+                AND ab1.id = linking_table.ability1_id
+                AND ab2.id = linking_table.ability2_id
+                AND ab3.id = linking_table.ability3_id
+                AND typ1.id = linking_table.type1_id
+                AND typ2.id = linking_table.type2_id
+                AND generations.id = linking_table.generation_id
+                ORDER BY pokemon.dex_num ASC;'''
 
-            # return the list of dictionaries to the html, then parse it inside HTML
-            return flask.render_template('search_results.html', search_results=pokemon_list)
+    elif category == 'pokemon':
+        query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
+                FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
+                WHERE 1 = 1
+                AND pokemon.id = linking_table.pokemon_id
+                AND ab1.id = linking_table.ability1_id
+                AND ab2.id = linking_table.ability2_id
+                AND ab3.id = linking_table.ability3_id
+                AND typ1.id = linking_table.type1_id
+                AND typ2.id = linking_table.type2_id
+                AND generations.id = linking_table.generation_id
+                AND pokemon.name ILIKE CONCAT ('%%',%s,'%%')
+                ORDER BY pokemon.dex_num ASC;'''
 
+    elif category == 'pokedex_number':
+        query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
+                FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
+                WHERE 1 = 1
+                AND pokemon.id = linking_table.pokemon_id
+                AND ab1.id = linking_table.ability1_id
+                AND ab2.id = linking_table.ability2_id
+                AND ab3.id = linking_table.ability3_id
+                AND typ1.id = linking_table.type1_id
+                AND typ2.id = linking_table.type2_id
+                AND generations.id = linking_table.generation_id
+                AND pokemon.dex_num = %s
+                ORDER BY pokemon.dex_num ASC;'''
 
-        elif category == 'pokedex_number':
-            query = ''''''
-        elif category == 'ability':
-            query = ''''''
-        elif category == 'type':
-            query = ''''''
+    elif category == 'ability':
+        query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
+                FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
+                WHERE 1 = 1
+                AND pokemon.id = linking_table.pokemon_id
+                AND ab1.id = linking_table.ability1_id
+                AND ab2.id = linking_table.ability2_id
+                AND ab3.id = linking_table.ability3_id
+                AND typ1.id = linking_table.type1_id
+                AND typ2.id = linking_table.type2_id
+                AND generations.id = linking_table.generation_id
+                AND (ab1.name ILIKE CONCAT ('%%',%s,'%%')
+                OR ab2.name ILIKE CONCAT ('%%',%s,'%%') 
+                OR ab3.name ILIKE CONCAT ('%%',%s,'%%'))
+                ORDER BY pokemon.dex_num ASC;'''
+
+    elif category == 'type':
+        query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
+                FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
+                WHERE 1 = 1
+                AND pokemon.id = linking_table.pokemon_id
+                AND ab1.id = linking_table.ability1_id
+                AND ab2.id = linking_table.ability2_id
+                AND ab3.id = linking_table.ability3_id
+                AND typ1.id = linking_table.type1_id
+                AND typ2.id = linking_table.type2_id
+                AND generations.id = linking_table.generation_id
+                AND (typ1.name ILIKE CONCAT ('%%',%s,'%%') OR typ2.name ILIKE CONCAT ('%%',%s,'%%'))
+                ORDER BY pokemon.dex_num ASC;'''
+
+    pokemon_list = []
+
+    # if there is no search text, return all pokemon
+    if search_text == 'default':
+        try:
+            connection = get_connection()
+            cursor = connection.cursor()
+            #what's the purpose of tuple in jeff's example
+            cursor.execute(query,)
+            for row in cursor:
+                pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
+                    'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e, file=sys.stderr)
+
+        # return the list of dictionaries to the html, then parse it inside HTML
+        return flask.render_template('search_results.html', search_results=pokemon_list)
+
+    elif category == 'pokemon' or category == 'pokedex_number':
+        try:
+            connection = get_connection()
+            cursor = connection.cursor()
+            #what's the purpose of tuple in jeff's example
+            cursor.execute(query, (search_text,))
+            for row in cursor:
+                pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
+                    'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e, file=sys.stderr)
+
+        # return the list of dictionaries to the html, then parse it inside HTML
+        return flask.render_template('search_results.html', search_results=pokemon_list)
+    
+    elif category == 'ability':
+        try:
+            connection = get_connection()
+            cursor = connection.cursor()
+            #what's the purpose of tuple in jeff's example
+            cursor.execute(query, (search_text, search_text, search_text,))
+            for row in cursor:
+                pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
+                    'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e, file=sys.stderr)
+
+        # return the list of dictionaries to the html, then parse it inside HTML
+        return flask.render_template('search_results.html', search_results=pokemon_list)
+    
+    elif category == 'type':
+        try:
+            connection = get_connection()
+            cursor = connection.cursor()
+            #what's the purpose of tuple in jeff's example
+            cursor.execute(query, (search_text, search_text,))
+            for row in cursor:
+                pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
+                    'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
+            cursor.close()
+            connection.close()
+        except Exception as e:
+            print(e, file=sys.stderr)
+
+        # return the list of dictionaries to the html, then parse it inside HTML
+        return flask.render_template('search_results.html', search_results=pokemon_list)
 
 # send in the info needed for the pokemon specific page in the url. construct the URL in the JS after
 # the JSON dump. then this route can parse out each piece of information

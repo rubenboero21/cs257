@@ -152,3 +152,4 @@ AND typ2.id = linking_table.type2_id
 AND generations.id = linking_table.generation_id
 AND (typ1.name = %s OR typ2.name = %s)
 ORDER BY pokemon.dex_num ASC;
+

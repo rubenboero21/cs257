@@ -39,6 +39,10 @@ div.search_text_pair {
 
 table, td, th {
     border: 2px solid black;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
 }
 
 #table_header {
@@ -46,6 +50,10 @@ table, td, th {
     font-weight: bold;
 }
 
+#search_results_table {
+    width: 90%;
+}
+/* makes every other row in a table a different color */
 tr:nth-child(2n){
     background-color: #E2FCFF;
 }
