@@ -18,16 +18,6 @@
     justify-content: center;
 }
 
-#search_bar {
-height: 30px;
-text-align: right;
-margin-left: 500px;
-}
-
-#advanced_search {
-    font-size: small;
-}
-
 .header {
     display: flex;
     /* https://teamtreehouse.com/community/how-to-position-a-flex-item-to-the-far-right-in-the-flexbox */

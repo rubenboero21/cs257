@@ -319,6 +319,7 @@ function onGoButtonClicked() {
     var search_category = search_dropdown.value;
     
     console.log(search_text)
+    console.log(search_category)
 
     // we really want search text to be optional, but we couldnt figure
     // out how to make it work with the API call, so we did this instead

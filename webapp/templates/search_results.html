@@ -39,16 +39,16 @@
         to parse out the individual data entries -->
         <table id="search_results_table">
             <tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>
-            {%for item in search_results%}
+            {%for pokemon in search_results%}
             <tr>
-                <td>{{item['dex_num']}}</td>
-                <td>{{item['name']}}</td>
-                <td>{{item['ability1']}}</td>
-                <td>{{item['ability2']}}</td>
-                <td>{{item['ability3']}}</td>             
-                <td>{{item['type1']}}</td>
-                <td>{{item['type2']}}</td>
-                <td>{{item['generation']}}</td>
+                <td>{{pokemon['dex_num']}}</td>
+                <td>{{pokemon['name']}}</td>
+                <td>{{pokemon['ability1']}}</td>
+                <td>{{pokemon['ability2']}}</td>
+                <td>{{pokemon['ability3']}}</td>             
+                <td>{{pokemon['type1']}}</td>
+                <td>{{pokemon['type2']}}</td>
+                <td>{{pokemon['generation']}}</td>
             </tr>
             {%endfor%}
         </table>

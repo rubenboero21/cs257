@@ -24,10 +24,6 @@ tr {
     padding: 10px;
 }
 
-#advanced_search {
-    font-size: small;
-}
-
 .header {
     display: flex;
     /* https://teamtreehouse.com/community/how-to-position-a-flex-item-to-the-far-right-in-the-flexbox */
@@ -41,12 +37,6 @@ tr {
 /* https://stackoverflow.com/questions/3463621/css-label-text-right-below-input-element */
 div.search_text_pair {
     float:left;
-}
-
-#search_bar {
-height: 30px;
-text-align: right;
-margin-left: 500px;
 }
 
 /* TODO: logo doesn't want to adopt resizing of code below */

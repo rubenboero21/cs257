@@ -20,11 +20,17 @@
         <a href = "/egg_groups">Egg Groups</a>
         <a href = "/types">Types</a>
         <a href = "/pokedex">Pokédex</a>
-    
+        
         <div class="search_text_pair">
-            <input name = "search_bar" type="text" placeholder="search anything"/>
-            <input type="submit" value="Go"><br /> <!-- <br /> is line break-->
-            <label for="search_bar" id = "advanced_search"><a href = "">Advanced Search</a></label>
+            <select id = "search_dropdown"> 
+                <option value = "pokemon">Pokémon</option> 
+                <option value = "pokedex_number">Pokédex Number</option> 
+                <option value = "ability">Ability</option> 
+                <option value = "type">Type</option> 
+            </select>
+            <input id = "search_bar" name = "search_bar" type="text" placeholder="search anything"/>
+            <input id = "go_button" type="submit" value="Go"><br/> <!-- <br /> is line break-->
+            <label for="search_bar"><a href = "">Advanced Search</a></label>
         </div>
     </div>
 
