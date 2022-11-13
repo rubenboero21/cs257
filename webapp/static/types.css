@@ -34,11 +34,6 @@ tr {
     padding: 50px;
 }
 
-/* https://stackoverflow.com/questions/3463621/css-label-text-right-below-input-element */
-div.search_text_pair {
-    float:left;
-}
-
 /* TODO: logo doesn't want to adopt resizing of code below */
 #logo{
     display: block;

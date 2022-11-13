@@ -28,11 +28,6 @@
     padding: 50px;
 }
 
-/* https://stackoverflow.com/questions/3463621/css-label-text-right-below-input-element */
-div.search_text_pair {
-    float:left;
-}
-
 #generation_table {
     margin-left: auto;
     margin-right: auto;

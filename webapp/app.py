@@ -14,6 +14,7 @@ import api
 import sys
 import config
 import psycopg2
+import json
 
 app = flask.Flask(__name__, static_folder='static', template_folder='templates')
 app.register_blueprint(api.api, url_prefix='/api')
@@ -48,19 +49,26 @@ def egg_groups():
 def types():
     return flask.render_template('types.html')
 
-@app.route('/pokedex')
-def pokedex():
-    return flask.render_template('pokedex.html')
+# if we add the '\' character to break up the line, flask doesn't work
+@app.route('/<id>/<name>/<ab1>/<ab2>/<ab3>/<type1>/<type2>/<generation>/<height>/<weight>/<normal_resist>/<fire_resist>/<water_resist>/<electric_resist>/<grass_resist>/<ice_resist>/<fighting_resist>/<poison_resist>/<ground_resist>/<flying_resist>/<psychic_resist>/<bug_resist>/<rock_resist>/<ghost_resist>/<dragon_resist>/<dark_resist>/<steel_resist>/<fairy_resist>')
+def pokedex(id,name,ab1,ab2,ab3,type1,type2,generation,height,weight,normal_resist,fire_resist, \
+water_resist,electric_resist,grass_resist,ice_resist,fighting_resist,poison_resist,ground_resist,flying_resist, \
+psychic_resist,bug_resist,rock_resist,ghost_resist,dragon_resist,dark_resist,steel_resist,fairy_resist):
+    print('made it')
+    # add the rest of the variables into the render template function
+    return flask.render_template('pokedex.html', name=name)
 
 # is there a way to shorten the length of this function? 
 # the queries need different number of search inputs, but other than that,
 # theyre the same execute command
+# SOLUTION
+# feed in the number of times the search text is used
 @app.route('/search_results/<category>/<search_text>')
 # def display_search_results():
 def display_search_results(category, search_text):
 
     if search_text == 'default':
-        query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name
+        query = '''SELECT  pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, linking_table.height, linking_table.weight, linking_table.normal_resist, linking_table.fire_resist, linking_table.water_resist, linking_table.electric_resist, linking_table.grass_resist, linking_table.ice_resist, linking_table.fighting_resist, linking_table.poison_resist, linking_table.ground_resist, linking_table.flying_resist, linking_table.psychic_resist, linking_table.bug_resist, linking_table.rock_resist, linking_table.ghost_resist, linking_table.dragon_resist, linking_table.dark_resist, linking_table.steel_resist, linking_table.fairy_resist
                 FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
                 WHERE 1 = 1
                 AND pokemon.id = linking_table.pokemon_id
@@ -131,6 +139,7 @@ def display_search_results(category, search_text):
                 ORDER BY pokemon.dex_num ASC;'''
 
     pokemon_list = []
+    url = []
 
     # if there is no search text, return all pokemon
     if search_text == 'default':
@@ -140,15 +149,53 @@ def display_search_results(category, search_text):
             #what's the purpose of tuple in jeff's example
             cursor.execute(query,)
             for row in cursor:
+                row = list(row)
+                # give a value of None to any entry that has no value
+                for i in range(len(row)):
+                    row[i] = str(row[i])
+                    if row[i] == '':
+                        row[i] = 'NA'
+                    # in order for the link to work properly when passed into the html, all 
+                    # portions of the link must be a single string (generation 1 breaks it
+                    # it must be generation_1, for example)
+                    if 'generation' in row[i]:
+                        split = row[i].split(' ')
+                        row[i] = split[0] + '_' + split[1]
+                    # in order for the link to work when passed into the html, it cant have
+                    # spaces in it, so replace spaces with an underscore
+                    if ' ' in row[i]:
+                        split = row[i].split(' ')
+                        new_row = ''
+                        for j in range(len(split)):
+                            new_row += split[j]
+                            if (j + 1) < len(split):
+                                new_row += '_'
+                        row[i] = new_row
+
                 pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
-                    'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation' : row[7]})
+                    'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'height':row[8], \
+                    'weight':row[9], 'normal_resist':row[10], 'fire_resist':row[11], 'water_resist':row[12], \
+                    'electric_resist':row[13], 'grass_resist':row[14], 'ice_resist':row[15], 'fighting_resist':row[16], \
+                    'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
+                    'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
+                    'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27]})
+
+                url.append(
+                    row[0] + '/' + row[1] + '/' + row[2] + '/' + row[3] + '/' + row[4] + '/' + row[5] + '/' \
+                    + row[6] + '/' + row[7] + '/' + row[8] + '/' + row[9] + '/' + row[10] + '/' + row[11] + '/' \
+                    + row[12] + '/' + row[13] + '/' + row[14] + '/' + row[15] + '/' + row[16] + '/' + row[17] + '/' \
+                    + row[18] + '/' + row[19] + '/' + row[20] + '/' + row[21] + '/' + row[22] + '/' + row[23] + '/' \
+                    + row[24] + '/' + row[25] + '/' + row[26] + '/' + row[27]
+                )
+                    
             cursor.close()
             connection.close()
+
         except Exception as e:
             print(e, file=sys.stderr)
 
         # return the list of dictionaries to the html, then parse it inside HTML
-        return flask.render_template('search_results.html', search_results=pokemon_list)
+        return flask.render_template('search_results.html', search_results=pokemon_list, url=url)
 
     elif category == 'pokemon' or category == 'pokedex_number':
         try:

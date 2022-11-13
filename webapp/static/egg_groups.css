@@ -35,11 +35,6 @@ th, td {
     padding: 50px;
 }
 
-/* https://stackoverflow.com/questions/3463621/css-label-text-right-below-input-element */
-div.search_text_pair {
-    float:left;
-}
-
 #logo{
     display: block;
     width: 80px;

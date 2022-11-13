@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home</title>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='search_results.css') }}">
+    <link rel="stylesheet" type= "text/css" href="{{ url_for('static',filename='search_results.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='pokemon.js') }}" ></script>
 </head>
 
@@ -20,21 +20,27 @@
             <a href = "/legendaries">Legendaries</a>
             <a href = "/egg_groups">Egg Groups</a>
             <a href = "/types">Types</a>
-            <a href = "/pokedex">Pokédex</a>
             
             <div class="search_text_pair">
-                <input name = "search_bar" type="text" placeholder="search anything"/>
-                <input type="submit" value="Go"><br /> <!-- <br /> is line break-->
-                <label for="search_bar" id = "advanced_search"><a href = "">Advanced Search</a></label>
+                <select id = "search_dropdown"> 
+                    <option value = "pokemon">Pokémon</option> 
+                    <option value = "pokedex_number">Pokédex Number</option> 
+                    <option value = "ability">Ability</option> 
+                    <option value = "type">Type</option> 
+                </select>
+                <input id = "search_bar" name = "search_bar" type="text" placeholder="search anything"/>
+                <input id = "go_button" type="submit" value="Go"><br/> <!-- <br /> is line break-->
+                <label for="search_bar"><a href = "">Advanced Search</a></label>
             </div>
         </div>
     
         <div class = "title_container">
             <h1>Search Results</h1>
         </div>
-    
         <div class = "empty_space"></div>
         
+        <p>{{url[3]}}</p>
+
         <!-- a list of dictionaries is passed in, then use jinja
         to parse out the individual data entries -->
         <table id="search_results_table">
@@ -42,7 +48,8 @@
             {%for pokemon in search_results%}
             <tr>
                 <td>{{pokemon['dex_num']}}</td>
-                <td>{{pokemon['name']}}</td>
+                <!-- loop counts the number of times the for loop has ran -->
+                <td><a href = /{{url[loop.index0]}}>{{pokemon['name']}}</a></td>
                 <td>{{pokemon['ability1']}}</td>
                 <td>{{pokemon['ability2']}}</td>
                 <td>{{pokemon['ability3']}}</td>             
