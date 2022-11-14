@@ -1,0 +1,4 @@
+A /api/help endpoint that returns, as straight text (i.e. not HTML) documentation 
+for all your implemented API endpoints. See the API design assignment for an example of the format I prefer.
+
+https://cs.carleton.edu/faculty/jondich/courses/cs257_f22/assignments/22-webapp-db-design.html#apidoc
