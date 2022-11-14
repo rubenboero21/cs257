@@ -11,8 +11,8 @@ FEATURES CURRENTLY WORKING:
       a table of results. Pokémon name in the table 
       is a link to a specific page about that Pokémon
 - Generations page that allows sorting of Pokémon by generations
-    - Pokémon name is a link to a specific page about that 
-      Pokémon
+    - Returns a table of results. Pokémon name in the table 
+      is a link to a specific page about that Pokémon
 - Legendaries page that allows sorting of Pokémon by legendary
   status (if a Pokémon is a legendary, is not, etc.)
     - Returns a table of results. Pokémon name in the table 
