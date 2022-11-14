@@ -32,6 +32,10 @@ def get_connection():
 @app.route('/')
 def home():
     return flask.render_template('index.html')
+
+@app.route('/api/help')
+def help():
+    return flask.render_template('help.txt')
     
 @app.route('/generations') 
 def generations():
