@@ -35,7 +35,10 @@ def home():
 
 @app.route('/api/help')
 def help():
-    return flask.render_template('help.txt')
+    with open('help.txt', 'r') as file:
+        content = file.read()
+    
+    return flask.Response(content, mimetype='text/plain')
     
 @app.route('/generations') 
 def generations():
