@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>Search Results</title>
     <link rel="stylesheet" type= "text/css" href="{{ url_for('static',filename='search_results.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='pokemon.js') }}" ></script>
 </head>
@@ -39,14 +39,14 @@
         </div>
         <div class = "empty_space"></div>
         
-        <p>{{url[3]}}</p>
-
         <!-- a list of dictionaries is passed in, then use jinja
         to parse out the individual data entries -->
         <table id="search_results_table">
             <tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>
             {%for pokemon in search_results%}
             <tr>
+                <!-- will need to remove the underscores from the text that
+                will be displayed -->
                 <td>{{pokemon['dex_num']}}</td>
                 <!-- loop counts the number of times the for loop has ran -->
                 <td><a href = /{{url[loop.index0]}}>{{pokemon['name']}}</a></td>
