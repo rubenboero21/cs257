@@ -83,7 +83,7 @@ def get_pokemon_for_generation(gen_name):
                 'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
                 'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
                 'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27], 'hp':row[28], 'atk':row[29], \
-                'def':row[30], 'spatk':row[31], 'spdef':row[31], 'spd':row[32]})
+                'def':row[30], 'spatk':row[31], 'spdef':row[32], 'spd':row[33]})
         cursor.close()
         connection.close()
 
@@ -152,7 +152,7 @@ def get_pokemon_for_legendary_category(legendary_category):
                 'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
                 'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
                 'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27], 'hp':row[28], 'atk':row[29], \
-                'def':row[30], 'spatk':row[31], 'spdef':row[31], 'spd':row[32]})
+                'def':row[30], 'spatk':row[31], 'spdef':row[32], 'spd':row[33]})
                 
     except Exception as e:
         print(e, file=sys.stderr)
@@ -223,7 +223,7 @@ def get_pokemon_from_type(search_type):
                 'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
                 'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
                 'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27], 'hp':row[28], 'atk':row[29], \
-                'def':row[30], 'spatk':row[31], 'spdef':row[31], 'spd':row[32]})
+                'def':row[30], 'spatk':row[31], 'spdef':row[32], 'spd':row[33]})
         cursor.close()
         connection.close()
 
@@ -298,7 +298,7 @@ def get_pokemon_from_egg_group(egg_group):
                 'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
                 'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
                 'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27], 'hp':row[28], 'atk':row[29], \
-                'def':row[30], 'spatk':row[31], 'spdef':row[31], 'spd':row[32]})
+                'def':row[30], 'spatk':row[31], 'spdef':row[32], 'spd':row[33]})
                 
         cursor.close()
         connection.close()
