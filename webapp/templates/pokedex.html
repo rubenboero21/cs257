@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{name}}</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='pokedex.css') }}">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='chartist.min.css') }}">
     <script type="text/javascript" src="{{ url_for('static', filename='pokemon.js') }}" ></script>
 </head>
 
@@ -43,23 +44,9 @@
     <div class = "empty_space"></div>    
 
     <div class = "pokemon_container"> 
-        <div id="stats">
-            <table id = "stats_table">
-                <th colspan="2" style="text-align: center">Stats</th>
-                <tr>
-                    <td>HP: {{hp | int}}</td>
-                    <td>Attack: {{atk| int}}</td>
-                </tr>
-                <tr>
-                    <td>Defense: {{defense | int}}</td>
-                    <td>Special Attack: {{spatk| int}}</td>
-                </tr>
-                <tr>
-                    <td>Special Defense: {{spdef | int}}</td>
-                    <td>Speed: {{spd| int}}</td>
-                </tr>
-            </table>
-        </div>  
+        <div class="stats_graph_container">
+            <div class="ct-chart ct-perfect-fourth" id="stats_chart"></div>
+        </div> 
         <div id="type_chart">
             <!-- https://stackoverflow.com/questions/13624276/how-to-separate-table-rows-with-a-line -->
             <table id = "type_table">
@@ -120,8 +107,32 @@
                     <td>{{fairy_resist}}</td>
                 </tr>
             </table>
-        </div>   
-    </div>   
+        </div>  
+        <div id="stats">
+            <table id = "stats_table">
+                <th colspan="4" style="text-align: center">Stats</th>
+                <tr>
+                    <td>HP</td><td id = "hp">{{hp | int}}</td>
+                    <td>ATK</td><td id = "atk">{{atk| int}}</td>
+                </tr>
+                <tr>
+                    <td>DEF</td><td id = "def">{{defense | int}}</td>
+                    <td>SP.ATK</td><td id = "spatk">{{spatk| int}}</td>
+                </tr>
+                <tr>
+                    <td>SPDEF</td><td id = "spdef">{{spdef | int}}</td>
+                    <td>SPD</td><td id = "spd">{{spd| int}}</td>
+                </tr>
+            </table>
+        </div>  
+    </div>  
 
+    <!-- These script tags go down here so they won't get executed until the
+        HTML is almost entirely parsed. Putting your script tags down here
+        has become increasingly standard for that reason. It simplifies the
+        "when does this happen" issue. -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script type="text/javascript" src="{{ url_for('static', filename='chartist.min.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='simple-charts.js') }}" ></script> 
 </body>
 </html>
