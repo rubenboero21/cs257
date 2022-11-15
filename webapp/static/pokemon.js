@@ -1,5 +1,5 @@
 /*
- * books.js
+ * pokemon.js
  * Jeff Ondich, 27 April 2016
  * Updated, 5 November 2020
  * 
