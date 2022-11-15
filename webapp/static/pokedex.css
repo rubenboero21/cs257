@@ -63,9 +63,9 @@ table {
     border-collapse: collapse;
 }
 
-/* this might break stuff later  */
+/* we need to get td for the different table classes*/
 td {
-    height: calc(100% / 9);
+    height: calc(100% / 10);
 }
 
 #stats_table {

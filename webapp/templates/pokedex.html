@@ -45,6 +45,7 @@
     <div class = "pokemon_container"> 
         <div id="stats">
             <table id = "stats_table">
+                <th colspan="2" style="text-align: center">Stats</th>
                 <tr>
                     <td>HP: {{hp | int}}</td>
                     <td>Attack: {{atk| int}}</td>
@@ -62,6 +63,8 @@
         <div id="type_chart">
             <!-- https://stackoverflow.com/questions/13624276/how-to-separate-table-rows-with-a-line -->
             <table id = "type_table">
+                <!-- https://www.w3.org/WAI/tutorials/tables/irregular/ -->
+                <th colspan="4" style="text-align: center">Type Effectiveness</th>
                 <tr>
                     <td>Normal:</td>
                     <td>{{normal_resist}}</td>
