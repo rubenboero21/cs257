@@ -49,12 +49,13 @@
                 will be displayed -->
                 <td>{{pokemon['dex_num']}}</td>
                 <!-- loop counts the number of times the for loop has ran -->
-                <td><a href = /{{url[loop.index0]}}></a>{{pokemon['name'] | replace("_", " ")}}</a></td>
+                <!-- the replace function isnt working -->
+                <td><a href = /{{url[loop.index0]}}>{{pokemon['name'] | replace("_", " ")}}</a></td>                
                 <td>{{pokemon['ability1'] | replace("_", " ")}}</td>
                 <td>{{pokemon['ability2'] | replace("_", " ")}}</td>
                 <td>{{pokemon['ability3'] | replace("_", " ")}}</td>             
-                <td>{{pokemon['type1'] | replace("_", " ")}}</td>
-                <td>{{pokemon['type2'] | replace("_", " ")}}</td>
+                <td>{{pokemon['type1']}}</td>
+                <td>{{pokemon['type2']}}</td>
                 <td>{{pokemon['generation'] | replace("_", " ")}}</td>
             </tr>
             {%endfor%}
