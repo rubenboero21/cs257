@@ -32,3 +32,22 @@ th, td {
     align-items: center;
     justify-content: center;
 }
+
+.pokemon_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    height: 485px;
+    width: 100%;
+}
+
+#stats {
+    width: 25%;
+    height: 50%;
+}
+
+#stats_table {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}

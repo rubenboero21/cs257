@@ -61,7 +61,6 @@ def types():
 def pokedex(id,name,ab1,ab2,ab3,type1,type2,generation,height,weight,normal_resist,fire_resist, \
 water_resist,electric_resist,grass_resist,ice_resist,fighting_resist,poison_resist,ground_resist,flying_resist, \
 psychic_resist,bug_resist,rock_resist,ghost_resist,dragon_resist,dark_resist,steel_resist,fairy_resist):
-    print('made it')
     # add the rest of the variables into the render template function
     return flask.render_template('pokedex.html', name=name)
 
