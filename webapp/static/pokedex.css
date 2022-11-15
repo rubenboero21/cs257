@@ -46,8 +46,43 @@ th, td {
     height: 50%;
 }
 
+#type_chart {
+    width: 25%;
+    height: 50%;
+}
+
+#graph {
+    width: 100%;
+    height: 50%;
+}
+
+table {    
+    width: 100%;
+    /* How to make the table fill up the whole div? */
+    height: 100%;
+    border-collapse: collapse;
+}
+
+/* this might break stuff later  */
+td {
+    height: calc(100% / 9);
+}
+
 #stats_table {
     border-top: 1px solid black;
     border-right: 1px solid black;
     border-left: 1px solid black;
 }
+
+#type_table {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+}
+
+#graph_table {
+    border-top: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    border-bottom: 1px solid black;
+}
+

@@ -46,11 +46,78 @@
         <div id="stats">
             <table id = "stats_table">
                 <tr>
-                    <td>{{hp}}:</td>
-                    <td>70</td>
+                    <td>HP: {{hp | int}}</td>
+                    <td>Attack: {{atk| int}}</td>
+                </tr>
+                <tr>
+                    <td>Defense: {{defense | int}}</td>
+                    <td>Special Attack: {{spatk| int}}</td>
+                </tr>
+                <tr>
+                    <td>Special Defense: {{spdef | int}}</td>
+                    <td>Speed: {{spd| int}}</td>
                 </tr>
             </table>
-        </div>     
+        </div>  
+        <div id="type_chart">
+            <!-- https://stackoverflow.com/questions/13624276/how-to-separate-table-rows-with-a-line -->
+            <table id = "type_table">
+                <tr>
+                    <td>Normal:</td>
+                    <td>{{normal_resist}}</td>
+                    <td>Fire:</td>
+                    <td>{{fire_resist}}</td>
+                <tr>
+                <tr>
+                    <td>Water:</td>
+                    <td>{{water_resist}}</td>
+                    <td>Electric:</td>
+                    <td>{{electric_resist}}</td>
+                </tr>
+                <tr>
+                    <td>Grass:</td>
+                    <td>{{grass_resist}}</td>
+                    <td>Ice:</td>
+                    <td>{{ice_resist}}</td>
+                </tr>
+                <tr>
+                    <td>Fighting:</td>
+                    <td>{{fighting_resist}}</td>
+                    <td>Poison:</td>
+                    <td>{{poison_resist}}</td>
+                </tr>
+                <tr>
+                    <td>Ground:</td>
+                    <td>{{ground_resist}}</td>
+                    <td>Flying:</td>
+                    <td>{{flying_resist}}</td>
+                </tr>
+                <tr>
+                    <td>Psychic:</td>
+                    <td>{{psychic_resist}}</td>
+                    <td>Bug:</td>
+                    <td>{{bug_resist}}</td>
+                </tr>
+                <tr>
+                    <td>Rock:</td>
+                    <td>{{rock_resist}}</td>
+                    <td>Ghost:</td>
+                    <td>{{ghost_resist}}</td>
+                </tr>
+                <tr>
+                    <td>Dragon:</td>
+                    <td>{{dragon_resist}}</td>
+                    <td>Dark:</td>
+                    <td>{{dark_resist}}</td>
+                </tr>
+                <tr>
+                    <td>Steel:</td>
+                    <td>{{steel_resist}}</td>
+                    <td>Fairy:</td>
+                    <td>{{fairy_resist}}</td>
+                </tr>
+            </table>
+        </div>   
     </div>   
 
 </body>

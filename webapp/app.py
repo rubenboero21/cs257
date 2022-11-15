@@ -62,10 +62,15 @@ def pokedex(id,name,ab1,ab2,ab3,type1,type2,generation,height,weight,normal_resi
 water_resist,electric_resist,grass_resist,ice_resist,fighting_resist,poison_resist,ground_resist,flying_resist, \
 psychic_resist,bug_resist,rock_resist,ghost_resist,dragon_resist,dark_resist,steel_resist,fairy_resist, hp, atk, \
 defense, spatk, spdef, spd):
-    print('here')
 
     # add the rest of the variables into the render template function
-    return flask.render_template('pokedex.html', name=name, hp=hp)
+    return flask.render_template('pokedex.html', id=id,name=name,ability1=ab1,ability2=ab2,ability3=ab3,type1=type1,\
+    type2=type2,generation=generation,height=height,weight=weight,normal_resist=normal_resist,fire_resist=fire_resist, \
+    water_resist=water_resist,electric_resist=electric_resist,grass_resist=grass_resist,ice_resist=ice_resist,\
+    fighting_resist=fighting_resist,poison_resist=poison_resist,ground_resist=ground_resist,flying_resist=flying_resist, \
+    psychic_resist=psychic_resist,bug_resist=bug_resist,rock_resist=rock_resist,ghost_resist=ghost_resist,\
+    dragon_resist=dragon_resist,dark_resist=dark_resist,steel_resist=steel_resist,fairy_resist=fairy_resist, \
+    hp=hp, atk=atk, defense=defense, spatk=spatk, spdef=spdef, spd=spd)
 
 # is there a way to shorten the length of this function? 
 # the queries need different number of search inputs, but other than that,
