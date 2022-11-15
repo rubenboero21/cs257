@@ -65,7 +65,7 @@ defense, spatk, spdef, spd):
     print('here')
 
     # add the rest of the variables into the render template function
-    return flask.render_template('pokedex.html', name=name)
+    return flask.render_template('pokedex.html', name=name, hp=hp)
 
 # is there a way to shorten the length of this function? 
 # the queries need different number of search inputs, but other than that,
