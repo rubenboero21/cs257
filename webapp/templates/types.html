@@ -13,7 +13,6 @@
         <!-- The following site was used to learn how to make an image a link:
         https://pagedart.com/blog/linking-images-in-html/ -->
         <a href = "/"><img id = "logo" alt = "Logo" src="{{ url_for('static', filename='logo.png') }}"></a>
-        <a href = "/">Home</a>
         <a href = "/generations">Generations</a>
         <a href = "/legendaries">Legendaries</a>
         <a href = "/egg_groups">Egg Groups</a>
@@ -27,7 +26,7 @@
                 <option value = "ability">Ability</option> 
                 <option value = "type">Type</option> 
             </select>
-            <input id = "search_bar" name = "search_bar" type="text" placeholder="search anything"/>
+            <input id = "search_bar" name = "search_bar" type="text" placeholder="Search"/>
             <input id = "go_button" type="submit" value="Go"><br/> <!-- <br /> is line break-->
             <label for="search_bar"><a href = "">Advanced Search</a></label>
         </div>
