@@ -8,8 +8,6 @@
  * Modified by Ruben Boero and Serafin Patino
  */
 
-window.onload = initialize;
-
 function initialize() {
     createBarChart();
 
@@ -52,20 +50,6 @@ function createBarChart() {
     var options = {horizontalBars: true, reverseData: true,   axisY: {offset: 80}, high: 255, low: 0}
 
     new Chartist.Bar('#stats_chart', data, options);
-
-    // new Chartist.Bar('.ct-chart', {
-    //     labels: ['HP', 'ATK', 'DEF', 'SP. ATK', 'SP. DEF', 'SPD'],
-    //     series: [
-    //       [hp, atk, def, spatk, spdef, spd],
-    //     ]
-    //   }, {
-    //     seriesBarDistance: 10,
-    //     reverseData: true,
-    //     horizontalBars: true,
-    //     // axisY: {
-    //     //   offset: 70
-    //     // }
-    //   });
 }
 
 

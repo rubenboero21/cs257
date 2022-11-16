@@ -8,8 +8,6 @@
 
 window.onload = initialize;
 
-var alternatingLineColor = '#E2FCFF'
-
 function initialize() {
     let legendary_dropdown = document.getElementById('legendary_selector');
     if (legendary_dropdown){
