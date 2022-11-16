@@ -94,13 +94,18 @@ table {
 td {
     /* height: calc(100% / 10); */
     /* 10.7 seems to fake the right height for all the table data */
-    height: 10.5%;
+    height: 10.55%;
 }
 
 #type_table {
     border-top: 1px solid black;
     border-right: 1px solid black;
 }
+
+/* can be used to color the text begind the type name */
+/* #Fire span{
+    background-color: #EE8130;
+} */
 
 
 
