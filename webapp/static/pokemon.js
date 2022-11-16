@@ -320,10 +320,9 @@ function onEggGroupSelectionChanged(event) {
 }
 
 // -------Search Bar-------
-function onSearchDropdownSelectionChanged() {
-    let search_category = this.value;
-    console.log(search_category)
-}
+// function onSearchDropdownSelectionChanged() {
+//     let search_category = this.value;
+// }
 
 function onGoButtonClicked() { 
     var search_text = document.getElementById('search_bar').value
@@ -336,6 +335,5 @@ function onGoButtonClicked() {
         search_text = 'default'
     }
     let url = '/search_results/' + search_category + '/' + search_text;
-    console.log(url)
     window.location.href = url
 }

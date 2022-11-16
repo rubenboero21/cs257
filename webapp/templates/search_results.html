@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Search Results</title>
     <link rel="stylesheet" type= "text/css" href="{{ url_for('static',filename='search_results.css') }}">
-    <script type="text/javascript" src="{{ url_for('static', filename='pokemon.js') }}" ></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='search.js') }}"></script>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
             <!-- The following site was used to learn how to make an image a link:
             https://pagedart.com/blog/linking-images-in-html/ -->
             <a href = "/"><img id = "logo" alt = "Logo" src="{{ url_for('static', filename='logo.png') }}"></a>
-            <a href = "/">Search Results</a>
+            <a href = "/">Home</a>
             <a href = "/generations">Generations</a>
             <a href = "/legendaries">Legendaries</a>
             <a href = "/egg_groups">Egg Groups</a>
@@ -50,7 +50,6 @@
                 <td>{{pokemon['dex_num']}}</td>
                 <!-- loop counts the number of times the for loop has ran -->
                 <!-- the replace function isnt working -->
-                <!-- <td><a href = /{{url[loop.index0]}}>{{pokemon['name'] | replace("_", " ")}}</a></td>                 -->
                 <td><a href = /{{url[loop.index0]}}>{{pokemon['name'] | replace("_", " ")}}</a></td>                
                 <td>{{pokemon['ability1'] | replace("_", " ")}}</td>
                 <td>{{pokemon['ability2'] | replace("_", " ")}}</td>

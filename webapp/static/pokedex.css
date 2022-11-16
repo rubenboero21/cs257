@@ -41,10 +41,6 @@ th, td {
     width: 100%;
 }
 
-/* #stats {
-    width: 50%;
-    height: 50%;
-} */
 
 #type_chart {
     width: 20%;
@@ -66,12 +62,6 @@ th, td {
     height: 100%;
     text-align: center;
 }
-/* #stats_table{
-    width: 90%;
-    height: 90%;
-    visibility: collapse;
-} */
-
 
 table {    
     width: 100%;
@@ -80,28 +70,14 @@ table {
     border-collapse: collapse;
 }
 
-/* we need to get td for the different table classes*/
 td {
     height: calc(100% / 10);
 }
-
-/* #stats_table {
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-} */
 
 #type_table {
     border-top: 1px solid black;
     border-right: 1px solid black;
 }
-
-/* #graph_table {
-    border-top: 1px solid black;
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    border-bottom: 1px solid black;
-} */
 
 
 

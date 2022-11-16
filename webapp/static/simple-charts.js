@@ -4,12 +4,35 @@
  *
  * Adapted from the Chartist library samples.
  *   https://gionkunz.github.io/chartist-js/examples.html
+ * 
+ * Modified by Ruben Boero and Serafin Patino
  */
 
 window.onload = initialize;
 
 function initialize() {
     createBarChart();
+
+    let go_button = document.getElementById('go_button');
+    if (go_button){
+        go_button.onclick = onGoButtonClicked;
+    }
+}
+
+function onGoButtonClicked() { 
+    var search_text = document.getElementById('search_bar').value
+    var search_dropdown = document.getElementById('search_dropdown');
+    var search_category = search_dropdown.value;
+
+    // we really want search text to be optional, but we couldnt figure
+    // out how to make it work with the API call, so we did this instead
+    if (search_text == '') {
+        search_text = 'default'
+    }
+    let url = '/search_results/' + search_category + '/' + search_text;
+    window.location.href = url
+
+    console.log('go button clicked')
 }
 
 function createBarChart() {
