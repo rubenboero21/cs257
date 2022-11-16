@@ -21,9 +21,7 @@ function createBarChart() {
     let spd = parseInt(document.getElementById('spd').innerText);
 
     var data = {
-        labels: ['HP ' + '(' + hp + ')', 'ATK ' + '(' + atk + ')', 'DEF ' + '(' + def + ')', 
-        'SP. ATK ' + '(' + spatk + ')', 'SP. DEF ' + '(' + spdef + ')', 'SPD ' + '(' + spd + ')'],
-
+        labels: ['HP', 'ATK ', 'DEF','SP. ATK','SP. DEF', 'SPD'],
         series: [[hp, atk, def, spatk, spdef, spd]]
 
     };

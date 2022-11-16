@@ -44,7 +44,29 @@
     <div class = "empty_space"></div>    
 
     <div class = "pokemon_container"> 
-        <div class="stats_graph_container">
+        <div id = "left_section">
+            <table>
+                <tr>
+                    <td id = "hp" >{{hp | int}}</td>
+                </tr>
+                <tr>
+                    <td id = "atk" >{{atk | int}}</td>
+                </tr>
+                <tr>
+                    <td id = "def" >{{defense | int}}</td>
+                </tr>
+                <tr>
+                    <td id = "spatk" >{{spatk | int}}</td>
+                </tr>
+                <tr>
+                    <td id = "spdef" >{{spdef | int}}</td>
+                </tr>
+                <tr>
+                    <td id = "spd" >{{spd | int}}</td>
+                </tr>
+            </table>
+        </div> 
+        <div class="stats_graph_container" >
             <div class="ct-chart ct-perfect-fourth" id="stats_chart"></div>
         </div> 
         <div id="type_chart">
@@ -108,7 +130,7 @@
                 </tr>
             </table>
         </div>  
-        <div id="stats">
+        <!-- <div id="stats">
             <table id = "stats_table">
                 <th colspan="4" style="text-align: center">Stats</th>
                 <tr>
@@ -124,7 +146,7 @@
                     <td>SPD</td><td id = "spd">{{spd| int}}</td>
                 </tr>
             </table>
-        </div>  
+        </div>  -->
     </div>  
 
     <!-- These script tags go down here so they won't get executed until the
