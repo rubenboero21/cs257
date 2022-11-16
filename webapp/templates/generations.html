@@ -15,7 +15,9 @@
         https://pagedart.com/blog/linking-images-in-html/ -->
         <a href = "/"><img id = "logo" alt = "Logo" src="{{ url_for('static', filename='logo.png') }}"></a>
         <a href = "/">Home</a>
-        <a href = "/generations">Generations</a>
+        <div>
+            <a href = "/generations" id = "current_page">Generations</a>
+        </div>
         <a href = "/legendaries">Legendaries</a>
         <a href = "/egg_groups">Egg Groups</a>
         <a href = "/types">Types</a>

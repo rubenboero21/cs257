@@ -51,3 +51,9 @@ th, td {
 .less_space {
     padding: 20px;
 }
+
+#current_page {
+    border-style: solid;
+    border-color: black;
+    padding: 2px;
+}
