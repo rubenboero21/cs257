@@ -49,7 +49,7 @@ function createBarChart() {
 
     };
 
-    var options = {horizontalBars: true, reverseData: true,   axisY: {offset: 80}}
+    var options = {horizontalBars: true, reverseData: true,   axisY: {offset: 80}, high: 255, low: 0}
 
     new Chartist.Bar('#stats_chart', data, options);
 
