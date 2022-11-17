@@ -34,14 +34,8 @@
     </div>
 
     <div class = "title_container">
-        <!-- <h1>{{name | replace("_", " ")}}<img src="https://img.pokemondb.net/sprites/sword-shield/icon/{{name | lower}}.png" alt="{{name}}"></h1> -->
-        <h1>{{name | replace("_", " ")}}
-            {% if 'Mega_' in name %}
-            <img src="https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/{{name | replace('Mega_', '')| lower}}-mega.pngs" alt="{{name}}">
-            {% else %}
-            <img src="https://raw.githubusercontent.com/msikma/pokesprite/master/pokemon-gen8/regular/{{name | lower}}.png" alt="{{name}}">
-            {% endif %}
-        </h1>
+        <h1>{{name | replace("_", " ")}}<img id = "sprite" src="https://img.pokemondb.net/sprites/sword-shield/icon/{{name | lower}}.png" alt="{{name}}"></h1>
+        <!-- https://msikma.github.io/pokesprite/overview/dex-gen8.html -->
         {% if type2 != 'NA' %}
         <table id = "types_table">
             <tr>
