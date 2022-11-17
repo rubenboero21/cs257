@@ -51,7 +51,7 @@ def get_generations():
 
 @api.route('/generation/<gen_name>')
 def get_pokemon_for_generation(gen_name):
-    query = '''SELECT  pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, linking_table.height, linking_table.weight, linking_table.normal_resist, linking_table.fire_resist, linking_table.water_resist, linking_table.electric_resist, linking_table.grass_resist, linking_table.ice_resist, linking_table.fighting_resist, linking_table.poison_resist, linking_table.ground_resist, linking_table.flying_resist, linking_table.psychic_resist, linking_table.bug_resist, linking_table.rock_resist, linking_table.ghost_resist, linking_table.dragon_resist, linking_table.dark_resist, linking_table.steel_resist, linking_table.fairy_resist, pokemon.hp, pokemon.atk, pokemon.def, pokemon.spatk, pokemon.spdef, pokemon.spd
+    query = '''SELECT  pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, pokemon.id
             FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
             WHERE 1 = 1
             AND pokemon.id = linking_table.pokemon_id
@@ -71,19 +71,14 @@ def get_pokemon_for_generation(gen_name):
         cursor.execute(query, (gen_name,))
         for row in cursor:
             row = list(row)
+            print(row[8])
             # give a value of None to any entry that has no value
             for i in range(len(row)):
                 if row[i] == '':
                     row[i] = 'NA'
 
             pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
-                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'height':row[8], \
-                'weight':row[9], 'normal_resist':row[10], 'fire_resist':row[11], 'water_resist':row[12], \
-                'electric_resist':row[13], 'grass_resist':row[14], 'ice_resist':row[15], 'fighting_resist':row[16], \
-                'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
-                'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
-                'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27], 'hp':row[28], 'atk':row[29], \
-                'def':row[30], 'spatk':row[31], 'spdef':row[32], 'spd':row[33]})
+                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'id':row[8]})
         cursor.close()
         connection.close()
 
@@ -119,7 +114,7 @@ def get_legendaries():
 
 @api.route('/legendaries/<legendary_category>')
 def get_pokemon_for_legendary_category(legendary_category):
-    query = '''SELECT  pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, linking_table.height, linking_table.weight, linking_table.normal_resist, linking_table.fire_resist, linking_table.water_resist, linking_table.electric_resist, linking_table.grass_resist, linking_table.ice_resist, linking_table.fighting_resist, linking_table.poison_resist, linking_table.ground_resist, linking_table.flying_resist, linking_table.psychic_resist, linking_table.bug_resist, linking_table.rock_resist, linking_table.ghost_resist, linking_table.dragon_resist, linking_table.dark_resist, linking_table.steel_resist, linking_table.fairy_resist, pokemon.hp, pokemon.atk, pokemon.def, pokemon.spatk, pokemon.spdef, pokemon.spd
+    query = '''SELECT  pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, pokemon.id
             FROM legendaries, pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
             WHERE 1 = 1
             AND legendaries.name = %s
@@ -146,13 +141,7 @@ def get_pokemon_for_legendary_category(legendary_category):
                     row[i] = 'NA'
 
             pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
-                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'height':row[8], \
-                'weight':row[9], 'normal_resist':row[10], 'fire_resist':row[11], 'water_resist':row[12], \
-                'electric_resist':row[13], 'grass_resist':row[14], 'ice_resist':row[15], 'fighting_resist':row[16], \
-                'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
-                'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
-                'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27], 'hp':row[28], 'atk':row[29], \
-                'def':row[30], 'spatk':row[31], 'spdef':row[32], 'spd':row[33]})
+                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'id':row[8]})
                 
     except Exception as e:
         print(e, file=sys.stderr)
@@ -191,7 +180,8 @@ def get_pokemon_from_type(search_type):
             http://.../type/<search_type>
         Returns an empty list if there's any database failure.
     '''
-    query = '''SELECT  pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, linking_table.height, linking_table.weight, linking_table.normal_resist, linking_table.fire_resist, linking_table.water_resist, linking_table.electric_resist, linking_table.grass_resist, linking_table.ice_resist, linking_table.fighting_resist, linking_table.poison_resist, linking_table.ground_resist, linking_table.flying_resist, linking_table.psychic_resist, linking_table.bug_resist, linking_table.rock_resist, linking_table.ghost_resist, linking_table.dragon_resist, linking_table.dark_resist, linking_table.steel_resist, linking_table.fairy_resist, pokemon.hp, pokemon.atk, pokemon.def, pokemon.spatk, pokemon.spdef, pokemon.spd
+    
+    query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, pokemon.id
             FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, linking_table
             WHERE 1 = 1
             AND pokemon.id = linking_table.pokemon_id
@@ -217,13 +207,7 @@ def get_pokemon_from_type(search_type):
                     row[i] = 'NA'
 
             pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
-                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'height':row[8], \
-                'weight':row[9], 'normal_resist':row[10], 'fire_resist':row[11], 'water_resist':row[12], \
-                'electric_resist':row[13], 'grass_resist':row[14], 'ice_resist':row[15], 'fighting_resist':row[16], \
-                'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
-                'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
-                'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27], 'hp':row[28], 'atk':row[29], \
-                'def':row[30], 'spatk':row[31], 'spdef':row[32], 'spd':row[33]})
+                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'id':row[8]})
         cursor.close()
         connection.close()
 
@@ -264,7 +248,7 @@ def get_pokemon_from_egg_group(egg_group):
             http://.../egg_groups/<egg_group>
         Returns an empty list if there's any database failure.
     '''
-    query = '''SELECT  pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, linking_table.height, linking_table.weight, linking_table.normal_resist, linking_table.fire_resist, linking_table.water_resist, linking_table.electric_resist, linking_table.grass_resist, linking_table.ice_resist, linking_table.fighting_resist, linking_table.poison_resist, linking_table.ground_resist, linking_table.flying_resist, linking_table.psychic_resist, linking_table.bug_resist, linking_table.rock_resist, linking_table.ghost_resist, linking_table.dragon_resist, linking_table.dark_resist, linking_table.steel_resist, linking_table.fairy_resist, pokemon.hp, pokemon.atk, pokemon.def, pokemon.spatk, pokemon.spdef, pokemon.spd
+    query = '''SELECT pokemon.dex_num, pokemon.name, ab1.name, ab2.name, ab3.name, typ1.name, typ2.name, generations.name, pokemon.id
             FROM pokemon, abilities ab1, abilities ab2, abilities ab3, types typ1, types typ2, generations, egg_groups, linking_table
             WHERE 1 = 1
             AND pokemon.id = linking_table.pokemon_id
@@ -292,13 +276,7 @@ def get_pokemon_from_egg_group(egg_group):
                     row[i] = 'NA'
 
             pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
-                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'height':row[8], \
-                'weight':row[9], 'normal_resist':row[10], 'fire_resist':row[11], 'water_resist':row[12], \
-                'electric_resist':row[13], 'grass_resist':row[14], 'ice_resist':row[15], 'fighting_resist':row[16], \
-                'poison_resist':row[17], 'ground_resist':row[18], 'flying_resist':row[19], 'psychic_resist':row[20],\
-                'bug_resist':row[21], 'rock_resist':row[22], 'ghost_resist':row[23], 'dragon_resist':row[24], \
-                'dark_resist':row[25], 'steel_resist':row[26], 'fairy_resist':row[27], 'hp':row[28], 'atk':row[29], \
-                'def':row[30], 'spatk':row[31], 'spdef':row[32], 'spd':row[33]})
+                'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'id':row[8]})
                 
         cursor.close()
         connection.close()

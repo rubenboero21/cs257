@@ -40,43 +40,6 @@ function getAPIBaseURL() {
     return baseURL;
 }
 
-// Returns the HTML for the table to display search results
-function createTableHTML(search_results, alternatingLineColor) {
-    let tableBody = '';
-
-    // Create the header of the table
-    tableBody += '<tr id = "table_header"><td>Dex Number</td><td>Pokémon</td><td>Ability 1</td><td>Ability 2</td><td>Hidden Ability</td><td>Type 1</td><td>Type 2</td><td>Generation</td></tr>'
-    // Create the body of the table
-    for (let k = 0; k < search_results.length; k++) {
-        let pokemon = search_results[k];
-
-        let url = pokemon['dex_num'] + '/' + pokemon['name'] + '/' + pokemon['ability1'] + '/' + pokemon['ability2']
-        + '/' + pokemon['ability3'] + '/' + pokemon['type1'] + '/' + pokemon['type2'] + '/' + pokemon['generation'] + '/'
-        + pokemon['height'] + '/' + pokemon['weight'] + '/' + pokemon['normal_resist'] + '/' + pokemon['fire_resist'] + '/' + pokemon['water_resist'] + '/'
-        + pokemon['electric_resist'] + '/' + pokemon['grass_resist'] + '/' + pokemon['ice_resist'] + '/' 
-        + pokemon['fighting_resist'] + '/' + pokemon['poison_resist'] + '/' + pokemon['ground_resist'] + '/'
-        + pokemon['flying_resist'] + '/' + pokemon['psychic_resist'] + '/' + pokemon['bug_resist'] + '/'
-        + pokemon['rock_resist'] + '/' + pokemon['ghost_resist'] + '/' + pokemon['dragon_resist'] + '/'
-        + pokemon['dark_resist'] + '/' + pokemon['steel_resist'] + '/' + pokemon['fairy_resist'] + '/'
-        + pokemon['hp'] + '/' + pokemon['atk'] + '/' + pokemon['def'] + '/' + pokemon['spatk'] + '/'
-        + pokemon['spdef'] + '/' + pokemon['spd']
-
-        if (k % 2 == 0) {
-            tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td><a href = "' + url + '">'+ pokemon['name'] + '</a></td>' + 
-            '<td>' + pokemon['ability1'] + '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
-            '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-            '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-        } 
-        else {
-            tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td><a href = "' + 
-            url + '">'+ pokemon['name'] + '</a>' + '<td>' + pokemon['ability1'] + '</td>' + '<td>' + 
-            pokemon['ability2'] + '</td>' + '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + 
-            '</td>' + '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
-        }        
-    }
-    return tableBody
-}
-
 function onGoButtonClicked() { 
     var search_text = document.getElementById('search_bar').value
     var search_dropdown = document.getElementById('search_dropdown');

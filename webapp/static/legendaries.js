@@ -54,16 +54,7 @@ function createTableHTML(search_results, alternatingLineColor) {
     for (let k = 0; k < search_results.length; k++) {
         let pokemon = search_results[k];
 
-        let url = pokemon['dex_num'] + '/' + pokemon['name'] + '/' + pokemon['ability1'] + '/' + pokemon['ability2']
-        + '/' + pokemon['ability3'] + '/' + pokemon['type1'] + '/' + pokemon['type2'] + '/' + pokemon['generation'] + '/'
-        + pokemon['height'] + '/' + pokemon['weight'] + '/' + pokemon['normal_resist'] + '/' + pokemon['fire_resist'] + '/' + pokemon['water_resist'] + '/'
-        + pokemon['electric_resist'] + '/' + pokemon['grass_resist'] + '/' + pokemon['ice_resist'] + '/' 
-        + pokemon['fighting_resist'] + '/' + pokemon['poison_resist'] + '/' + pokemon['ground_resist'] + '/'
-        + pokemon['flying_resist'] + '/' + pokemon['psychic_resist'] + '/' + pokemon['bug_resist'] + '/'
-        + pokemon['rock_resist'] + '/' + pokemon['ghost_resist'] + '/' + pokemon['dragon_resist'] + '/'
-        + pokemon['dark_resist'] + '/' + pokemon['steel_resist'] + '/' + pokemon['fairy_resist'] + '/'
-        + pokemon['hp'] + '/' + pokemon['atk'] + '/' + pokemon['def'] + '/' + pokemon['spatk'] + '/'
-        + pokemon['spdef'] + '/' + pokemon['spd']
+        let url = '/specific/' + pokemon['id']
 
         if (k % 2 == 0) {
             tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td><a href = "' + url + '">'+ pokemon['name'] + '</a></td>' + 
