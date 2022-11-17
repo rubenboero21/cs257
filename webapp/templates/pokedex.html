@@ -34,8 +34,8 @@
     </div>
 
     <div class = "title_container">
-        <h1>{{name | replace("_", " ")}}<img id = "sprite" src="https://img.pokemondb.net/sprites/sword-shield/icon/{{name | lower}}.png" alt="{{name}}"></h1>
-        <!-- https://msikma.github.io/pokesprite/overview/dex-gen8.html -->
+        <h1 id = "pokemon_name">{{name}}</h1>
+
         {% if type2 != 'NA' %}
         <table id = "types_table">
             <tr>
