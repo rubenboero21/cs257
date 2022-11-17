@@ -22,6 +22,16 @@ function initialize() {
     if (go_button){
         go_button.onclick = onGoButtonClicked;
     }
+
+    let search_bar = document.getElementById('search_bar');
+    if (search_bar) {
+        search_bar.addEventListener('keyup', function(event){
+            event.preventDefault();
+            if (event.keyCode === 13) {
+                go_button.click();
+            }
+        })
+    }
 }
 
 // Returns the base URL of the API, onto which endpoint

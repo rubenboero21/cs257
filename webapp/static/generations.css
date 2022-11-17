@@ -1,5 +1,9 @@
 /* This file was created by Ruben Boero and Serafin Patino */
 
+html * {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
 .title_container {
     text-align: center;
     padding: 10px;
@@ -50,3 +54,4 @@ table, td, th {
     border-color: black;
     padding: 2px;
 }
+
