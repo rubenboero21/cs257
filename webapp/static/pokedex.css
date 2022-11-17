@@ -32,11 +32,6 @@ table {
     padding: 10px;
 }
 
-#sprite {
-    font-size: small;
-    font-weight: lighter;
-}
-
 #Normal {
     color: white;
     background-color: #A8A77A;
@@ -226,10 +221,10 @@ td {
     border-right: 1px solid black;
 }
 
-/* can be used to color the text begind the type name */
-/* #Fire span{
-    background-color: #EE8130;
-} */
+#ability_table{
+    width: 24%;
+    margin-top: 5px;
+}
 
 
 

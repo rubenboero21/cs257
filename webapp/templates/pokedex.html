@@ -7,6 +7,7 @@
     <title>{{name}}</title>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='pokedex.css') }}">
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='chartist.min.css') }}">
+    <link rel = "icon" type = "image/x-icon" href="{{ url_for('static',filename='favicon.ico') }}"
 </head>
 
 <!-- The following link was used to make the table https://www.youtube.com/watch?v=iDA0kF5lrVk -->
@@ -36,6 +37,8 @@
     <div class = "title_container">
         <h1 id = "pokemon_name">{{name}}</h1>
 
+        <div>#{{dex_num}}</div>
+
         {% if type2 != 'NA' %}
         <table id = "types_table">
             <tr>
@@ -50,6 +53,20 @@
             </tr>
         </table>
         {% endif %}
+
+        <table id = ability_table>
+            <tr>
+                <th style="width: 33%">Ability 1</th>
+                <th style="width: 33%">Ability 2</th>
+                <th style="width: 33%">Hidden Ability</th>
+            </tr>
+            <tr>
+                <td style="width: 33%">{{ability1}}</td>
+                <td style="width: 33%">{{ability2}}</td>
+                <td style="width: 33%">{{ability3}}</td>
+            </tr>
+        </table>
+
         <table id = "height_weight">
             <tr>
                 <td>{{height}} (m)</td>
