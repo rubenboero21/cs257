@@ -7,6 +7,7 @@
  * 
  * Modified by Ruben Boero and Serafin Patino
  */
+window.onload = initialize;
 
 function initialize() {
     createBarChart();
