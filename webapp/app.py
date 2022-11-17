@@ -57,7 +57,7 @@ def get_query_results_and_url(query, num_of_inputs, search_text):
             pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
                 'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'id':row[8]})
 
-            url.append('specific' + '/' + row[10])
+            url.append('specific' + '/' + row[8])
                 
         cursor.close()
         connection.close()
