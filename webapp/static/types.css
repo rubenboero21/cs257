@@ -1,5 +1,5 @@
-/* This file was created by Ruben Boero and Se
-fin Patino */
+/* This file was created by Ruben Boero and Serafin Patino */
+
 html * {
     font-family: Arial, Helvetica, sans-serif;
 }
@@ -10,6 +10,7 @@ table, td, th {
     text-align: center;
     width: 88%;
 }
+
 td {
     width: 200px;
 }
@@ -38,13 +39,10 @@ tr {
     padding: 50px;
 }
 
-/* TODO: logo doesn't want to adopt resizing of code below */
 #logo{
     display: block;
     width: 80px;
     height: 80px;
-    align-items: center;
-    justify-content: center;
 }
 
 .less_space {
