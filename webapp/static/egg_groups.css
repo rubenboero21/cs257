@@ -11,9 +11,6 @@ table, td, th {
     border-collapse: collapse;
 }
 
-td {
-    width: 200px;
-}
 
 tr {
     align-items: center;
@@ -22,6 +19,7 @@ tr {
 th, td {
     border: 3px solid black;
     text-align: left;
+    width: 200px;
 }
 
 .title_container {
@@ -52,7 +50,7 @@ th, td {
     font-weight: bold;
 }
 
-.less_space {
+#twenty_px_space {
     padding: 20px;
 }
 
