@@ -94,9 +94,6 @@ def egg_groups():
 def types():
     return flask.render_template('types.html')
 
-# if we add the '\' character to break up the line, flask doesn't work
-# @app.route('/<dex_num>/<name>/<ab1>/<ab2>/<ab3>/<type1>/<type2>/<generation>/<height>/<weight>/<id>')
-
 @app.route('/specific/<id>')
 def pokedex(id):
 
@@ -169,18 +166,13 @@ def pokedex(id):
             poison_resist = poison_resist, ground_resist = ground_resist, flying_resist = flying_resist, \
             psychic_resist = psychic_resist, bug_resist = bug_resist, rock_resist = rock_resist, ghost_resist = \
             ghost_resist, dragon_resist = dragon_resist, dark_resist = dark_resist, steel_resist = steel_resist, \
-            fairy_resist = fairy_resist, hp = hp, atk = atk, defense = defense, spatk = spatk, spdef = spdef, spd = spd)
+            fairy_resist = fairy_resist, hp = hp, atk = atk, defense = defense, spatk = spatk, spdef = spdef, \
+            spd = spd)
 
     except Exception as e:
         print(e, file=sys.stderr)
 
-            
-    # query the DB using the index to get the pokemon info specific to the pokemon with that id
-    # return flask.render_template('pokedex.html', dex_num=dex_num,name=name,ability1=ab1,ability2=ab2,ability3=ab3,type1=type1,\
-    # type2=type2,generation=generation,height=height,weight=weight, id=id)
-
 @app.route('/search_results/<category>/<search_text>')
-# def display_search_results():
 def display_search_results(category, search_text):
 
     if search_text == 'default':
@@ -259,7 +251,8 @@ def display_search_results(category, search_text):
         result = get_query_results_and_url(query, 0, '')
         pokemon_list = result[0]
         url = result[1]
-
+        
+        # return the list of dictionaries to the search results page, then parse it inside HTML
         return flask.render_template('search_results.html', search_results=pokemon_list, url=url)
 
     elif category == 'pokemon' or category == 'pokedex_number':
@@ -267,7 +260,7 @@ def display_search_results(category, search_text):
         pokemon_list = result[0]
         url = result[1]
         
-        # return the list of dictionaries to the html, then parse it inside HTML
+        # return the list of dictionaries to the search results page, then parse it inside HTML
         return flask.render_template('search_results.html', search_results=pokemon_list, url=url)
     
     elif category == 'ability':
@@ -275,7 +268,7 @@ def display_search_results(category, search_text):
         pokemon_list = result[0]
         url = result[1]
 
-        # return the list of dictionaries to the html, then parse it inside HTML
+        # return the list of dictionaries to the search results page, then parse it inside HTML
         return flask.render_template('search_results.html', search_results=pokemon_list, url=url)
     
     elif category == 'type':
@@ -283,7 +276,7 @@ def display_search_results(category, search_text):
         pokemon_list = result[0]
         url = result[1]
 
-        # return the list of dictionaries to the html, then parse it inside HTML
+        # return the list of dictionaries to the search results page, then parse it inside HTML
         return flask.render_template('search_results.html', search_results=pokemon_list, url=url)
 
 if __name__ == '__main__':

@@ -13,11 +13,13 @@ var alternatingLineColor = '#E2FCFF'
 function initialize() {
     loadTypesSelector();
 
+    // get the go button, call the on click function when the button is pressed
     let go_button = document.getElementById('go_button');
     if (go_button){
         go_button.onclick = onGoButtonClicked;
     }
 
+    // wait for the enter button to be pressed, search when it is clicked
     let search_bar = document.getElementById('search_bar');
     if (search_bar) {
         search_bar.addEventListener('keyup', function(event){
@@ -40,7 +42,8 @@ function createTableHTML(search_results, alternatingLineColor) {
         let pokemon = search_results[k];
 
         let url = '/specific/' + pokemon['id']
-
+        
+        // everyother line will be a different color
         if (k % 2 == 0) {
             tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td><a href = "' + url + '">'+ pokemon['name'] + '</a></td>' + 
             '<td>' + pokemon['ability1'] + '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
@@ -72,8 +75,6 @@ function onGoButtonClicked() {
     var search_dropdown = document.getElementById('search_dropdown');
     var search_category = search_dropdown.value;
 
-    // we really want search text to be optional, but we couldnt figure
-    // out how to make it work with the API call, so we did this instead
     if (search_text == '') {
         search_text = 'default'
     }

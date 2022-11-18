@@ -1,5 +1,5 @@
 /*
- * pokemon.js
+ * search.js
  * Jeff Ondich, 27 April 2016
  * Updated, 5 November 2020
  * 
@@ -13,12 +13,14 @@ function initialize() {
     if (legendary_dropdown){
         legendary_dropdown.onchange = onLegendaryCategorySelectionChanged;
     }
-
+    
+    // get the go button, call the on click function when the button is pressed
     let go_button = document.getElementById('go_button');
     if (go_button){
         go_button.onclick = onGoButtonClicked;
     }
 
+    // wait for the enter button to be pressed, search when it is clicked
     let search_bar = document.getElementById('search_bar');
     if (search_bar) {
         search_bar.addEventListener('keyup', function(event){
@@ -45,8 +47,6 @@ function onGoButtonClicked() {
     var search_dropdown = document.getElementById('search_dropdown');
     var search_category = search_dropdown.value;
 
-    // we really want search text to be optional, but we couldnt figure
-    // out how to make it work with the API call, so we did this instead
     if (search_text == '') {
         search_text = 'default'
     }

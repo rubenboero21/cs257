@@ -37,7 +37,6 @@ def get_generations():
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        #what's the purpose of tuple in jeff's example
         cursor.execute(query, tuple())
         for row in cursor:
             generation = row[0]
@@ -71,13 +70,14 @@ def get_pokemon_for_generation(gen_name):
         cursor.execute(query, (gen_name,))
         for row in cursor:
             row = list(row)
-            # give a value of None to any entry that has no value
+            # give a value of NA to any entry that has no value
             for i in range(len(row)):
                 if row[i] == '':
                     row[i] = 'NA'
 
             pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
                 'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'id':row[8]})
+        
         cursor.close()
         connection.close()
 
@@ -99,7 +99,7 @@ def get_legendaries():
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        #what's the purpose of tuple in jeff's example
+
         cursor.execute(query, tuple())
         for row in cursor:
             legendary = row[0]
@@ -134,7 +134,7 @@ def get_pokemon_for_legendary_category(legendary_category):
         cursor.execute(query, (legendary_category,))
         for row in cursor:
             row = list(row)
-            # give a value of None to any entry that has no value
+            # give a value of NA to any entry that has no value
             for i in range(len(row)):
                 if row[i] == '':
                     row[i] = 'NA'
@@ -161,7 +161,6 @@ def get_types():
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        #what's the purpose of tuple in jeff's example
         cursor.execute(query, tuple())
         for row in cursor:
             type = row[0]
@@ -196,17 +195,17 @@ def get_pokemon_from_type(search_type):
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        #what's the purpose of tuple in jeff's example
         cursor.execute(query, (search_type, search_type,))
         for row in cursor:
             row = list(row)
-            # give a value of None to any entry that has no value
+            # give a value of NA to any entry that has no value
             for i in range(len(row)):
                 if row[i] == '':
                     row[i] = 'NA'
 
             pokemon_list.append({'dex_num':row[0], 'name':row[1], 'ability1':row[2], 'ability2':row[3],\
                 'ability3':row[4], 'type1':row[5], 'type2':row[6], 'generation':row[7], 'id':row[8]})
+        
         cursor.close()
         connection.close()
 
@@ -229,7 +228,6 @@ def get_egg_groups():
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        #what's the purpose of tuple in jeff's example
         cursor.execute(query, tuple())
         for row in cursor:
             egg_group = row[0]
@@ -265,11 +263,10 @@ def get_pokemon_from_egg_group(egg_group):
     try:
         connection = get_connection()
         cursor = connection.cursor()
-        #what's the purpose of tuple in jeff's example
         cursor.execute(query, (egg_group,))
         for row in cursor:
             row = list(row)
-            # give a value of None to any entry that has no value
+            # give a value of NA to any entry that has no value
             for i in range(len(row)):
                 if row[i] == '':
                     row[i] = 'NA'

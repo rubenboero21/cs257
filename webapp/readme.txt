@@ -2,7 +2,12 @@ AUTHORS: Ruben Boero and Serafin Patino
 
 DATA: stats and attributes of all Pokémon from the first 8 generations of Pokémon
 
-FEATURES CURRENTLY WORKING:
+The raw data can be found on this site:
+https://www.kaggle.com/datasets/mariotormo/complete-pokemon-dataset-updated-090420 
+We used the 4.20 csv version.
+
+
+STATUS:
 - Search bar on home page and top right of all other pages
     - searches by category (Pokémon name, Pokémon ID number, 
       ability, and type)
@@ -24,7 +29,8 @@ FEATURES CURRENTLY WORKING:
 - Types page that allows sorting of Pokémon by their type(s)
     - Returns a table of results. Pokémon name in the table 
       is a link to a specific page about that Pokémon
+- The names of Pokémon in the search results table are links
+  to a specific page with more in detail about that Pokémon
 
-FEATURES NOT YET WORKING:
-- Advanced search
-- Pokémon specific page does not work. Currently, just shows the name of the Pokémon
+NOTES:
+
