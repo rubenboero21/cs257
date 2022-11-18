@@ -71,7 +71,6 @@ def get_pokemon_for_generation(gen_name):
         cursor.execute(query, (gen_name,))
         for row in cursor:
             row = list(row)
-            print(row[8])
             # give a value of None to any entry that has no value
             for i in range(len(row)):
                 if row[i] == '':
