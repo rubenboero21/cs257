@@ -56,14 +56,14 @@
 
         <table id = ability_table>
             <tr>
-                <th style="width: 33%">Ability 1</th>
-                <th style="width: 33%">Ability 2</th>
-                <th style="width: 33%">Hidden Ability</th>
+                <th style = "width: 33%">Ability 1</th>
+                <th style = "width: 33%">Ability 2</th>
+                <th style = "width: 33%">Hidden Ability</th>
             </tr>
             <tr>
-                <td style="width: 33%">{{ability1}}</td>
-                <td style="width: 33%">{{ability2}}</td>
-                <td style="width: 33%">{{ability3}}</td>
+                <td style = "width: 33%">{{ability1}}</td>
+                <td style = "width: 33%">{{ability2}}</td>
+                <td style = "width: 33%">{{ability3}}</td>
             </tr>
         </table>
 
@@ -100,14 +100,14 @@
                 </tr>
             </table>
         </div> 
-        <div class="stats_graph_container" >
-            <div class="ct-chart ct-perfect-fourth" id="stats_chart"></div>
+        <div class = "stats_graph_container" >
+            <div class = "ct-chart ct-perfect-fourth" id = "stats_chart"></div>
         </div> 
-        <div id="type_chart">
+        <div id = "type_chart">
             <!-- https://stackoverflow.com/questions/13624276/how-to-separate-table-rows-with-a-line -->
             <table id = "type_table">
                 <!-- https://www.w3.org/WAI/tutorials/tables/irregular/ -->
-                <th colspan="4" style="text-align: center">Type Effectiveness</th>
+                <th colspan = "4" style = "text-align: center">Type Effectiveness</th>
                 <tr>
                     <td>Normal:</td>
                     <td>{{normal_resist}}</td>
@@ -166,10 +166,6 @@
         </div>  
     </div>  
 
-    <!-- These script tags go down here so they won't get executed until the
-        HTML is almost entirely parsed. Putting your script tags down here
-        has become increasingly standard for that reason. It simplifies the
-        "when does this happen" issue. -->
     <script type="text/javascript" src="{{ url_for('static', filename='chartist.min.js') }}" ></script>
     <!-- the go button and search bar functionality has been added into simple-charts.js -->
     <script type="text/javascript" src="{{ url_for('static', filename='pokedex.js') }}" ></script>
