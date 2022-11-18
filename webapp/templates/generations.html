@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset = "UTF-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
     <title>Generations</title>
-    <script type="text/javascript" src="{{ url_for('static', filename='generations.js') }}"></script>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='generations.css') }}">
+    <script type = "text/javascript" src = "{{ url_for('static', filename='generations.js') }}"></script>
+    <link rel = "stylesheet" type = "text/css" href = "{{ url_for('static',filename='generations.css') }}">
     <link rel = "icon" type = "image/x-icon" href="{{ url_for('static',filename='favicon.ico') }}">
 </head>
 
@@ -29,9 +29,9 @@
                 <option value = "ability">Ability</option> 
                 <option value = "type">Type</option> 
             </select>
-            <input id = "search_bar" name = "search_bar" type="text" placeholder="Search"/>
-            <input id = "go_button" type="submit" value="Go"><br/> <!-- <br /> is line break-->
-            <label for="search_bar"><a href = "">Advanced Search</a></label>
+            <input id = "search_bar" name = "search_bar" type = "text" placeholder = "Search"/>
+            <input id = "go_button" type = "submit" value = "Go"><br/> <!-- <br /> is line break-->
+            <label for = "search_bar"><a href = "">Advanced Search</a></label>
         </div>
     </div>
 
@@ -48,7 +48,7 @@
         <select name = "generations menu" id = "generation_selector"></select>
     </div>
     
-    <p><table id="generation_table"></table></p>
+    <p><table id = "generation_table"></table></p>
 
 </body>
 </html>

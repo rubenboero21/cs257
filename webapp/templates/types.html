@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset = "UTF-8">
+    <meta http-equiv = "X-UA-Compatible" content = "IE=edge">
+    <meta name = "viewport" content="width=device-width, initial-scale=1.0">
     <title>Types</title>
-    <script type="text/javascript" src="{{ url_for('static', filename='types.js') }}"></script>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='types.css') }}">
-    <link rel = "icon" type = "image/x-icon" href="{{ url_for('static',filename='favicon.ico') }}">
+    <script type = "text/javascript" src = "{{ url_for('static', filename='types.js') }}"></script>
+    <link rel = "stylesheet" type= "text/css" href = "{{ url_for('static',filename='types.css') }}">
+    <link rel = "icon" type = "image/x-icon" href = "{{ url_for('static',filename='favicon.ico') }}">
 </head>
 
 <body>
@@ -21,16 +21,16 @@
         <div>
             <a href = "/types" id = "current_page">Types</a>
         </div>
-        <div class="search_text_pair">
+        <div class = "search_text_pair">
             <select id = "search_dropdown"> 
                 <option value = "pokemon">Pokémon</option> 
                 <option value = "pokedex_number">Pokédex Number</option> 
                 <option value = "ability">Ability</option> 
                 <option value = "type">Type</option> 
             </select>
-            <input id = "search_bar" name = "search_bar" type="text" placeholder="Search"/>
-            <input id = "go_button" type="submit" value="Go"><br/> <!-- <br /> is line break-->
-            <label for="search_bar"><a href = "">Advanced Search</a></label>
+            <input id = "search_bar" name = "search_bar" type = "text" placeholder = "Search"/>
+            <input id = "go_button" type = "submit" value = "Go"><br/> <!-- <br /> is line break-->
+            <label for ="search_bar"><a href = "">Advanced Search</a></label>
         </div>
     </div>
 
