@@ -3,9 +3,6 @@
     Jeff Ondich, 25 April 2016
     Updated 8 November 2021
 
-    A small Flask application that provides a barelywebsite with an accompanying
-    API (which is also tiny) to support that website.
-
     Modified by Ruben Boero and Serafin Patino
 '''
 import flask
