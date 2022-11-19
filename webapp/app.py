@@ -91,6 +91,8 @@ def egg_groups():
 def types():
     return flask.render_template('types.html')
 
+# queries the DB for all relevant information about a pokemon then passes it into pokedex.html
+# in order to display it on that page
 @app.route('/specific/<id>')
 def pokedex(id):
 
@@ -169,6 +171,8 @@ def pokedex(id):
     except Exception as e:
         print(e, file=sys.stderr)
 
+# queries the database for information relevant to the results table that is shown to the 
+# user when they have used the search feature
 @app.route('/search_results/<category>/<search_text>')
 def display_search_results(category, search_text):
 

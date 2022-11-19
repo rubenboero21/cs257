@@ -2,7 +2,7 @@ AUTHORS: Ruben Boero and Serafin Patino
 
 DATA: stats and attributes of all Pokémon from the first 8 generations of Pokémon
 
-The raw data can be found on this site:
+The raw data can be found on this site (CC BY-SA 4.0 license):
 https://www.kaggle.com/datasets/mariotormo/complete-pokemon-dataset-updated-090420 
 We used the 4.20 csv version.
 
