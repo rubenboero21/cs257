@@ -48,13 +48,15 @@ function createTableHTML(search_results, alternatingLineColor) {
             tableBody += '<tr><td>'+ pokemon['dex_num'] + '<td><a href = "' + url + '">'+ pokemon['name'] + '</a></td>' + 
             '<td>' + pokemon['ability1'] + '</td>' + '<td>' + pokemon['ability2'] + '</td>' + 
             '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + '</td>' + 
-            '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
+            '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'].replace('generation', 'Generation') +
+            '</td>' + '</td></tr>\n';
         } 
         else {
             tableBody += '<tr bgcolor="' + alternatingLineColor + '"><td>'+ pokemon['dex_num'] + '<td><a href = "' + 
             url + '">'+ pokemon['name'] + '</a>' + '<td>' + pokemon['ability1'] + '</td>' + '<td>' + 
             pokemon['ability2'] + '</td>' + '<td>' + pokemon['ability3'] + '</td>' + '<td>' + pokemon['type1'] + 
-            '</td>' + '<td>' + pokemon['type2']+ '</td>' + '<td>' + pokemon['generation'] + '</td>' + '</td></tr>\n';
+            '</td>' + '<td>' + pokemon['type2']+ '</td>' + '<td>' + 
+            pokemon['generation'].replace('generation', 'Generation') + '</td>' + '</td></tr>\n';
         }        
     }
     return tableBody
