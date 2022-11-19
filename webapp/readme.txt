@@ -33,4 +33,5 @@ STATUS:
   to a specific page with more in detail about that Pokémon
 
 NOTES:
-
+- We deleted Slowbro from our data because our dataset did 
+  not include any information for that Pokémon.
